@@ -1,2 +1,13 @@
+# macOS和Windows下打开docx文件会生成的临时文件
 .DS_Store
-~$
+.localized
+~*
+*.tmp
+*.swp
+*.bak
+
+# C#教程不需要build需要的文件
+Documents/C#教程/C#demo.csproj
+Documents/C#教程/obj
+Documents/C#教程/bin
+
