@@ -1,4 +1,4 @@
-# .NET学习
+# .NET学习(1)
 
 官方文档：[.NET文档](https://learn.microsoft.com/zh-cn/dotnet/fundamentals/)   [下载.NET](https://dotnet.microsoft.com/zh-cn/download)   [教程文档](https://learn.microsoft.com/zh-cn/training/paths/build-dotnet-applications-csharp/)   [NuGet 文档](https://learn.microsoft.com/zh-cn/nuget/)   [.NET CLI 文档](https://learn.microsoft.com/zh-cn/dotnet/core/tools/)
 
@@ -551,7 +551,11 @@ public class WeatherForecastController : ControllerBase
 ```
 
 - `[ApiController]` 启用[固定行为](https://learn.microsoft.com/zh-cn/aspnet/core/web-api/#apicontroller-attribute-1)，使生成 Web API 更加容易。此属性包括多个特定于 API 的固定行为，例如自动处理错误的 HTTP 请求。
-- `[Route]` 定义路由模式 `[controller]`。 `[controller]` 令牌将替换为控制器的名称（不区分大小写，无 Controller 后缀）。 此控制器处理对 `http://localhost:{PORT}/weatherforecast` 的请求。
+- `[Route]` 定义路由模式 `[controller]`。 `[controller]` 令牌将替换为控制器的名称（不区分大小写，无 Controller 后缀）。 对于控制器`WeatherForecastController`，处理对 `http://localhost:{PORT}/weatherforecast` 的请求。
+
+  - 若改为`[Route("api/[controller]")]`（VS添加API控制器时默认），则路径变为`http://localhost:{PORT}/api/weatherforecast` 
+
+  - 若改为`[Route("[controller]/[action]")]`则可以使路由规则精确到动作（方法）
 
 ### 添加一个简单的 Hello World 控制器
 

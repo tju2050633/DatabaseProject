@@ -41,3 +41,12 @@
 ### 目前进度
 
 熟悉HTML、CSS；学习了WebApi的项目结构，路由规则的创建与使用，form表单传输与路由传参，从数据库中获取并返回数据。从数据库中获取与返回数据尚未做demo进行测试
+
+## 7.4
+
+学习视频[C#/.NET 论坛开发实战（二）WebApi后端搭建 与 SqlServer数据库操作 ](https://www.bilibili.com/video/BV1ry4y1b71E/)P1-30
+
+- 掌握Oracle数据库与ASP.NET Core Web API连接方式，并用C#进行CRUD操作（相关文档位于Documents/任务过程/C组/dotnet2.md）
+- 了解三层架构模型，并进行代码更改和简单封装
+
+由于数据库开发尚不完善，不方便开发接口，暂时在教材数据库基础上实现上述操作。
