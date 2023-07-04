@@ -26,7 +26,10 @@ ps: 明天开启前端开发
 
 # 7.4
 
-
+* 学习element-plus + vue3结合开发
+* 学习bootstrap + vue3结合开发
+* 理解数据传输机制
+* 处理vue想的配置问题
 
 
 
