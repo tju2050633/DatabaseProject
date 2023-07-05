@@ -49,11 +49,11 @@
 
 # 7.4
 
-## Vue项目仪表盘
+### Vue项目仪表盘
 
 学习项目仪表盘的基本操作，并编写[文档](../%E8%AF%B4%E6%98%8E%E6%96%87%E6%A1%A3/%E9%A1%B9%E7%9B%AE%E4%BB%AA%E8%A1%A8%E7%9B%98.md)
 
-## 学习组长提供的视频
+### 学习组长提供的视频
 
 学习视频 `P1 ~ P8`
 
@@ -66,11 +66,44 @@
 
 # 7.5
 
+### 学习vue项目结构
 
+`src` 文件夹结构如下：
 
+```txt
+├── assets      # 资源文件夹
+│   ├── ...
+│   └── ...
+├── components  # 组件文件夹
+│   ├── ...
+│   └── ...
+├── router      # 路由文件夹
+│   ├── ...
+│   └── ...
+├── store       # 状态管理文件夹
+│   ├── ...
+│   └── ...
+├── views       # 视图文件夹
+│   ├── ...
+│   └── ...
+├── App.vue     # Vue应用程序的根组件
+└── main.js     # Vue应用程序的入口文件
+```
 
+### 学习bootstrap的使用
 
+安装 `bootstrap` 依赖
 
+在 `src/main.js` 中：
+
+```js
+import 'bootstrap/dist/css/bootstrap.css'
+import 'bootstrap/dist/js/bootstrap'
+```
+
+项目中可以直接使用 `bootstrap` 上提供的控件的代码
+
+选取了一些控件，可在 `DatabaseProject\FrontEnd` 中查看
 
 # 7.6
 
