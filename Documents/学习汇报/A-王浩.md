@@ -53,6 +53,8 @@
 
 学习项目仪表盘的基本操作，并编写[文档](../%E8%AF%B4%E6%98%8E%E6%96%87%E6%A1%A3/%E9%A1%B9%E7%9B%AE%E4%BB%AA%E8%A1%A8%E7%9B%98.md)
 
+(该文档于7.5删除，更加完善的文档在 [这里](../../FrontEnd/%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E.md))
+
 ### 学习组长提供的视频
 
 学习视频 `P1 ~ P8`
@@ -107,9 +109,92 @@ import 'bootstrap/dist/js/bootstrap'
 
 # 7.6
 
+## 1. 学习API的使用
 
+**这里我使用的是 `Ajax` 使用 `Axios` 似乎更简单一些？**
 
+需要安装 `jquery` 依赖
 
+通过
+
+```js
+import $ from 'jquery';
+```
+
+在其他 **.js** 或 **.vue** 文件中导入 **$**
+
+通过
+
+```js
+$.ajax({
+   url: "https:xxxxxxxxx",
+   type: "GET",
+   data: {
+      user_id: xxx,
+   },
+   headers: {
+      'Authorization': "Bearer " + access,
+   },
+   success(resp) {
+      console.log(resp);
+   }
+});
+```
+
+使用 **API**
+
+## 2. 学习router的使用
+
+通过
+
+```js
+import router from '@/router/index';
+```
+
+在其他 **.js** 或 **.vue** 文件中导入 **router**
+
+通过
+
+```js
+router.push({
+   name: 'userprofile',
+   params: {
+      userId
+   }
+});
+```
+
+使用 **router** 进行页面跳转
+
+## 3. 学习store的使用
+
+不同控件间传递数据通常可以使用这种方法：
+
+父组件 -> 子组件：`props`
+
+子组件 -> 父组件：`event`
+
+但是如果控件嵌套较多，父子控件间传递数据会很复杂。`store` 可以将数据设置为全局数据，方便所有控件使用。
+
+`/src/store/index.js` 文件功能介绍：
+
+```txt
+├── state      # 存储全局的共享状态数据
+├── getters    # 一组从状态中派生出的计算属性
+├── mutations  # 一组用于修改状态的方法
+├── actions    # 一组用于执行异步操作的方法
+└── modules    # 一个包含其他模块的对象
+```
+
+通过将 ModuleUser 模块添加到 modules 选项中，该模块可以在全局的 store 中进行使用，它可以有自己的 state、getters、mutations、actions，并与其他模块进行交互。
+
+通过将这个配置文件导出为默认导出，其他部分的代码可以通过导入该文件获取 Vuex store 的实例，并在应用程序中使用它来进行全局的状态管理。
+
+## 4. 完善示范项目
+
+[github链接](https://github.com/rmEleven/testVue)
+
+在之前的示范项目中使用 **API**、**router**、**store** 等相关知识，成功与公开的后端对接，实现了登录、退出等一系列功能。
 
 
 
