@@ -1,44 +1,59 @@
 <template>
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
         <div class="container-fluid">
-            <router-link class="navbar-brand" :to="{ name: '404' }">Navbar</router-link>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <router-link class="nav-link active" aria-current="page" :to="{ name: 'home' }">Home</router-link>
-                    </li>
-                    <li class="nav-item">
-                        <router-link class="nav-link" :to="{ name: 'link' }">Link</router-link>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-                            aria-expanded="false">
-                            Dropdown
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><router-link class="dropdown-item" :to="{ name: 'action' }">Action</router-link></li>
-                            <li><router-link class="dropdown-item" :to="{ name: 'anotherAction' }">Another
-                                    action</router-link></li>
-                            <li>
-                                <hr class="dropdown-divider">
-                            </li>
-                            <li><router-link class="dropdown-item" :to="{ name: 'sthElse' }">Something else
-                                    here</router-link></li>
-                        </ul>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link disabled">Disabled</a>
-                    </li>
-                </ul>
-                <form class="d-flex" role="search">
-                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-outline-success" type="submit">Search</button>
-                </form>
-            </div>
+
+            <!-- logo与title -->
+            <router-link class="navbar-brand" :to="{ name: 'home' }" style="margin-left: 50px;">
+                <img src="../assets/logo.png" alt="Logo" width="30" class="d-inline-block align-text-top">
+                <span class="navbar-text">
+                    共享花园
+                </span>
+            </router-link>
+
+            <!-- 搜索框 -->
+            <form class="d-flex" role="search" style="min-width: 60%; margin-left: auto; margin-right: auto;">
+                <!-- 输入框 -->
+                <input class="form-control me-2" type="search" placeholder="搜索" aria-label="Search">
+                <!-- 搜索按钮 -->
+                <button class="btn btn-outline-success" type="submit">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search"
+                        viewBox="0 0 16 16">
+                        <path
+                            d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
+                    </svg>
+                </button>
+            </form>
+
+            <!-- 用户状态下拉菜单 -->
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class=" nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
+                            class="bi bi-person" viewBox="0 0 16 16">
+                            <path
+                                d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0Zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4Zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10Z" />
+                        </svg>
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <!-- 下拉菜单项内容 -->
+                        <li><router-link class="dropdown-item" :to="{ name: 'home' }">个人主页</router-link></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><router-link class="dropdown-item" :to="{ name: 'home' }">消息通知</router-link></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><router-link class="dropdown-item" :to="{ name: '404' }">关于我们</router-link></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><router-link class="dropdown-item" :to="{ name: '404' }">反馈</router-link></li>
+                    </ul>
+                </li>
+            </ul>
+
         </div>
     </nav>
 </template>

@@ -2,10 +2,7 @@
   <ContentBase>
     <div class="card">
       <div class="card-body">
-        <div class="d-flex align-items-center">
-          <strong>Loading...</strong>
-          <div class="spinner-border ms-auto" role="status" aria-hidden="true"></div>
-        </div>
+        404 Not Found
       </div>
     </div>
   </ContentBase>

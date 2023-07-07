@@ -1,11 +1,7 @@
-import { createRouter, createWebHashHistory } from 'vue-router'
+import { createRouter, createWebHistory } from 'vue-router'
 
 import HomeView from '../views/HomeView.vue'
 import NotFoundView from '../views/NotFoundView.vue'
-import LinkView from '../views/LinkView.vue'
-import ActionView from '../views/ActionView.vue'
-import AnotherActionView from '../views/AnotherActionView.vue'
-import SthElseView from '../views/SthElseView.vue'
 
 const routes = [
   {
@@ -14,34 +10,18 @@ const routes = [
     component: HomeView
   },
   {
-    path: '/link',
-    name: 'link',
-    component: LinkView
-  },
-  {
-    path: '/action',
-    name: 'action',
-    component: ActionView
-  },
-  {
-    path: '/anotherAction',
-    name: 'anotherAction',
-    component: AnotherActionView
-  },
-  {
-    path: '/sthElse',
-    name: 'sthElse',
-    component: SthElseView
-  },
-  {
-    path: '/404',
+    path: '/404/',
     name: '404',
     component: NotFoundView
+  },
+  {
+    path: '/:catchAll(.*)',
+    redirect: '/404/'
   }
 ]
 
 const router = createRouter({
-  history: createWebHashHistory(),
+  history: createWebHistory(),
   routes
 })
 
