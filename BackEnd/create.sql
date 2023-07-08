@@ -225,3 +225,5 @@ CREATE TABLE Act_Works (
   FOREIGN KEY (act_id) REFERENCES Voluntary_Activities(act_id),
   FOREIGN KEY (worker_id) REFERENCES Account(account_id)
 );
+
+commit;
