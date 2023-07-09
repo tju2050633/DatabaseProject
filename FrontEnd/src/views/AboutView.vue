@@ -2,7 +2,7 @@
     <ContentBase>
         <div class="card">
             <div class="card-body">
-                Register
+                About
             </div>
         </div>
     </ContentBase>
@@ -12,7 +12,7 @@
 import ContentBase from '../components/ContentBase.vue';
 
 export default {
-    name: 'RegisterView',
+    name: 'AboutView',
     components: {
         ContentBase,
     }
