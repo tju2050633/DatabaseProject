@@ -1,27 +1,26 @@
-DROP TABLE Account;
 DROP TABLE Student;
 DROP TABLE Administer;
 DROP TABLE Login_Info;
 DROP TABLE Violation_Info;
 DROP TABLE Account_Profile;
-DROP TABLE Blog;
 DROP TABLE Blog_Ratings;
 DROP TABLE Blog_Comment;
+DROP TABLE Blog;
 DROP TABLE Apply;
-DROP TABLE Report;
 DROP TABLE Report_approval_history;
-DROP TABLE Garden;
+DROP TABLE Report;
 DROP TABLE Garden_Maintenance;
-DROP TABLE Garden_Activity;
 DROP TABLE Garden_Invitation;
-DROP TABLE Points_Mall;
+DROP TABLE Garden_Activity;
 DROP TABLE Points_Redeem;
-DROP TABLE Voluntary_Activities;
+DROP TABLE Points_Mall;
 DROP TABLE Act_Application;
-DROP TABLE Act_Recruitment;
 DROP TABLE Act_Works;
+DROP TABLE Voluntary_Activities;
+DROP TABLE Act_Recruitment;
+DROP TABLE Garden;
+DROP TABLE Account;
 
--- 创建 Account 表
 CREATE TABLE Account (
   account_id INT PRIMARY KEY,
   password VARCHAR(50),
@@ -29,7 +28,6 @@ CREATE TABLE Account (
   create_time DATE
 );
 
--- 创建 Student 表
 CREATE TABLE Student (
   stu_id INT PRIMARY KEY,
   name VARCHAR(50),
@@ -38,7 +36,6 @@ CREATE TABLE Student (
   FOREIGN KEY (account_id) REFERENCES Account(account_id)
 );
 
--- 创建 Administer 表
 CREATE TABLE Administer (
   admin_id INT PRIMARY KEY,
   admin_name VARCHAR(50),
@@ -46,7 +43,6 @@ CREATE TABLE Administer (
   FOREIGN KEY (account_id) REFERENCES Account(account_id)
 );
 
--- 创建 Login_Info 表
 CREATE TABLE Login_Info (
   login_info_id INT PRIMARY KEY,
   account_id INT,
@@ -55,7 +51,6 @@ CREATE TABLE Login_Info (
   FOREIGN KEY (account_id) REFERENCES Account(account_id)
 );
 
--- 创建 Violation_Info 表
 CREATE TABLE Violation_Info (
   account_id INT PRIMARY KEY,
   violation_description VARCHAR(50),
@@ -63,7 +58,6 @@ CREATE TABLE Violation_Info (
   FOREIGN KEY (account_id) REFERENCES Account(account_id)
 );
 
--- 创建 Account_Profile 表
 CREATE TABLE Account_Profile (
   account_id INT PRIMARY KEY,
   avatar VARCHAR(50),
@@ -72,7 +66,6 @@ CREATE TABLE Account_Profile (
   FOREIGN KEY (account_id) REFERENCES Account(account_id)
 );
 
--- 创建 Blog 表
 CREATE TABLE Blog (
   blog_id INT PRIMARY KEY,
   account_id INT,
@@ -84,7 +77,6 @@ CREATE TABLE Blog (
   FOREIGN KEY (account_id) REFERENCES Account(account_id)
 );
 
--- 创建 Blog_Ratings 表
 CREATE TABLE Blog_Ratings (
   blog_rating_id INT PRIMARY KEY,
   blog_id INT,
@@ -95,7 +87,6 @@ CREATE TABLE Blog_Ratings (
   FOREIGN KEY (account_id) REFERENCES Account(account_id)
 );
 
--- 创建 Blog_Comment 表
 CREATE TABLE Blog_Comment (
   comment_id INT,
   blog_id INT,
@@ -107,7 +98,6 @@ CREATE TABLE Blog_Comment (
   FOREIGN KEY (commentator_id) REFERENCES Account(account_id)
 );
 
--- 创建 Apply 表
 CREATE TABLE Apply (
   apply_id INT PRIMARY KEY,
   account_id INT,
@@ -117,7 +107,6 @@ CREATE TABLE Apply (
   FOREIGN KEY (account_id) REFERENCES Account(account_id)
 );
 
--- 创建 Report 表
 CREATE TABLE Report (
   report_id INT PRIMARY KEY,
   reporter_id INT,
@@ -129,7 +118,6 @@ CREATE TABLE Report (
   FOREIGN KEY (reported_user_id) REFERENCES Account(account_id)
 );
 
--- 创建 Report_approval_history 表
 CREATE TABLE Report_approval_history (
   approval_id INT PRIMARY KEY,
   report_id INT,
@@ -138,7 +126,6 @@ CREATE TABLE Report_approval_history (
   FOREIGN KEY (report_id) REFERENCES Report(report_id)
 );
 
--- 创建 Garden 表
 CREATE TABLE Garden (
   garden_id INT PRIMARY KEY,
   owner_id INT,
@@ -150,7 +137,6 @@ CREATE TABLE Garden (
   FOREIGN KEY (owner_id) REFERENCES Account(account_id)
 );
 
--- 创建 Garden_Maintenance 表
 CREATE TABLE Garden_Maintenance (
   garden_id INT,
   maintenance_id INT,
@@ -162,7 +148,6 @@ CREATE TABLE Garden_Maintenance (
   FOREIGN KEY (maintainer_id) REFERENCES Account(account_id)
 );
 
--- 创建 Garden_Activity 表
 CREATE TABLE Garden_Activity (
   activity_id INT PRIMARY KEY,
   garden_id INT,
@@ -172,7 +157,6 @@ CREATE TABLE Garden_Activity (
   FOREIGN KEY (garden_id) REFERENCES Garden(garden_id)
 );
 
--- 创建 Garden_Invitation 表
 CREATE TABLE Garden_Invitation (
   invitation_id INT PRIMARY KEY,
   activity_id INT,
@@ -181,7 +165,6 @@ CREATE TABLE Garden_Invitation (
   FOREIGN KEY (invitee_id) REFERENCES Account(account_id)
 );
 
--- 创建 Points_Mall 表
 CREATE TABLE Points_Mall (
   item_id INT PRIMARY KEY,
   item_name VARCHAR(50),
@@ -190,7 +173,6 @@ CREATE TABLE Points_Mall (
   item_storage INT
 );
 
--- 创建 Points_Redeem 表
 CREATE TABLE Points_Redeem (
   redeem_id INT PRIMARY KEY,
   account_id INT,
@@ -200,19 +182,6 @@ CREATE TABLE Points_Redeem (
   FOREIGN KEY (item_id) REFERENCES Points_Mall(item_id)
 );
 
--- 创建 Act_Application 表
-CREATE TABLE Act_Application (
-  act_application_id INT PRIMARY KEY,
-  act_id INT,
-  account_id INT,
-  app_description VARCHAR(50),
-  application_result VARCHAR(50),
-  is_approved INT,
-  FOREIGN KEY (account_id) REFERENCES Account(account_id),
-  FOREIGN KEY (act_id) REFERENCES Voluntary_Activities(act_id)
-);
-
--- 创建 Act_Recruitment 表
 CREATE TABLE Act_Recruitment (
   act_recruitment_id INT PRIMARY KEY,
   garden_id INT,
@@ -223,7 +192,6 @@ CREATE TABLE Act_Recruitment (
   FOREIGN KEY (recruiter_id) REFERENCES Account(account_id)
 );
 
--- 创建 Voluntary_Activities 表
 CREATE TABLE Voluntary_Activities (
   act_id INT PRIMARY KEY,
   garden_id INT,
@@ -235,7 +203,17 @@ CREATE TABLE Voluntary_Activities (
   FOREIGN KEY (garden_id) REFERENCES Garden(garden_id)
 );
 
--- 创建 Act_Works 表
+CREATE TABLE Act_Application (
+  act_application_id INT PRIMARY KEY,
+  act_id INT,
+  account_id INT,
+  app_description VARCHAR(50),
+  application_result VARCHAR(50),
+  is_approved INT,
+  FOREIGN KEY (account_id) REFERENCES Account(account_id),
+  FOREIGN KEY (act_id) REFERENCES Voluntary_Activities(act_id)
+);
+
 CREATE TABLE Act_Works (
   act_id INT,
   act_works_id INT PRIMARY KEY,
@@ -247,3 +225,5 @@ CREATE TABLE Act_Works (
   FOREIGN KEY (act_id) REFERENCES Voluntary_Activities(act_id),
   FOREIGN KEY (worker_id) REFERENCES Account(account_id)
 );
+
+commit;
