@@ -37,19 +37,29 @@
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <!-- 下拉菜单项内容 -->
-                        <li><router-link class="dropdown-item" :to="{ name: 'home' }">个人主页</router-link></li>
+                        <li><router-link class="dropdown-item" v-if="!$store.state.user.is_login"
+                                :to="{ name: 'login' }">登录</router-link></li>
+                        <li><router-link class="dropdown-item" v-if="$store.state.user.is_login"
+                                :to="{ name: 'home' }">个人主页</router-link></li>
+
                         <li>
                             <hr class="dropdown-divider">
                         </li>
-                        <li><router-link class="dropdown-item" :to="{ name: 'home' }">消息通知</router-link></li>
+
+                        <li><router-link class="dropdown-item" v-if="!$store.state.user.is_login"
+                                :to="{ name: 'register' }">注册</router-link></li>
+                        <li><router-link class="dropdown-item" v-if="$store.state.user.is_login"
+                                :to="{ name: 'home' }">消息通知</router-link></li>
+
                         <li>
                             <hr class="dropdown-divider">
                         </li>
-                        <li><router-link class="dropdown-item" :to="{ name: '404' }">关于我们</router-link></li>
+
+                        <li><router-link class="dropdown-item" :to="{ name: 'about' }">关于我们</router-link></li>
                         <li>
                             <hr class="dropdown-divider">
                         </li>
-                        <li><router-link class="dropdown-item" :to="{ name: '404' }">反馈</router-link></li>
+                        <li><router-link class="dropdown-item" :to="{ name: 'feedback' }">反馈</router-link></li>
                     </ul>
                 </li>
             </ul>
@@ -59,8 +69,18 @@
 </template>
 
 <script>
+import { useStore } from 'vuex';
+
 export default {
     name: "NavBar",
+
+    setup() {
+        const store = useStore();
+
+        return {
+            store
+        }
+    }
 }
 </script>
 

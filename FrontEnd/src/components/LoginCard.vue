@@ -105,4 +105,8 @@ button {
 .card {
     height: 40%;
 }
+
+.error-message {
+    color: red;
+}
 </style>
