@@ -1,6 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
-import HomeView from '../views/HomeView.vue'
 import NotFoundView from '../views/NotFoundView.vue'
 import LoginView from '../views/LoginView.vue'
 import RegisterView from '../views/RegisterView.vue'
@@ -9,9 +8,20 @@ import FeedbackView from '../views/FeedbackView.vue'
 
 const routes = [
   {
+    //主页路由及其子页面的组件路由
     path: '/',
     name: 'home',
-    component: HomeView
+    component: () => import('../views/HomePageView.vue'), //通过相对路径导入页面组件，和import是两种路由的方法
+    children: [
+      {
+      path: 'GardenManage',
+      component: () => import('../components/gardenManager.vue'),
+      },
+      {
+        path:'ItemBlock',
+        component:()=> import('../components/itemBlock.vue'),
+        }
+    ], 
   },
   {
     path: '/login/',
