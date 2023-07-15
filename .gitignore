@@ -11,3 +11,5 @@ Documents/C#教程/C#demo.csproj
 Documents/C#教程/obj
 Documents/C#教程/bin
 
+# 前端node_modules
+FrontEnd/node_modules
