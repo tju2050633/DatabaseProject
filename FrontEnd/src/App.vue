@@ -1,6 +1,9 @@
 <template>
-  <NavBar /> <!--导航栏-->
-  <router-view /> <!--路由组件-->
+  <div id='app'>
+    <NavBar /> <!--导航栏-->
+    <RouterView></RouterView>
+    <router-view /> <!--路由组件-->
+  </div>
 </template>
 
 <script>
