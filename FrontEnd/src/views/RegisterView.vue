@@ -1,22 +1,34 @@
 <template>
-    <ContentBase>
-        <div class="card">
-            <div class="card-body">
-                Register
+    <body>
+        <div class="container">
+            <div class="d-flex align-items-center">
+                <!-- 组件内容 -->
+                <RegisterCard />
             </div>
         </div>
-    </ContentBase>
+    </body>
 </template>
   
 <script>
-import ContentBase from '../components/ContentBase.vue';
+import RegisterCard from '@/components/RegisterCard.vue';
 
 export default {
     name: 'RegisterView',
     components: {
-        ContentBase,
+        RegisterCard
     }
 }
 </script>
   
-<style scoped></style>
+<style scoped>
+body {
+    background-image: url('../assets/Garden.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.d-flex {
+    margin-left: 75%;
+    height: 91.3vh;
+}
+</style>
