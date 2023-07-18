@@ -49,7 +49,7 @@
                         <li><router-link class="dropdown-item" v-if="!$store.state.user.is_login"
                                 :to="{ name: 'register' }">注册</router-link></li>
                         <li><router-link class="dropdown-item" v-if="$store.state.user.is_login"
-                                :to="{ name: 'home' }">消息通知</router-link></li>
+                                :to="{ name: 'message' }">消息通知</router-link></li>
 
                         <li>
                             <hr class="dropdown-divider">
