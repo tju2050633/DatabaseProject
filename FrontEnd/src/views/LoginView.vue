@@ -6,7 +6,6 @@
                 <LoginCard />
             </div>
         </div>
-
     </body>
 </template>
   
@@ -30,9 +29,5 @@ body {
 
 .d-flex {
     margin-left: 75%;
-}
-
-.error-message {
-    color: red;
 }
 </style>

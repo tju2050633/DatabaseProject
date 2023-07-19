@@ -3,6 +3,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import NotFoundView from '../views/NotFoundView.vue'
 import LoginView from '../views/LoginView.vue'
 import RegisterView from '../views/RegisterView.vue'
+import MessageView from '../views/MessageView.vue'
 import AboutView from '../views/AboutView.vue'
 import FeedbackView from '../views/FeedbackView.vue'
 
@@ -14,14 +15,14 @@ const routes = [
     component: () => import('../views/HomePageView.vue'), //通过相对路径导入页面组件，和import是两种路由的方法
     children: [
       {
-      path: 'GardenManage',
-      component: () => import('../components/gardenManager.vue'),
+        path: 'GardenManage',
+        component: () => import('../components/gardenManager.vue'),
       },
       {
-        path:'ItemBlock',
-        component:()=> import('../components/itemBlock.vue'),
-        }
-    ], 
+        path: 'ItemBlock',
+        component: () => import('../components/itemBlock.vue'),
+      }
+    ],
   },
   {
     path: '/login/',
@@ -32,6 +33,11 @@ const routes = [
     path: '/register/',
     name: 'register',
     component: RegisterView
+  },
+  {
+    path: '/message/',
+    name: 'message',
+    component: MessageView
   },
   {
     path: '/about/',
