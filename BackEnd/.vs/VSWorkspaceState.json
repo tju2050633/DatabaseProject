@@ -3,8 +3,8 @@
     "",
     "\\Garden",
     "\\GardenBLL",
-    "\\Garden\\Controllers"
+    "\\GardenDAL"
   ],
-  "SelectedNode": "\\Garden\\Controllers\\AccountController.cs",
+  "SelectedNode": "\\Garden\\Garden.sln",
   "PreviewInSolutionExplorer": false
 }
