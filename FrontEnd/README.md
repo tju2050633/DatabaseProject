@@ -1,4 +1,4 @@
-# front
+# display_page
 
 ## Project setup
 ```

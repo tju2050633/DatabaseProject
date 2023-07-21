@@ -14,7 +14,6 @@
       </el-row>
 <!-- 静态随便写，动态用v-for -->
       <el-card style="margin-top: 20px; margin-left: 20px; margin-right: 20px">
-        
         <h1>描述</h1>
         <div>给你看点好康的</div>
         <h1>

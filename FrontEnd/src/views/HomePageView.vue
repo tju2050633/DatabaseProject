@@ -56,7 +56,7 @@
     <div class="navigator">
       <el-row>
         <el-col :offset="2" :span="5">
-          <el-card shadow="hover" body-style="height:100px" style="background-color: rgb(194, 241, 194)"><router-link :to="{ name: 'login' }">
+          <el-card shadow="hover" body-style="height:100px" style="background-color: rgb(194, 241, 194)"><router-link :to="{ name: 'display' }">
             <div class="navigator-card" style="text-align:center">
               <el-icon><video-camera></video-camera></el-icon>
               <el-text>花园展厅</el-text>
