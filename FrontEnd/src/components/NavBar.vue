@@ -1,6 +1,7 @@
 <template>
     <nav class="navbar navbar-expand-lg" style="background-color: rgb(211, 228, 220);">
         <div class="container-fluid">
+
             <!-- logo与title -->
             <router-link class="navbar-brand" :to="{ name: 'home' }" style="margin-left: 50px;">
                 <img src="../assets/logo.png" alt="Logo" width="30" class="d-inline-block align-text-top">
@@ -8,16 +9,13 @@
                     共享花园
                 </span>
             </router-link>
-            
+
             <!-- 搜索框 -->
             <form class="d-flex" role="search" style="min-width: 60%; margin-left: auto; margin-right: auto;">
                 <!-- 输入框 -->
-                <input class="form-control me-2" type="search" placeholder="搜索" aria-label="Search"  v-model="searchData"
-                @focus="searchListIfShow"
-                :class="{ active: focusFlag }">
-                   
+                <input class="form-control me-2" type="search" placeholder="搜索" aria-label="Search">
                 <!-- 搜索按钮 -->
-                <button class="btn btn-outline-success" type="submit" @click="addHistory">
+                <button class="btn btn-outline-success" type="submit">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search"
                         viewBox="0 0 16 16">
                         <path
@@ -25,7 +23,7 @@
                     </svg>
                 </button>
             </form>
-            
+
             <!-- 用户状态下拉菜单 -->
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class=" nav-item dropdown">
@@ -67,23 +65,7 @@
             </ul>
 
         </div>
-    </nav> 
-    <el-row v-show="!hotsListFlag">
-      <el-col :span="13" :offset="5">
-        <ul class="form-control me-2">
-            <li
-              class="form-control me-2"
-              v-for="(item, index) in searchHistory"
-              :key="index">
-              <span @click="insertSearch(item)">{{ item }}</span>
-              <el-button type="button" @click="deleteThisHistory(item)">清除</el-button>
-            </li>
-          </ul>
-      </el-col>
-    </el-row>
-
-
-   
+    </nav>
 </template>
 
 <script>
@@ -92,33 +74,6 @@ import { useStore } from 'vuex';
 export default {
     name: "NavBar",
 
-    data(){
-        return{
-        searchData:'',
-        searchHistory: ['111','222'], //页面重新加载后数据会丢失 还得研究一下怎么把他保存到本地
-        hotsListFlag: true,
-        focusFlag: false,
-        }
-    },
-    methods: {
-    // 搜索框下拉列表
-    searchListIfShow() {
-      this.hotsListFlag = !this.hotsListFlag;
-      this.focusFlag = !this.focusFlag;
-    },
-    deleteThisHistory(item){
-        let index = this.searchHistory.indexOf(item);
-        if (index !== -1) {this.searchHistory.splice(index, 1);
-        }
-    },
-    insertSearch(item){
-        this.searchData=item;
-    },
-    addHistory(){
-        console.log(this.searchData)
-        this.searchHistory.push(this.searchData)
-    }
-  },
     setup() {
         const store = useStore();
 

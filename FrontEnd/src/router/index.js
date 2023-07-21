@@ -6,6 +6,8 @@ import RegisterView from '../views/RegisterView.vue'
 import MessageView from '../views/MessageView.vue'
 import AboutView from '../views/AboutView.vue'
 import FeedbackView from '../views/FeedbackView.vue'
+import DisplayView from '../views/DisplayView.vue'
+import PersonalView from '../views/PersonalView.vue'
 
 const routes = [
   {
@@ -57,7 +59,17 @@ const routes = [
   {
     path: '/:catchAll(.*)',
     redirect: '/404/'
-  }
+  },
+  {
+    path: '/display/',
+    name: 'display',
+    component: DisplayView
+  },
+  {
+    path: '/personal/',
+    name: 'personal',
+    component: PersonalView
+  },
 ]
 
 const router = createRouter({
