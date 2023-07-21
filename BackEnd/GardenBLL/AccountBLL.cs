@@ -7,7 +7,7 @@ namespace Garden.BLL
     public class AccountBLL : IAccountBLL
     {
         AccountDAL accountDAL = new();
-        public string Login(int id, string password)
+        public string Login(string id, string password)
         {
             int status;
             Account account = accountDAL.GetAccountByIdAndPwd(id, password, out status);
@@ -20,10 +20,10 @@ namespace Garden.BLL
             }
 
             LoginInfoBLL loginInfoBLL = new();
-            loginInfoBLL.AddLoginInfo(account.AccountId, null, null);
-
-            return "登录成功";  
+            loginInfoBLL.AddLoginInfo(account.AccountId, null);
+            return "登录成功";
         }
+
 
     }
 }

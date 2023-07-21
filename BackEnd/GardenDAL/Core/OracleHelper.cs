@@ -6,8 +6,8 @@ namespace Garden.DAL.Core
     public static class OracleHelper
     {
         // 数据库连接字段，按需修改
-        public static string connectionString = "Data Source=localhost:1521/orcl;User Id=C##gd;Password=123456;";
-
+        //public static string connectionString = "Data Source=localhost:1521/orcl;User Id=C##gd;Password=123456;";
+        public static string connectionString = "Data Source=120.27.148.187:1521/orcl;User Id=C##gd;Password=123456;";
         public static DataTable ExecuteTable(string cmdText, params OracleParameter[] oracleParameters)
         {
             using OracleConnection conn = new(connectionString);

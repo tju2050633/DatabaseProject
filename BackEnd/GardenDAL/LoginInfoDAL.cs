@@ -10,24 +10,21 @@ namespace Garden.DAL
         private LoginInfo ToModel(DataRow row)
         {
             LoginInfo loginInfo = new();
-            loginInfo.LoginInfoId = Convert.ToInt32(row["login_info_id"]);
-            loginInfo.Account_id = Convert.ToInt32(row["account_id"]);
-            loginInfo.LoginLocation = row["login_location"].ToString();
+            loginInfo.LoginInfoId = row["login_info_id"].ToString();
+            loginInfo.AccountId = row["account_id"].ToString();
             loginInfo.LoginTime = Convert.ToDateTime(row["login_time"]);
             return loginInfo;
         }
 
-        public bool Insert(int loginInfoId, int accountId, string loginLocation, DateTime loginTime)
+        public bool Insert(string accountId, DateTime loginTime)
         {
             try
             {
-                string sql = "INSERT INTO login_info(login_info_id, account_id, login_time, login_location) VALUES(:param1,:param2,:param3,:param4)";
+                string sql = "INSERT INTO login_info(login_info_id, account_id, login_time) VALUES(login_info_seq.NEXTVAL,:id,:time)";
                 OracleParameter[] oracleParameters = new OracleParameter[]
                 {
-                    new OracleParameter("param1", OracleDbType.Int32) {Value = loginInfoId},
-                    new OracleParameter("param2", OracleDbType.Int32) {Value = accountId},
-                    new OracleParameter("param3", OracleDbType.Date) {Value = loginTime},
-                    new OracleParameter("param4", OracleDbType.Varchar2) {Value = loginLocation}
+                    new OracleParameter("id", OracleDbType.Char) {Value = accountId},
+                    new OracleParameter("time", OracleDbType.Date) {Value = loginTime}
                 };
                 OracleHelper.ExecuteNonQuery(sql, oracleParameters);
                 OracleHelper.ExecuteNonQuery("commit;");
@@ -38,12 +35,6 @@ namespace Garden.DAL
                 Console.WriteLine(ex.Message);
                 return false;
             }
-        }
-
-        public static int GetMaxId()
-        {
-            object result = OracleHelper.ExecuteScalar("SELECT COALESCE(MAX(login_info_id), 0) FROM login_info");
-            return result != DBNull.Value ? Convert.ToInt32(result) : 0;
         }
 
     }

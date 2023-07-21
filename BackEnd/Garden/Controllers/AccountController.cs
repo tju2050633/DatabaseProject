@@ -1,10 +1,9 @@
 ﻿using Garden.BLL.Interfaces;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Garden.Controllers
 {
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     [ApiController]
     public class AccountController : ControllerBase
     {
@@ -12,15 +11,13 @@ namespace Garden.Controllers
 
         public AccountController(IAccountBLL accountBLL)
         {
-            _accountBLL = accountBLL;   
+            _accountBLL = accountBLL;
         }
 
         [HttpGet]
-        public ActionResult<string> Get(int id, string pwd) 
+        public ActionResult<string> Get(string id, string pwd)
         {
             return _accountBLL.Login(id, pwd);
-
         }
-
     }
 }

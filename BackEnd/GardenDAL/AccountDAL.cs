@@ -10,29 +10,37 @@ namespace Garden.DAL
         private Account ToModel(DataRow row)
         {
             Account account = new();
-            account.AccountId = Convert.ToInt32(row["account_id"]);
-            account.AccountType = row["account_type"].ToString();
+            account.AccountId = row["account_id"].ToString();
+            account.StudentStaffId = row["student_staff_id"].ToString();
             account.Password = row["password"].ToString();
-            account.CreateTime = Convert.ToDateTime(row["create_time"]);
+            account.Email = row["email"].ToString();
+            account.Phone = row["phone"].ToString();
+            account.Portrait = row["portrait"].ToString() ;
+            account.Bio = row["bio"].ToString();
+            account.AccountName = row["account_name"].ToString();
+            account.Points = Convert.ToInt32(row["points"]);
+            account.JoinTime = Convert.ToDateTime(row["join_time"]);
             return account;
         }
+
         private List<Account> ToModelList(DataTable dt)
         {
-            List<Account> al = new();
+            List<Account> ul = new();
             for (int i = 0; i < dt.Rows.Count; i++)
             {
                 DataRow dr = dt.Rows[i];
                 Account account = ToModel(dr);
-                al.Add(account);
+                ul.Add(account);
             }
-            return al;
+            return ul;
         }
+
         public Account GetAccountById(int id, out int status)
         {
             try
             {
                 DataTable dt = OracleHelper.ExecuteTable("SELECT * FROM account WHERE account_id=:id",
-                    new OracleParameter("id", OracleDbType.Int32) { Value = id });
+                    new OracleParameter("id", OracleDbType.Char) { Value = id });
                 if (dt.Rows.Count != 1)
                 {
                     status = 0;
@@ -48,21 +56,20 @@ namespace Garden.DAL
                 status = -1;
                 return null;
             }
-
-
         }
-        public Account GetAccountByIdAndPwd(int id, string pwd, out int status)
+
+        public Account GetAccountByIdAndPwd(string id, string pwd, out int status)
         {
             try
             {
-                string sql = "SELECT * FROM account WHERE account_id=:param1 AND password=:param2";
+                string sql = "SELECT * FROM account WHERE account_id=:id AND password=:pwd";
                 OracleParameter[] oracleParameters = new OracleParameter[]
                 {
-                    new OracleParameter("param1", OracleDbType.Int32) {Value = id},
-                    new OracleParameter("param2", OracleDbType.Varchar2) {Value = pwd}
+                    new OracleParameter("id", OracleDbType.Char) {Value = id},
+                    new OracleParameter("pwd", OracleDbType.Varchar2) {Value = pwd}
                 };
                 DataTable dt = OracleHelper.ExecuteTable(sql, oracleParameters);
-
+ 
                 if (dt.Rows.Count != 1)
                 {
                     status = 0;
