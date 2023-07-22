@@ -9,6 +9,8 @@ import FeedbackView from '../views/FeedbackView.vue'
 import DisplayView from '../views/DisplayView.vue'
 import PersonalView from '../views/PersonalView.vue'
 
+import { useStore } from 'vuex'
+
 const routes = [
   {
     //主页路由及其子页面的组件路由
@@ -76,5 +78,34 @@ const router = createRouter({
   history: createWebHistory(),
   routes
 })
+
+// 使用 router.beforeEach 注册一个全局前置守卫，判断用户是否登陆
+router.beforeEach((to, from, next) => {
+  console.log('to:',to)
+// 判断用户是否已经登录
+  const store = useStore();
+  const isLogin = store.state.user.is_login;
+  console.log(store.state.user.is_login);
+
+  if (to.path === '/login'
+  ||to.path=== '/register') {
+    // 需要用户权限的页面,如果用户已经登录，重定向到首页
+    if (isLogin) {
+      next('/')
+    } else {
+      // 否则，继续跳转到登录相应的页
+      next()
+    }
+  } else {
+    // 如果用户已经登录，继续跳转到目标页面
+    if (isLogin) {
+      next()
+    } else {
+      alert("该页面需要用户权限,请登录");
+      // 否则，重定向到登录页
+      next('/login')
+    }
+  }
+});
 
 export default router
