@@ -1,5 +1,5 @@
 <template>
-    <nav class="navbar navbar-expand-lg" style="background-color: rgb(211, 228, 220);">
+    <nav class="navbar navbar-expand-lg fixed-top" style="background-color: rgb(211, 228, 220);">
         <div class="container-fluid">
 
             <!-- logo与title -->
