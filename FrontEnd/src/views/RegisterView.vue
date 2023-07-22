@@ -1,7 +1,7 @@
 <template>
     <body>
         <div class="container">
-            <div class="d-flex align-items-center">
+            <div class="d-flex align-items-center" style="height: 100vh;">
                 <!-- 组件内容 -->
                 <RegisterCard />
             </div>
