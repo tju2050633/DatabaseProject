@@ -9,7 +9,7 @@
               <el-icon><user /></el-icon>
               <span>账号管理</span>
             </template>
-            <el-menu-item index="1-1" @click="this.$router.push('/login/')">我的主页</el-menu-item>
+            <el-menu-item index="1-1" @click="this.$router.push({ name: 'personal' })">我的主页</el-menu-item>
             <el-menu-item index="1-2" @click="this.$router.push('/login/')">登入/登出</el-menu-item>
           </el-sub-menu>
           <el-sub-menu index="2">
@@ -224,8 +224,6 @@
 
 
 <script>
-
-  
 export default {
   name: "HomePageView",
   data() {
@@ -247,10 +245,10 @@ export default {
 
       UserInfo: { name: "未登录", accountId: "#", type: "#" },
       mainPageDem: [
-        { description: "", src:  require("../assets/logo.png")},
+        { description: "", src: require("../assets/logo.png") },
         { description: "", src: require("../assets/mainpage.jpeg") },
         { description: "", src: require("../assets/mainpage.jpeg") },
-        { description: "", src: require("../assets/mainpage.jpeg" )},
+        { description: "", src: require("../assets/mainpage.jpeg") },
       ],
       avatarUrl:
         "https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png",
@@ -258,14 +256,11 @@ export default {
       currentDate: new Date(),
       blockData: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
       len: 10,
-     
     };
   },
-  methods: {
-  },
+  methods: {},
   computed: {},
   components: {},
 };
-
 </script>
 

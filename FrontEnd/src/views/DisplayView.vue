@@ -65,6 +65,8 @@
                 <!-- 图片展示区域 -->
                 <el-main>
                     <div v-if="activeTab === 'hot'">
+                        <!--这里实际项目中应该为数据库读取并展示-->
+                        
                         <!-- 在activeTab为'hot'时，展示一系列图片 -->
                         <el-card v-for="(image, index) in hotImages" :key="index"
                             style="margin: 20px;box-shadow: 0 10px 18px rgba(0, 0, 0, 0.53);"

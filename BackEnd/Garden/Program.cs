@@ -24,6 +24,14 @@ if (app.Environment.IsDevelopment())
 
 app.UseAuthorization();
 
+//服务端启用后端跨域请求协议
+app.UseCors(builder =>
+{
+    builder.AllowAnyHeader()
+           .AllowAnyOrigin()
+           .AllowAnyMethod();
+});
+
 app.MapControllers();
 
 app.Run();
