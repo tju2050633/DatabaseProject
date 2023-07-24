@@ -1,0 +1,173 @@
+<template>
+    <div class="card" style="width: 60vw;">
+        <div class="card-body">
+            <!-- 标题 -->
+            <h1 class="heading">意见反馈</h1>
+
+            <!-- 问题分类 -->
+            <h5 class="subheading">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" fill="currentColor" class="bi bi-1-square"
+                    viewBox="0 0 16 16">
+                    <path d="M9.283 4.002V12H7.971V5.338h-.065L6.072 6.656V5.385l1.899-1.383h1.312Z" />
+                    <path
+                        d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2Zm15 0a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V2Z" />
+                </svg>
+                问题分类
+            </h5>
+
+            <div class="row">
+                <div class="col">
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="exampleRadios" id="登录与注册" value="登录与注册" checked>
+                        <label class="form-check-label" for="登录与注册">登录与注册</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="exampleRadios" id="花园信息与功能" value="花园信息与功能">
+                        <label class="form-check-label" for="花园信息与功能">花园信息与功能</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="exampleRadios" id="帖子与评论" value="帖子与评论">
+                        <label class="form-check-label" for="帖子与评论">帖子与评论</label>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="exampleRadios" id="活动与志愿者" value="活动与志愿者">
+                        <label class="form-check-label" for="活动与志愿者">活动与志愿者</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="exampleRadios" id="安全与隐私" value="安全与隐私">
+                        <label class="form-check-label" for="安全与隐私">安全与隐私</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="exampleRadios" id="其他问题和建议" value="其他问题和建议">
+                        <label class="form-check-label" for="其他问题和建议">其他问题和建议</label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 输入标题 -->
+            <h5 class="subheading">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" fill="currentColor" class="bi bi-2-square"
+                    viewBox="0 0 16 16">
+                    <path
+                        d="M6.646 6.24v.07H5.375v-.064c0-1.213.879-2.402 2.637-2.402 1.582 0 2.613.949 2.613 2.215 0 1.002-.6 1.667-1.287 2.43l-.096.107-1.974 2.22v.077h3.498V12H5.422v-.832l2.97-3.293c.434-.475.903-1.008.903-1.705 0-.744-.557-1.236-1.313-1.236-.843 0-1.336.615-1.336 1.306Z" />
+                    <path
+                        d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2Zm15 0a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V2Z" />
+                </svg>
+                标题
+            </h5>
+
+            <div class="form-floating mb-3">
+                <input type="txet" class="form-control" id="topic" placeholder="请填写标题">
+                <label for="topic">请填写标题</label>
+            </div>
+
+            <!-- 输入内容 -->
+            <h5 class="subheading">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" fill="currentColor" class="bi bi-3-square"
+                    viewBox="0 0 16 16">
+                    <path
+                        d="M7.918 8.414h-.879V7.342h.838c.78 0 1.348-.522 1.342-1.237 0-.709-.563-1.195-1.348-1.195-.79 0-1.312.498-1.348 1.055H5.275c.036-1.137.95-2.115 2.625-2.121 1.594-.012 2.608.885 2.637 2.062.023 1.137-.885 1.776-1.482 1.875v.07c.703.07 1.71.64 1.734 1.917.024 1.459-1.277 2.396-2.93 2.396-1.705 0-2.707-.967-2.754-2.144H6.33c.059.597.68 1.06 1.541 1.066.973.006 1.6-.563 1.588-1.354-.006-.779-.621-1.318-1.541-1.318Z" />
+                    <path
+                        d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2Zm15 0a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V2Z" />
+                </svg>
+                内容
+            </h5>
+
+            <div class="form-floating">
+                <textarea class="form-control" placeholder="请填写具体内容" id="content" style="height: 30vh"></textarea>
+                <label for="content">请填写具体内容</label>
+            </div>
+
+            <!-- 上传图片 -->
+            <h5 class="subheading">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" fill="currentColor" class="bi bi-4-square"
+                    viewBox="0 0 16 16">
+                    <path
+                        d="M7.519 5.057c.22-.352.439-.703.657-1.055h1.933v5.332h1.008v1.107H10.11V12H8.85v-1.559H4.978V9.322c.77-1.427 1.656-2.847 2.542-4.265ZM6.225 9.281v.053H8.85V5.063h-.065c-.867 1.33-1.787 2.806-2.56 4.218Z" />
+                    <path
+                        d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2Zm15 0a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V2Z" />
+                </svg>
+                上传图片
+            </h5>
+
+            <input class="form-control" type="file" id="formFileMultiple" multiple>
+
+            <div class="form-text"> 非必填项</div>
+
+            <!-- 联系方式 -->
+            <h5 class="subheading">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" fill="currentColor" class="bi bi-5-square"
+                    viewBox="0 0 16 16">
+                    <path
+                        d="M7.994 12.158c-1.57 0-2.654-.902-2.719-2.115h1.237c.14.72.832 1.031 1.529 1.031.791 0 1.57-.597 1.57-1.681 0-.967-.732-1.57-1.582-1.57-.767 0-1.242.45-1.435.808H5.445L5.791 4h4.705v1.103H6.875l-.193 2.343h.064c.17-.258.715-.68 1.611-.68 1.383 0 2.561.944 2.561 2.585 0 1.687-1.184 2.806-2.924 2.806Z" />
+                    <path
+                        d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2Zm15 0a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V2Z" />
+                </svg>
+                联系方式
+            </h5>
+
+            <div class="form-floating mb-3">
+                <input type="email" class="form-control" id="email" placeholder="请填写邮箱地址以便回复">
+                <label for="email">请填写邮箱地址以便回复</label>
+            </div>
+
+            <!-- 提交按钮 -->
+            <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal">提交</button>
+
+            <!-- 模态框 -->
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="exampleModalLabel">提交信息</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <p>感谢您的反馈！您的意见已成功提交。</p>
+                            <p>我们非常重视您的意见，它将帮助我们不断改进和优化服务。</p>
+                            <p>如有需要，我们将尽快与您联系。</p>
+                            <p>再次感谢您的宝贵意见！</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-success" data-bs-dismiss="modal">确认</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
+
+<script>
+export default {
+    name: "FeedbackCard",
+}
+</script>
+
+<style scoped>
+.heading {
+    text-align: center;
+    color: rgb(25, 135, 84);
+    margin-top: 5vh;
+    margin-bottom: 5vh;
+}
+
+.subheading {
+    color: rgb(25, 135, 84);
+    margin-top: 5vh;
+    margin-bottom: 2vh;
+}
+
+.btn {
+    margin-top: 5vh;
+    margin-bottom: 1vh;
+    width: 10vw;
+}
+
+.form-check {
+    margin-top: 2vh;
+    margin-bottom: 2vh;
+}
+</style>
