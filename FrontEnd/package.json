@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@popperjs/core": "^2.11.8",
+    "@vueuse/core": "^10.2.1",
     "axios": "^1.4.0",
     "bootstrap": "^5.3.0",
     "core-js": "^3.8.3",
@@ -18,7 +19,9 @@
     "jquery": "^3.7.0",
     "jwt-decode": "^3.1.2",
     "vue": "^3.3.4",
+    "vue-baidu-map-3x": "^1.0.34",
     "vue-router": "^4.2.4",
+    "vue3-baidu-map-gl": "^2.2.2",
     "vuex": "^4.1.0"
   },
   "devDependencies": {

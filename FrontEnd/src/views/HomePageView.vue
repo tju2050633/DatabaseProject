@@ -17,9 +17,9 @@
               <el-icon><position /></el-icon>
               <span>校园地图</span>
             </template>
-            <el-menu-item index="2-1" @click="this.$router.push('/login/')">四平路校区</el-menu-item>
-            <el-menu-item index="2-2" @click="this.$router.push('/login/')">嘉定校区</el-menu-item>
-            <el-menu-item index="2-3" @click="this.$router.push('/login/')">沪西校区</el-menu-item>
+            <el-menu-item index="2-1" @click="this.$router.push({ name: 'SiPingmap' })">四平路校区</el-menu-item>
+            <el-menu-item index="2-2" @click="this.$router.push({ name: 'JiaDingmap' })">嘉定校区</el-menu-item>
+            <el-menu-item index="2-3" @click="this.$router.push({ name: 'HuXimap' })">沪西校区</el-menu-item>
           </el-sub-menu>
           <el-sub-menu index="3">
             <template #title>
