@@ -72,6 +72,21 @@ const routes = [
     name: 'personal',
     component: PersonalView
   },
+  {
+    path: '/map/SiPing',
+    name: 'SiPingmap',
+    component:()=>import ('../views/TJMapSiPing.vue')
+  },
+  {
+    path: '/map/JiaDing',
+    name: 'JiaDingmap',
+    component:()=>import ('../views/TJMapJiaDing.vue')
+  },
+  {
+    path: '/map/HuXi',
+    name: 'HuXimap',
+    component:()=>import ('../views/TJMapHuXi.vue')
+  },
 ]
 
 const router = createRouter({
