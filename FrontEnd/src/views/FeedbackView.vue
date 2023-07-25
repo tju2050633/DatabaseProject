@@ -1,22 +1,23 @@
 <template>
-    <ContentBase>
-        <div class="card">
-            <div class="card-body">
-                Feedback
-            </div>
-        </div>
-    </ContentBase>
+    <div class="d-flex justify-content-center">
+        <FeedbackCard />
+    </div>
 </template>
   
 <script>
-import ContentBase from '../components/ContentBase.vue';
+import FeedbackCard from '@/components/FeedbackCard.vue';
 
 export default {
     name: 'FeedbackView',
     components: {
-        ContentBase,
+        FeedbackCard
     }
 }
 </script>
   
-<style scoped></style>
+<style scoped>
+.d-flex {
+    margin-top: 100px;
+    margin-bottom: 40px;
+}
+</style>

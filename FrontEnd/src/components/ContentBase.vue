@@ -1,6 +1,6 @@
 <template>
     <div class="home">
-        <div class="container">
+        <div class="container" style="margin-top: 70px;">
             <div class="card">
                 <div class="card-body">
                     <slot></slot>
