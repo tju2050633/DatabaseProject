@@ -8,6 +8,8 @@ import AboutView from '../views/AboutView.vue'
 import FeedbackView from '../views/FeedbackView.vue'
 import DisplayView from '../views/DisplayView.vue'
 import PersonalView from '../views/PersonalView.vue'
+import PersonalInfo from '../views/PersonalInfo.vue'
+import BlogView from '../views/BlogView.vue'
 
 import { useStore } from 'vuex'
 
@@ -72,6 +74,16 @@ const routes = [
     name: 'personal',
     component: PersonalView
   },
+  {
+    path:'/personalInfo/',
+    name:'personalInfo',
+    component:PersonalInfo
+  },
+  {
+    path:'/BlogView/',
+    name:'BlogView',
+    component:BlogView
+  }
 ]
 
 const router = createRouter({
@@ -84,7 +96,8 @@ router.beforeEach((to, from, next) => {
   console.log('to:',to)
 // 判断用户是否已经登录
   const store = useStore();
-  const isLogin = store.state.user.is_login;
+  //const isLogin = store.state.user.is_login;
+  const isLogin = true;
   console.log(store.state.user.is_login);
 
   if (to.path === '/login'
