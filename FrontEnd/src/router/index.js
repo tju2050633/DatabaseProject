@@ -83,7 +83,8 @@ const routes = [
     path:'/BlogView/',
     name:'BlogView',
     component:BlogView
-  }
+  },
+  {
     path: '/map/SiPing',
     name: 'SiPingmap',
     component:()=>import ('../views/TJMapSiPing.vue')
