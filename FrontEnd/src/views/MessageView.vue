@@ -7,7 +7,7 @@
         </div>
     </ContentBase>
 </template>
-  
+
 <script>
 import ContentBase from '../components/ContentBase.vue';
 

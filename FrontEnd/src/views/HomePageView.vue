@@ -1,46 +1,54 @@
-<template>
-  <div class="mainPage">
-    <!-- 侧边栏 -->
-    <el-row >
-      <el-col :span="3">
-        <el-menu>
-          <el-sub-menu index="1">
-            <template #title>
-              <el-icon><user /></el-icon>
-              <span>账号管理</span>
-            </template>
-            <el-menu-item index="1-1" @click="this.$router.push({ name: 'personal' })">我的主页</el-menu-item>
-            <el-menu-item index="1-2" @click="this.$router.push('/login/')">登入/登出</el-menu-item>
-          </el-sub-menu>
-          <el-sub-menu index="2">
-            <template #title>
-              <el-icon><position /></el-icon>
-              <span>校园地图</span>
-            </template>
-            <el-menu-item index="2-1" @click="this.$router.push({ name: 'SiPingmap' })">四平路校区</el-menu-item>
-            <el-menu-item index="2-2" @click="this.$router.push({ name: 'JiaDingmap' })">嘉定校区</el-menu-item>
-            <el-menu-item index="2-3" @click="this.$router.push({ name: 'HuXimap' })">沪西校区</el-menu-item>
-          </el-sub-menu>
-          <el-sub-menu index="3">
-            <template #title>
-              <el-icon><house /></el-icon>
-              <span>花园管理</span>
-            </template>
-            <el-menu-item index="3-1" @click="this.$router.push('/login/')">精选花园</el-menu-item>
-            <el-menu-item index="3-2" @click="this.$router.push('/login/')">我的花园</el-menu-item>
-          </el-sub-menu>
-          <el-sub-menu index="4">
-            <template #title>
-              <el-icon><chatSquare /></el-icon>
-              <span>博客论坛</span>
-            </template>
-            <el-menu-item index="4-1" @click="this.$router.push('/login/')">精选博客</el-menu-item>
-            <el-menu-item index="4-2" @click="this.$router.push('/login/')">我的发表</el-menu-item>
-          </el-sub-menu>
-        </el-menu>
+<template>    
+      <!-- 走马灯的主页图片 -->
+      <el-row>
+        <el-col :span="3">
+          <el-menu>
+              <el-sub-menu index="1">
+                  <template #title>
+                      <el-icon>
+                          <user />
+                      </el-icon>
+                      <span>账号管理</span>
+                  </template>
+                  <el-menu-item index="1-1" @click="this.$router.push('/personal/')">我的主页</el-menu-item>
+                  <el-menu-item index="1-2" @click="this.$router.push('/login/')">登入/登出</el-menu-item>
+              </el-sub-menu>
+              <el-sub-menu index="2">
+                  <template #title>
+                      <el-icon>
+                          <position />
+                      </el-icon>
+                      <span>校园地图</span>
+                  </template>
+                  <el-menu-item index="2-1" @click="this.$router.push('/PersonalInfo/')">四平路校区</el-menu-item>
+                  <el-menu-item index="2-2" @click="this.$router.push('/login/')">嘉定校区</el-menu-item>
+                  <el-menu-item index="2-3" @click="this.$router.push('/login/')">沪西校区</el-menu-item>
+              </el-sub-menu>
+              <el-sub-menu index="3">
+                  <template #title>
+                      <el-icon>
+                          <house />
+                      </el-icon>
+                      <span>花园管理</span>
+                  </template>
+                  <el-menu-item index="3-1" @click="this.$router.push('/display/')">精选花园</el-menu-item>
+                  <el-menu-item index="3-2" @click="this.$router.push('/login/')">我的花园</el-menu-item>
+              </el-sub-menu>
+              <el-sub-menu index="4">
+                  <template #title>
+                      <el-icon>
+                          <chatSquare />
+                      </el-icon>
+                      <span>博客论坛</span>
+                  </template>
+                  <el-menu-item index="4-1" @click="this.$router.push('/blog/')">精选博客</el-menu-item>
+                  <el-menu-item index="4-2" @click="this.$router.push('/login/')">我的发表</el-menu-item>
+              </el-sub-menu>
+          </el-menu>
+
       </el-col>
 
-      <!-- 走马灯的主页图片 -->
+
       <el-col :span="21">
         <el-carousel :interval="4000" type="card" height="300px" indicator-position="outside">
           <el-carousel-item v-for="item in mainPageDem" :key="item">
@@ -56,35 +64,35 @@
     <div class="navigator">
       <el-row>
         <el-col :offset="2" :span="5">
-          <el-card shadow="hover" body-style="height:100px" style="background-color: rgb(194, 241, 194)"><router-link :to="{ name: 'display' }">
+          <el-card shadow="hover" body-style="height:100px" style="background-color: rgb(194, 241, 194)" @click="this.$router.push('/BlogView/')">
             <div class="navigator-card" style="text-align:center">
               <el-icon><video-camera></video-camera></el-icon>
               <el-text>花园展厅</el-text>
-            </div></router-link>
+            </div>
           </el-card>
         </el-col>
         <el-col :span="5">
-          <el-card shadow="hover" body-style="height:100px"><router-link :to="{ name: 'login' }">
+          <el-card shadow="hover" body-style="height:100px"  @click="this.$router.push('/BlogView/')">
             <div class="navigator-card" style="text-align:center">
               <el-icon><video-camera></video-camera></el-icon>
               <el-text>我的花园</el-text>
-            </div></router-link>
+            </div>
           </el-card>
         </el-col>
         <el-col :span="5">
-          <el-card shadow="hover" body-style="height:100px" style="background-color: rgb(194, 241, 194)" ><router-link :to="{ name: 'login' }">
+          <el-card shadow="hover" body-style="height:100px" style="background-color: rgb(194, 241, 194)" @click="this.$router.push('/BlogView/')">
             <div class="navigator-card" style="text-align:center">
               <el-icon><video-camera></video-camera></el-icon>
               <el-text>博客论坛</el-text>
-            </div></router-link>
+            </div>
           </el-card>
         </el-col>
         <el-col :span="5">
-          <el-card shadow="hover" body-style="height:100px" ><router-link :to="{ name: 'login' }">
+          <el-card shadow="hover" body-style="height:100px"  @click="this.$router.push('/BlogView/')">
             <div class="navigator-card" style="text-align:center">
               <el-icon><video-camera></video-camera></el-icon>
               <el-text>当前热榜</el-text>
-            </div></router-link>
+            </div>
           </el-card>
         </el-col>
       </el-row>
@@ -177,7 +185,6 @@
     </el-backtop>
 
     <RouterView></RouterView>
-  </div>
 </template>
 
 
@@ -219,13 +226,26 @@
 .clearfix:after {
   clear: both;
 }
+
+.side-bar{
+  position: fixed; /* 将 div 固定在屏幕上 */
+  top: 0; /* 设置距离屏幕顶部的距离为 0，使其始终在屏幕最顶部 */
+  left: 0; /* 设置距离屏幕左侧的距离为 0，使其始终在屏幕最左侧 */
+  height: 100%; /* 占据整个屏幕的高度 */
+  width: 200px; /* 设置 div 的宽度 */
+  background-color: #f0f0f0; /* 设置背景颜色，这里仅作示例 */
+  /* 这里可以添加其他样式，比如边框、内边距、内容等 */
+}
+
 </style>
 
 
 
 <script>
+
 export default {
   name: "HomePageView",
+  components:{},
   data() {
     return {
       searchHistory: [
@@ -260,7 +280,6 @@ export default {
   },
   methods: {},
   computed: {},
-  components: {},
 };
 </script>
 
