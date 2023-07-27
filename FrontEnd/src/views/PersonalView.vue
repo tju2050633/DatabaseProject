@@ -1,4 +1,5 @@
 <template>
+    <div class="container" style="margin-top: 60px;">
     <el-row id="mainpart">
         <el-col :span="3">
             <el-menu>
@@ -98,6 +99,7 @@
             </el-card>
         </el-col>
     </el-row>
+    </div>
 </template>
   
   

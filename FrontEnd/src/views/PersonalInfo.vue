@@ -1,5 +1,6 @@
 <template>
   <body>
+    <div class="container" style="margin-top: 60px;">
     <div class="common-layout">
       <el-container class="personalinfo" style="height:100vw">
         <el-header>Header</el-header>
@@ -279,6 +280,7 @@
 
         </el-container>
       </el-container>
+    </div>
     </div>
   </body>
 

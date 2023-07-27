@@ -4,6 +4,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
     </head>
+    <div class="container" style="margin-top: 60px;">
     <!-- 侧边栏 -->
     <el-row id="mainpart">
         <el-col :span="3">
@@ -135,6 +136,7 @@
             </el-container>
         </el-col>
     </el-row>
+    </div>
 </template>
 
 <style></style>
