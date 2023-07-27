@@ -24,6 +24,28 @@ namespace Garden.BLL
             return "登录成功";
         }
 
+        public string Register(string ssid, string password, string accountName)
+        {
+            int status;
+            if (accountDAL.IsAccountNameExist(accountName, out status))
+            {
+                return "用户名已存在";
+            }
+            if (status < 0)
+            {
+                return "发生错误";
+            }
 
+            if (accountDAL.IsSSIDExist(ssid, out status))
+            {
+                return "此学工号已被使用";
+            }
+            if (status < 0)
+            {
+                return "发生错误";
+            }
+            accountDAL.Insert(password, accountName, System.DateTime.Now, ssid);
+            return "注册成功";
+        }
     }
 }
