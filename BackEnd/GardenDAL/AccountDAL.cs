@@ -123,19 +123,23 @@ namespace Garden.DAL
 
         public bool Insert(string password, string accountName, DateTime joinTime, string studentStaffId)
         {
-            // 插入jointime有bug
+            // 插入jointime有bug，用直接插入字符串（不使用oracleParameter）的方式暂时解决了bug
             try
             {
-                //string formattedTime = joinTime.ToString("yyyy-MM-dd HH:mm:ss");
-                //Console.WriteLine(formattedTime);
-                string sql = "INSERT INTO account(account_id, password, account_name, student_staff_id, points, join_time) VALUES(account_seq.NEXTVAL, :pwd, :name, :ssid, :point, :time)";
+                string formattedTime = joinTime.ToString("yyyy-MM-dd HH:mm:ss");
+                Console.WriteLine(formattedTime);
+
+                //string sql = "INSERT INTO account(account_id, password, account_name, student_staff_id, points, join_time) VALUES(account_seq.NEXTVAL, :pwd, :name, :ssid, :point, :time)";
+                //string sql = $"INSERT INTO account(account_id, password, account_name, student_staff_id, points, join_time) VALUES(account_seq.NEXTVAL, :pwd, :name, :ssid, :point, TO_DATE('{formattedTime}','yyyy-mm-dd hh24:mi:ss'))";
+                //string sql = $"INSERT INTO account(account_id, password, account_name, student_staff_id, points, join_time) VALUES(account_seq.NEXTVAL, :pwd, :name, '1', 0, TO_DATE('2023-07-27 20:42:59','yyyy-mm-dd hh24:mi:ss'))";
+                string sql = $"INSERT INTO account(account_id, password, account_name, student_staff_id, points, join_time) VALUES(account_seq.NEXTVAL, :pwd, :name, '{studentStaffId}', 0, TO_DATE('{formattedTime}','yyyy-mm-dd hh24:mi:ss'))";
 
                 OracleParameter[] oracleParameters = new OracleParameter[]
                 {
                     new OracleParameter("pwd", OracleDbType.Varchar2) {Value = password},
-                    new OracleParameter("time", OracleDbType.Date) {Value = joinTime},
-                    new OracleParameter("point", OracleDbType.Int64) {Value = 0},
-                    new OracleParameter("ssid", OracleDbType.Char) {Value = studentStaffId},
+                    //new OracleParameter("time", OracleDbType.Date) {Value = joinTime},
+                    //new OracleParameter("point", OracleDbType.Int64) {Value = 0},
+                    //new OracleParameter("ssid", OracleDbType.Char) {Value = studentStaffId},
                     new OracleParameter("name", OracleDbType.Varchar2) {Value = accountName}
                 };
                 OracleHelper.ExecuteNonQuery(sql, oracleParameters);
