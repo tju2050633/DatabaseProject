@@ -35,7 +35,7 @@ namespace Garden.DAL
             return ul;
         }
 
-        public Account GetAccountById(int id, out int status)
+        public Account GetAccountById(string id, out int status)
         {
             try
             {
@@ -87,6 +87,67 @@ namespace Garden.DAL
             }
         }
 
+        public bool IsAccountNameExist(string name, out int status)
+        {
+            try
+            {
+                DataTable dt = OracleHelper.ExecuteTable("SELECT account_id FROM account WHERE account_name=:name",
+                    new OracleParameter("name", OracleDbType.Varchar2) { Value = name });
+                status = 0;
+                return dt.Rows.Count > 0;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                status = -1;
+                return false;
+            }
+        }
+
+        public bool IsSSIDExist(string ssid, out int status)
+        {
+            try
+            {
+                DataTable dt = OracleHelper.ExecuteTable("SELECT account_id FROM account WHERE student_staff_id=:ssid",
+                    new OracleParameter("ssid", OracleDbType.Char) { Value = ssid });
+                status = 0;
+                return dt.Rows.Count > 0;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                status = -1;
+                return false;
+            }
+        }
+
+        public bool Insert(string password, string accountName, DateTime joinTime, string studentStaffId)
+        {
+            // 插入jointime有bug
+            try
+            {
+                //string formattedTime = joinTime.ToString("yyyy-MM-dd HH:mm:ss");
+                //Console.WriteLine(formattedTime);
+                string sql = "INSERT INTO account(account_id, password, account_name, student_staff_id, points, join_time) VALUES(account_seq.NEXTVAL, :pwd, :name, :ssid, :point, :time)";
+
+                OracleParameter[] oracleParameters = new OracleParameter[]
+                {
+                    new OracleParameter("pwd", OracleDbType.Varchar2) {Value = password},
+                    new OracleParameter("time", OracleDbType.Date) {Value = joinTime},
+                    new OracleParameter("point", OracleDbType.Int64) {Value = 0},
+                    new OracleParameter("ssid", OracleDbType.Char) {Value = studentStaffId},
+                    new OracleParameter("name", OracleDbType.Varchar2) {Value = accountName}
+                };
+                OracleHelper.ExecuteNonQuery(sql, oracleParameters);
+                OracleHelper.ExecuteNonQuery("commit;");
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return false;
+            }
+        }
 
     }
 }
