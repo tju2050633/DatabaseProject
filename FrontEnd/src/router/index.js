@@ -71,22 +71,11 @@ const routes = [
     name:'BlogView',
     component: () => import('../views/BlogView.vue')
   },
-
-  // 校园地图
   {
-    path: '/map/SiPing',
-    name: 'SiPingmap',
-    component:()=>import ('../views/TJMapSiPing.vue')
-  },
-  {
-    path: '/map/JiaDing',
-    name: 'JiaDingmap',
-    component:()=>import ('../views/TJMapJiaDing.vue')
-  },
-  {
-    path: '/map/HuXi',
-    name: 'HuXimap',
-    component:()=>import ('../views/TJMapHuXi.vue')
+    path: '/TJMap/:lng/:lat',
+    name: 'TJMap',
+    component: () => import('../views/TJMap.vue'),
+    props: true // 开启props传参
   },
 
   // 404
