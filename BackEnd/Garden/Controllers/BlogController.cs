@@ -17,13 +17,13 @@ namespace Garden.Controllers
         }
 
         [HttpGet]
-        public Blog Get(string id)
+        public ActionResult<Blog> Get(string id)
         {
             return _blogBLL.Get(id);
         }
 
         [HttpPost]
-        public string Insert(string owner_id, string title, string content)
+        public ActionResult<string> Insert(string owner_id, string title, string content)
         {
             Blog blog = new();
             blog.OwnerId = owner_id;
