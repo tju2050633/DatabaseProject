@@ -27,17 +27,32 @@
             </template>
             <el-menu-item
               index="2-1"
-              @click="this.$router.push({ name: 'SiPingmap' })"
+              @click="
+                this.$router.push({
+                  name: 'TJMap',
+                  params: { lng: 121.505829, lat: 31.285099 },
+                })
+              "
               >四平路校区</el-menu-item
             >
             <el-menu-item
               index="2-2"
-              @click="this.$router.push({ name: 'JiaDingmap' })"
+              @click="
+                this.$router.push({
+                  name: 'TJMap',
+                  params: { lng: 121.220631, lat: 31.291873 },
+                })
+              "
               >嘉定校区</el-menu-item
             >
             <el-menu-item
               index="2-3"
-              @click="this.$router.push({ name: 'HuXimap' })"
+              @click="
+                this.$router.push({
+                  name: 'TJMap',
+                  params: { lng: 121.397398, lat: 31.277339 },
+                })
+              "
               >沪西校区</el-menu-item
             >
           </el-sub-menu>

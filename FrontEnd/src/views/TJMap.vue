@@ -1,6 +1,6 @@
-<!-- 四平校区的地图页面(仅修改BMap中的center属性) -->
+<!-- 嘉定校区的地图页面(仅修改BMap中的center属性) -->
 <template>
-  <div class="container" style="margin-top: 60px;">
+  <div class="container" style="margin-top: 60px">
     <label>
       <input type="checkbox" v-model="mapSetting.enableScrollWheelZoom" />
       鼠标缩放
@@ -54,8 +54,8 @@
       :heading="64.5"
       :tilt="73"
       :center="{
-        lng: 121.505829,
-        lat: 31.285099
+        lng: this.$route.params.lng,
+        lat: this.$route.params.lat,
       }"
       :ak="'HR8QVms0aC9N8giqxCuXfNXGhzBuT6X2'"
       :zoom="19"
@@ -70,19 +70,19 @@
       :enablePinchToZoom="mapSetting.enablePinchToZoom"
       :enableTraffic="mapSetting.enableTraffic"
     >
-    <BCityList />
+      <BCityList />
     </BMap>
   </div>
 </template>
 
 <script>
-import { ref } from 'vue'
+import { ref } from "vue";
 // import { MapType, MapProps } from 'vue3-baidu-map-gl'
 
 export default {
-  name:'TJMapSiPing',
+  name: "TJMap",
   setup() {
-    const type = ref('BMAP_NORMAL_MAP')
+    const type = ref("BMAP_NORMAL_MAP");
     const mapSetting = ref({
       enableDragging: true,
       enableInertialDragging: true,
@@ -93,13 +93,13 @@ export default {
       enableKeyboard: true,
       enablePinchToZoom: true,
       enableAutoResize: true,
-      enableTraffic: false
-    })
+      enableTraffic: false,
+    });
 
     return {
       type,
-      mapSetting
-    }
-  }
-}
+      mapSetting,
+    };
+  },
+};
 </script>
