@@ -1,3 +1,5 @@
+<!-- 注册模块，仅在RegisterView里使用 -->
+
 <template>
   <div class="card" style="height: 350px">
     <div class="card-body">

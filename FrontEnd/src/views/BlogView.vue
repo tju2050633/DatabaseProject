@@ -1,57 +1,12 @@
 <template>
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
-    </head>
     <div class="container" style="margin-top: 60px;">
-    <!-- 侧边栏 -->
+    
+    <!-- 导航栏 -->
+    <NavBar/>
+
     <el-row id="mainpart">
-        <el-col :span="3">
-            <el-menu>
-                <el-sub-menu index="1">
-                    <template #title>
-                        <el-icon>
-                            <user />
-                        </el-icon>
-                        <span>账号管理</span>
-                    </template>
-                    <el-menu-item index="1-1" @click="this.$router.push('/personal/')">我的主页</el-menu-item>
-                    <el-menu-item index="1-2" @click="this.$router.push('/login/')">登入/登出</el-menu-item>
-                </el-sub-menu>
-                <el-sub-menu index="2">
-                    <template #title>
-                        <el-icon>
-                            <position />
-                        </el-icon>
-                        <span>校园地图</span>
-                    </template>
-                    <el-menu-item index="2-1" @click="this.$router.push('/login/')">四平路校区</el-menu-item>
-                    <el-menu-item index="2-2" @click="this.$router.push('/login/')">嘉定校区</el-menu-item>
-                    <el-menu-item index="2-3" @click="this.$router.push('/login/')">沪西校区</el-menu-item>
-                </el-sub-menu>
-                <el-sub-menu index="3">
-                    <template #title>
-                        <el-icon>
-                            <house />
-                        </el-icon>
-                        <span>花园管理</span>
-                    </template>
-                    <el-menu-item index="3-1" @click="this.$router.push('/display/')">精选花园</el-menu-item>
-                    <el-menu-item index="3-2" @click="this.$router.push('/login/')">我的花园</el-menu-item>
-                </el-sub-menu>
-                <el-sub-menu index="4">
-                    <template #title>
-                        <el-icon>
-                            <chatSquare />
-                        </el-icon>
-                        <span>博客论坛</span>
-                    </template>
-                    <el-menu-item index="4-1" @click="this.$router.push('/blog/')">精选博客</el-menu-item>
-                    <el-menu-item index="4-2" @click="this.$router.push('/login/')">我的发表</el-menu-item>
-                </el-sub-menu>
-            </el-menu>
-        </el-col>
+        <!-- 侧边栏 -->
+        <SideBar/>
 
         <el-col :span="14">
             <div id="app">
@@ -59,64 +14,7 @@
                     <img src="../assets/blog-logo.png">
                 </el-card>
                 <el-card v-for="(card, index) in cards" :key="index" class="card">
-                    <div class="card-header">
-                        <h1 class="blog-name">{{ card.blogName }}</h1>
-                        <img class="author-avatar-img" :src="card.avatar" @click="this.$router.push('/PersonalInfo/')"
-                            alt="作者头像">
-                        <h2 class="author-name" @click="this.$router.push('/PersonalInfo/')">{{ card.author }}</h2>
-                    </div>
-                    <div class="card-content">
-                        <p v-if="!card.showFullContent">
-                            {{ card.partialContent }}
-                        </p>
-                        <p v-else>
-                            {{ card.fullContent }}
-                        </p>
-                        <button class="read-more-button" @click="toggleContent(index)">
-                            {{ card.showFullContent ? '收起' : '阅读全文' }}
-                        </button>
-                    </div>
-                    <div class="card-footer">
-                        <el-row>
-                            <el-col span="3">
-                                <el-button @click="toggleCollapse(index)" style="display: flex; align-items: center;">
-                                    <span v-if="card.isOpen" style="margin-right: 5px;">▲</span>
-                                    <span v-else style="margin-right: 5px;">▼</span>
-                                    <span style="flex: 1; text-align: center;">{{ card.isOpen ? '收起评论区' : '展开评论区' }} ({{
-                                        card.comments.length }})</span>
-                                </el-button>
-                            </el-col>
-                            <el-col span="3">
-                                <el-button @click="handleLike(index)" style="display: flex; align-items: center;">
-                                    <transition name="star-on-transition" mode="out-in" @after-leave="handleAfterLeave">
-                                        <i class="el-icon-star-off" v-if="!card.liked"></i>
-                                        <i class="el-icon-star-on" v-else></i>
-                                    </transition>
-                                    {{ card.liked ? '取消点赞' : '点赞' }}
-                                    {{ '(' + card.totalLikes + ')' }}
-                                </el-button>
-                            </el-col>
-                            <el-col span="3">
-                                <el-button @click="toggleInput(index)"
-                                    style="display: flex; align-items: center;">撰写评论</el-button>
-                            </el-col>
-                        </el-row>
-                        <el-row>
-                            <el-collapse v-model="card.isOpen" v-if="card.isOpen">
-                                <div class="comment-container" v-for="(commentData, commentIndex) in card.comments"
-                                    :key="commentIndex">
-                                    <div>
-                                        {{ commentData.user }} : {{ commentData.content }}
-                                    </div>
-                                </div>
-                            </el-collapse>
-                            <div v-if="card.showInput">
-                                <el-input class="custom-input" v-model="card.comment" placeholder="输入你的想法..."></el-input>
-                                <el-button @click="submitComment(index)" type="primary" size="small"
-                                    style="display: flex; align-items: center;">提交</el-button>
-                            </div>
-                        </el-row>
-                    </div>
+                    <BlogBlock :card="card"/>
                 </el-card>
             </div>
 

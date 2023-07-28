@@ -1,6 +1,10 @@
 <template>
     <body>
         <div class="container" style="margin-top: 60px;">
+            <!-- 导航栏 -->
+            <NavBar />
+
+            <!-- 主体 -->
             <div class="row">
                 <!-- 左侧导航栏 -->
                 <div class="col-2">
@@ -127,8 +131,6 @@
 <script>
 export default {
     name: 'AboutView',
-    components: {
-    }
 };
 </script>
 

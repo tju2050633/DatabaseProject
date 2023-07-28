@@ -1,51 +1,12 @@
 <template>
     <div class="container" style="margin-top: 60px;">
+    <!-- 导航栏 -->
+    <NavBar/>
+
     <el-row id="mainpart">
-        <el-col :span="3">
-            <el-menu>
-                <el-sub-menu index="1">
-                    <template #title>
-                        <el-icon>
-                            <user />
-                        </el-icon>
-                        <span>账号管理</span>
-                    </template>
-                    <el-menu-item index="1-1">我的主页</el-menu-item>
-                    <el-menu-item index="1-2">登入/登出</el-menu-item>
-                </el-sub-menu>
-                <el-sub-menu index="2">
-                    <template #title>
-                        <el-icon>
-                            <position />
-                        </el-icon>
-                        <span>校园地图</span>
-                    </template>
-                    <el-menu-item index="2-1">四平路校区</el-menu-item>
-                    <el-menu-item index="2-2">嘉定校区</el-menu-item>
-                    <el-menu-item index="2-3">沪西校区</el-menu-item>
-                </el-sub-menu>
-                <el-sub-menu index="3">
-                    <template #title>
-                        <el-icon>
-                            <house />
-                        </el-icon>
-                        <span>花园管理</span>
-                    </template>
-                    <el-menu-item index="3-1" @click="this.$router.push('/display')">精选花园</el-menu-item>
-                    <el-menu-item index="3-2">我的花园</el-menu-item>
-                </el-sub-menu>
-                <el-sub-menu index="4">
-                    <template #title>
-                        <el-icon>
-                            <chatSquare />
-                        </el-icon>
-                        <span>博客论坛</span>
-                    </template>
-                    <el-menu-item index="4-1">精选博客</el-menu-item>
-                    <el-menu-item index="4-2">我的发表</el-menu-item>
-                </el-sub-menu>
-            </el-menu>
-        </el-col>
+        <!-- 侧边栏 -->
+        <SideBar/>
+        
         <el-col :span="15">
             <el-card style="margin-top:10px;margin-left: 20px; margin-right: 20px">
                 <el-row style="font-size: x-large">

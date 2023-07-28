@@ -1,89 +1,78 @@
 import { createRouter, createWebHistory } from 'vue-router'
-
-import NotFoundView from '../views/NotFoundView.vue'
-import LoginView from '../views/LoginView.vue'
-import RegisterView from '../views/RegisterView.vue'
-import MessageView from '../views/MessageView.vue'
-import AboutView from '../views/AboutView.vue'
-import FeedbackView from '../views/FeedbackView.vue'
-import DisplayView from '../views/DisplayView.vue'
-import PersonalView from '../views/PersonalView.vue'
-import PersonalInfo from '../views/PersonalInfo.vue'
-import BlogView from '../views/BlogView.vue'
-
 import { useStore } from 'vuex'
+
+// 定义路由，统一使用懒加载
 
 const routes = [
   {
-    //主页路由及其子页面的组件路由
+    // 主页
     path: '/',
     name: 'home',
     component: () => import('../views/HomePageView.vue'), //通过相对路径导入页面组件，和import是两种路由的方法
     children: [
       {
-        path: 'GardenManage',
-        component: () => import('../components/gardenManager.vue'),
-      },
-      {
         path: 'ItemBlock',
-        component: () => import('../components/itemBlock.vue'),
+        component: () => import('../components/ItemBlock.vue'),
       }
     ],
   },
+
+  // 登录注册
   {
     path: '/login/',
     name: 'login',
-    component: LoginView
+    component: () => import('../views/LoginView.vue'),
   },
   {
     path: '/register/',
     name: 'register',
-    component: RegisterView
+    component: () => import('../views/RegisterView.vue'),
   },
+
+  // 消息、关于、反馈
   {
     path: '/message/',
     name: 'message',
-    component: MessageView
+    component: () => import('../views/MessageView.vue'),
   },
   {
     path: '/about/',
     name: 'about',
-    component: AboutView
+    component: () => import('../views/AboutView.vue'),
   },
   {
     path: '/feedback/',
     name: 'feedback',
-    component: FeedbackView
+    component: () => import('../views/FeedbackView.vue')
   },
-  {
-    path: '/404/',
-    name: '404',
-    component: NotFoundView
-  },
-  {
-    path: '/:catchAll(.*)',
-    redirect: '/404/'
-  },
+
+  // 花园展厅
   {
     path: '/display/',
     name: 'display',
-    component: DisplayView
+    component: () => import('../views/GardenDisplayView.vue')
   },
   {
-    path: '/personal/',
-    name: 'personal',
-    component: PersonalView
+    path: '/garden/',
+    name: 'garden',
+    component: () => import('../views/GardenView.vue')
   },
+
+  // 个人主页
   {
     path:'/personalInfo/',
     name:'personalInfo',
-    component:PersonalInfo
+    component: () => import('../views/PersonalInfoView.vue')
   },
+
+  // 博客
   {
     path:'/BlogView/',
     name:'BlogView',
-    component:BlogView
+    component: () => import('../views/BlogView.vue')
   },
+
+  // 校园地图
   {
     path: '/map/SiPing',
     name: 'SiPingmap',
@@ -98,6 +87,17 @@ const routes = [
     path: '/map/HuXi',
     name: 'HuXimap',
     component:()=>import ('../views/TJMapHuXi.vue')
+  },
+
+  // 404
+  {
+    path: '/404/',
+    name: '404',
+    component: () => import('../views/NotFoundView.vue')
+  },
+  {
+    path: '/:catchAll(.*)',
+    redirect: '/404/'
   },
 ]
 

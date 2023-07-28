@@ -25,3 +25,5 @@ BackEnd/GardenModels/bin
 BackEnd/GardenModels/obj
 BackEnd/.vs
 BackEnd/Garden/.vs
+*.vsidx
+BackEnd/Garden/.vs/Garden/v17/.suo

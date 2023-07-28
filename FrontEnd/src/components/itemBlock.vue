@@ -1,19 +1,17 @@
+<!-- 主页底部板块，博客、花园等 -->
+
 <template>
 <div class="item-block">
-<el-row>
-  <el-col>
-    <el-card :body-style="{ padding: '1px' }" shadow="hover">
-      <img src="https://img2.baidu.com/it/u=1903252484,200684433&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500" class="image">
-      <div style="padding: 14px;">
-        <span>同济大学共享花园</span>
-        <div class="bottom clearfix">
-          <time class="time">{{ currentDate }}</time>
-          <el-button type="text" class="button" icon="el-icon-warning">举报</el-button>
-        </div>
+  <el-card :body-style="{ padding: '1px' }" shadow="hover">
+    <img src="https://img1.baidu.com/it/u=4038661611,1664572164&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=502">
+    <div style="padding: 15px;">
+      <span>同济大学共享花园</span>
+      <div class="bottom clearfix">
+        <time class="time">{{ currentDate }}</time>
+        <el-button type="text" class="button" icon="el-icon-warning">举报</el-button>
       </div>
-    </el-card>
-  </el-col>
-</el-row>
+    </div>
+  </el-card>
 </div>
 </template>
 
@@ -51,6 +49,7 @@
 
 <script>
 export default {
+  name: "ItemBlock",
   data() {
     return {
       currentDate: new Date()

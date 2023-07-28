@@ -12,6 +12,7 @@ builder.Services.AddSwaggerGen();
 
 // Add BLL Singleton
 builder.Services.AddSingleton<IAccountBLL, AccountBLL>();
+builder.Services.AddSingleton<IBlogBLL, BlogBLL>();
 
 var app = builder.Build();
 

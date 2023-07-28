@@ -1,3 +1,5 @@
+<!-- 反馈模块，仅在FeedbackView里使用 -->
+
 <template>
     <div class="card" style="width: 60vw;">
         <div class="card-body">

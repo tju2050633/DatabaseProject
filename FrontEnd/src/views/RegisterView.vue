@@ -10,13 +10,8 @@
 </template>
   
 <script>
-import RegisterCard from '@/components/RegisterCard.vue';
-
 export default {
     name: 'RegisterView',
-    components: {
-        RegisterCard
-    }
 }
 </script>
   

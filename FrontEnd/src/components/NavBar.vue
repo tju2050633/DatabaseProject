@@ -1,9 +1,12 @@
+<!-- 导航栏组件 -->
+
 <template>
   <nav
     class="navbar navbar-expand-lg fixed-top"
     style="background-color: rgb(211, 228, 220)"
   >
     <div class="container-fluid">
+
       <!-- logo与title -->
       <router-link
         class="navbar-brand"
@@ -35,6 +38,7 @@
           v-model="state.searchTerm"
           @input="filterSearchHistory"
         />
+
         <!-- 搜索按钮 -->
         <button class="btn btn-outline-success" type="submit" @click="search">
           <svg
@@ -51,6 +55,7 @@
           </svg>
         </button>
       </form>
+
       <!-- 搜索历史记录下拉框 -->
       <li class="nav-item dropdown">
         <a
@@ -86,6 +91,8 @@
       <!-- 用户状态下拉菜单 -->
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item dropdown">
+
+          <!-- 头像 -->
           <a
             class="nav-link dropdown-toggle"
             href="#"
@@ -106,23 +113,19 @@
               />
             </svg>
           </a>
+
+          <!-- 下拉菜单 -->
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <!-- 下拉菜单项内容 -->
             <li>
-              <router-link
-                class="dropdown-item"
-                v-if="!$store.state.user.is_login"
-                :to="{ name: 'login' }"
-                >登录</router-link
-              >
+              <router-link class="dropdown-item" v-if="!$store.state.user.is_login" :to="{ name: 'login' }" >
+                登录
+              </router-link>
             </li>
+
             <li>
-              <router-link
-                class="dropdown-item"
-                v-if="$store.state.user.is_login"
-                :to="{ name: 'home' }"
-                >个人主页</router-link
-              >
+              <router-link class="dropdown-item" v-if="$store.state.user.is_login" :to="{ name: 'personalInfo' }" >
+                个人主页
+              </router-link>
             </li>
 
             <li>
@@ -130,20 +133,15 @@
             </li>
 
             <li>
-              <router-link
-                class="dropdown-item"
-                v-if="!$store.state.user.is_login"
-                :to="{ name: 'register' }"
-                >注册</router-link
-              >
+              <router-link class="dropdown-item" v-if="!$store.state.user.is_login" :to="{ name: 'register' }" >
+                注册
+              </router-link>
             </li>
+
             <li>
-              <router-link
-                class="dropdown-item"
-                v-if="$store.state.user.is_login"
-                :to="{ name: 'message' }"
-                >消息通知</router-link
-              >
+              <router-link class="dropdown-item" v-if="$store.state.user.is_login" :to="{ name: 'message' }">
+                消息通知
+              </router-link>
             </li>
 
             <li>
@@ -151,18 +149,21 @@
             </li>
 
             <li>
-              <router-link class="dropdown-item" :to="{ name: 'about' }"
-                >关于我们</router-link
-              >
+              <router-link class="dropdown-item" :to="{ name: 'about' }">
+                关于我们
+              </router-link>
             </li>
+
             <li>
               <hr class="dropdown-divider" />
             </li>
+
             <li>
-              <router-link class="dropdown-item" :to="{ name: 'feedback' }"
-                >反馈</router-link
-              >
+              <router-link class="dropdown-item" :to="{ name: 'feedback' }">
+                反馈
+              </router-link>
             </li>
+
           </ul>
         </li>
       </ul>
