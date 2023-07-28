@@ -9,3 +9,4 @@ namespace Garden.BLL.Interfaces
         public string Insert(Garden garden);
     }
 }
+
