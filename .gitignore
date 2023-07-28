@@ -14,7 +14,7 @@ Documents/C#教程/bin
 # 前端node_modules
 FrontEnd/node_modules
 
-# 后端bin和obj目录
+# 后端.vs、bin和obj目录
 BackEnd/Garden/bin
 BackEnd/Garden/obj
 BackEnd/GardenBLL/bin
@@ -24,3 +24,4 @@ BackEnd/GardenDAL/obj
 BackEnd/GardenModels/bin
 BackEnd/GardenModels/obj
 BackEnd/.vs
+BackEnd/Garden/.vs
