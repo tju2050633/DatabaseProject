@@ -79,7 +79,7 @@ namespace Garden.DAL
         {
             try
             {
-                string sql = "INSERT INTO blog(blog_id, owner_id, title, content, release_time, agree_num, comment_num) VALUES(blog_seq.NEXTVAL, :owner_id, :title, :content, :release_time, :agree_num, :comment_num);commit;";
+                string sql = "INSERT INTO blog(blog_id, owner_id, title, content, release_time, agree_num, comment_num) VALUES(blog_seq.NEXTVAL, :owner_id, :title, :content, :release_time, :agree_num, :comment_num)";
                 OracleParameter[] oracleParameters = new OracleParameter[]
                 {
                     new OracleParameter("owner_id", OracleDbType.Char) { Value = blog.OwnerId },
@@ -90,7 +90,7 @@ namespace Garden.DAL
                     new OracleParameter("comment_num", OracleDbType.Int32) { Value = blog.CommentNum }
                 };
                 OracleHelper.ExecuteNonQuery(sql, oracleParameters);
-                //OracleHelper.ExecuteNonQuery("commit;");
+                OracleHelper.ExecuteNonQuery("commit;");
                 return true;
             }
             catch (Exception ex)
