@@ -9,13 +9,8 @@
 </template>
 
 <script>
-import ContentBase from '../components/ContentBase.vue';
-
 export default {
     name: 'MessageView',
-    components: {
-        ContentBase,
-    }
 }
 </script>
   

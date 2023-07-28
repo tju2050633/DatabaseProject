@@ -1,3 +1,5 @@
+<!-- 登录模块，仅在LoginView里使用 -->
+
 <template>
   <div class="card" style="height: 250px">
     <div class="card-body">

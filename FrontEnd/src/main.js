@@ -2,6 +2,22 @@ import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
+
+// 统一导入所有组件，main.js中的import语句全局生效
+import BlogBlock from '@/components/BlogBlock.vue'
+import CampusMap from '@/components/CampusMap.vue'
+import ContentBase from '@/components/ContentBase.vue'
+import FeedbackCard from '@/components/FeedbackCard.vue'
+import GardenBlock from '@/components/GardenBlock.vue'
+import ItemBlock from '@/components/ItemBlock.vue'
+import LoginCard from '@/components/LoginCard.vue'
+import NavBar from '@/components/NavBar.vue'
+import PersonalBlogBlock from '@/components/PersonalBlogBlock.vue'
+import PersonalGardenBlock from '@/components/PersonalGardenBlock.vue'
+import PersonalRecordBlock from '@/components/PersonalRecordBlock.vue'
+import RegisterCard from '@/components/RegisterCard.vue'
+import SideBar from '@/components/SideBar.vue'
+
 //引入bootstrp
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap/dist/js/bootstrap'
@@ -20,15 +36,29 @@ import baiduMap from 'vue3-baidu-map-gl'
 const app = createApp(App)
 app.use(store)
 app.use(router)
-
 app.use(vue3BaiduMapGl)
 app.use(baiduMap, {
   ak: 'HR8QVms0aC9N8giqxCuXfNXGhzBuT6X2',
   plugins: ['TrackAnimation']
 })
-
 app.use(ElementPlus)
 for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
     app.component(key, component)
 }
+
+// 将所有组件统一挂载
+app.component('BlogBlock', BlogBlock)
+app.component('CampusMap', CampusMap)
+app.component('ContentBase', ContentBase)
+app.component('FeedbackCard', FeedbackCard)
+app.component('GardenBlock', GardenBlock)
+app.component('ItemBlock', ItemBlock)
+app.component('LoginCard', LoginCard)
+app.component('NavBar', NavBar)
+app.component('PersonalBlogBlock', PersonalBlogBlock)
+app.component('PersonalGardenBlock', PersonalGardenBlock)
+app.component('PersonalRecordBlock', PersonalRecordBlock)
+app.component('RegisterCard', RegisterCard)
+app.component('SideBar', SideBar)
+
 app.mount('#app')

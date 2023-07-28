@@ -1,17 +1,16 @@
 <template>
+    <!-- 导航栏 -->
+    <NavBar />
+
+    <!-- 反馈模块 -->
     <div class="d-flex justify-content-center">
         <FeedbackCard />
     </div>
 </template>
   
 <script>
-import FeedbackCard from '@/components/FeedbackCard.vue';
-
 export default {
     name: 'FeedbackView',
-    components: {
-        FeedbackCard
-    }
 }
 </script>
   
