@@ -43,33 +43,33 @@ const routes = [
   {
     path: '/feedback/',
     name: 'feedback',
-    component: () => import('../views/FeedbackView.vue')
+    component: () => import('../views/FeedbackView.vue'),
   },
 
   // 花园展厅
   {
     path: '/display/',
     name: 'display',
-    component: () => import('../views/GardenDisplayView.vue')
+    component: () => import('../views/GardenDisplayView.vue'),
   },
   {
     path: '/garden/',
     name: 'garden',
-    component: () => import('../views/GardenView.vue')
+    component: () => import('../views/GardenView.vue'),
   },
 
   // 个人主页
   {
     path:'/personalInfo/',
     name:'personalInfo',
-    component: () => import('../views/PersonalInfoView.vue')
+    component: () => import('../views/PersonalInfoView.vue'),
   },
 
   // 博客
   {
     path:'/BlogView/',
     name:'BlogView',
-    component: () => import('../views/BlogView.vue')
+    component: () => import('../views/BlogView.vue'),
   },
   {
     path: '/TJMap/:lng/:lat',
@@ -82,7 +82,7 @@ const routes = [
   {
     path: '/404/',
     name: '404',
-    component: () => import('../views/NotFoundView.vue')
+    component: () => import('../views/NotFoundView.vue'),
   },
   {
     path: '/:catchAll(.*)',

@@ -136,7 +136,7 @@ export default {
     const isUsernameValid = computed(() =>
       /^[a-zA-Z0-9_-]{4,16}$/.test(state.username)
     );
-    const isIdValid = computed(() => /^[0-9]{7}$/.test(state.id));
+    const isIdValid = computed(() => /^[0-9]{7}$/.test(state.userid));
     const isPasswordValid = computed(() =>
       /^[a-zA-Z0-9]{6,16}$/.test(state.password)
     );
@@ -150,15 +150,15 @@ export default {
     /*检测输入的格式问题 */
     const FormatDetection = () => {
       if (!isUsernameValid.value) {
-        error_message.value = "用户名格式不正确";
+        error_message.value = "用户名格式不正确(允许大小写字母和数字,长度4-16)";
         return false;
       }
       if (!isIdValid.value) {
-        error_message.value = "学工号格式不正确";
+        error_message.value = "学工号格式不正确(0-9,长度7)";
         return false;
       }
       if (!isPasswordValid.value) {
-        error_message.value = "密码格式不正确";
+        error_message.value = "密码格式不正确(允许大小写字母和数字,长度6-16)";
         return false;
       }
       if (state.password != state.repassword) {
@@ -177,9 +177,9 @@ export default {
           url: "/Account/",
           method: "post",
           params: {
-            _username: state.username,
-            _userid: state.userid,
-            _password: state.password,
+            id: state.userid,
+            pwd: state.password,
+            name: state.username,
           },
         }).then(
           function (res) {
