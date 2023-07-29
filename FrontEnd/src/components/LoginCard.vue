@@ -18,12 +18,12 @@
               d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0Zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4Zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10Z"
             />
           </svg>
-          <!-- 输入用户名 -->
+          <!-- 输入学工号 -->
           <input
-            v-model="state.username"
+            v-model="state.userid"
             type="text"
             class="form-control"
-            placeholder="学工号/用户名"
+            placeholder="学工号"
             id="username"
           />
         </div>
@@ -93,7 +93,7 @@ export default {
     };
 
     // 定义计算属性
-    const isIdValid = computed(() => /^[0-9]{7}$/.test(state.id));
+    const isIdValid = computed(() => /^[0-9]{7}$/.test(state.userid));
     const isPasswordValid = computed(() =>
       /^[a-zA-Z0-9]{6,16}$/.test(state.password)
     );
@@ -101,11 +101,11 @@ export default {
     /*检测输入的格式问题 */
     const FormatDetection = () => {
       if (!isIdValid.value) {
-        error_message.value = "学工号格式不正确";
+        error_message.value = "学工号格式不正确(0-9,长度7)";
         return false;
       }
       if (!isPasswordValid.value) {
-        error_message.value = "密码格式不正确";
+        error_message.value = "密码格式不正确(允许大小写字母和数字,长度6-16)";
         return false;
       }
       return true;
@@ -119,9 +119,7 @@ export default {
         url: "/Account/",
         method: "get",
         params: {
-          //   id: state.userid,
-          //   pwd: state.password,
-          id: state.username,
+          id: state.userid,
           pwd: state.password,
         },
       }).then(
