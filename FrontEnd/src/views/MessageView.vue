@@ -1,17 +1,22 @@
 <template>
-    <ContentBase>
-        <div class="card">
-            <div class="card-body">
-                Message
-            </div>
-        </div>
-    </ContentBase>
+    <div class="d-flex justify-content-center">
+        <MessageCard />
+    </div>
 </template>
-
+  
 <script>
+import MessageCard from '@/components/MessageCard.vue';
+
 export default {
     name: 'MessageView',
+    components: {
+        MessageCard
+    }
 }
 </script>
   
-<style scoped></style>
+<style scoped>
+.d-flex {
+    margin-top: 10vh;
+}
+</style>
