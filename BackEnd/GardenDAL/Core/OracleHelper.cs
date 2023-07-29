@@ -20,6 +20,7 @@ namespace Garden.DAL.Core
             return ds.Tables[0];
         }
 
+
         public static int ExecuteNonQuery(string cmdText, params OracleParameter[] oracleParameters)
         {
             using OracleConnection conn = new(connectionString);
