@@ -17,6 +17,10 @@ import PersonalGardenBlock from '@/components/PersonalGardenBlock.vue'
 import PersonalRecordBlock from '@/components/PersonalRecordBlock.vue'
 import RegisterCard from '@/components/RegisterCard.vue'
 import SideBar from '@/components/SideBar.vue'
+import ActiveUsers from '@/components/ActiveUsers'
+import GardenDistribution from '@/components/GardenDistribution'
+import GradeDistribution from '@/components/GradeDistribution'
+import BlogDistribution from '@/components/BlogDistribution'
 
 //引入bootstrp
 import 'bootstrap/dist/css/bootstrap.css'
@@ -32,11 +36,16 @@ import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 import vue3BaiduMapGl from 'vue3-baidu-map-gl'//这个是完整引用，若忽略打包后的文件大小，可不管，这里展示完整引用
 import baiduMap from 'vue3-baidu-map-gl'
 
+
+//导入echarts
+import * as echarts from 'echarts';
+
 //创建app使用所需的组件，并挂载到#app
 const app = createApp(App)
 app.use(store)
 app.use(router)
 app.use(vue3BaiduMapGl)
+app.use(echarts)
 app.use(baiduMap, {
   ak: 'HR8QVms0aC9N8giqxCuXfNXGhzBuT6X2',
   plugins: ['TrackAnimation']
@@ -60,5 +69,9 @@ app.component('PersonalGardenBlock', PersonalGardenBlock)
 app.component('PersonalRecordBlock', PersonalRecordBlock)
 app.component('RegisterCard', RegisterCard)
 app.component('SideBar', SideBar)
+app.component('ActiveUsers', ActiveUsers)
+app.component('GradeDistribution',GradeDistribution)
+app.component('GardenDistribution',GardenDistribution)
+app.component('BlogDistribution',BlogDistribution)
 
 app.mount('#app')

@@ -72,8 +72,11 @@
                 </el-card>
 
                 <!-- 标签栏 -->
+
+                <br /><br /><br /><br />
+
                 <el-row :gutter="30">
-                  <el-col :offset="1">
+                  <el-col :offset="0">
                     <el-breadcrumb separator="|" style="font-size:x-large">
                       <el-breadcrumb-item :to="{}" ></el-breadcrumb-item>
                       <el-breadcrumb-item :to="{}" @click="refresh(1)">互动</el-breadcrumb-item>

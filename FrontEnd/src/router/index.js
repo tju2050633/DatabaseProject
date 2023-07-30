@@ -64,6 +64,12 @@ const routes = [
     name:'personalInfo',
     component: () => import('../views/PersonalInfoView.vue'),
   },
+    // 数据展示
+    {
+      path:'/DataVisualization/',
+      name:'DataVisualization',
+      component: () => import('../views/DataVisualization.vue'),
+    },
 
   // 博客
   {
