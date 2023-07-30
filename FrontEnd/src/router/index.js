@@ -60,15 +60,15 @@ const routes = [
 
   // 个人主页
   {
-    path:'/personalInfo/',
-    name:'personalInfo',
+    path: '/personalInfo/',
+    name: 'personalInfo',
     component: () => import('../views/PersonalInfoView.vue'),
   },
 
   // 博客
   {
-    path:'/BlogView/',
-    name:'BlogView',
+    path: '/BlogView/',
+    name: 'BlogView',
     component: () => import('../views/BlogView.vue'),
   },
   {
@@ -88,6 +88,18 @@ const routes = [
     path: '/:catchAll(.*)',
     redirect: '/404/'
   },
+
+  // 积分商城
+  {
+    path: '/PointMall/',
+    name: 'PointMall',
+    component: () => import('../views/PointMallView.vue')
+  },
+  {
+    path: '/PointItem/',
+    name: 'PointItem',
+    component: () => import('../views/PointItemView.vue')
+  }
 ]
 
 const router = createRouter({
@@ -97,15 +109,15 @@ const router = createRouter({
 
 // 使用 router.beforeEach 注册一个全局前置守卫，判断用户是否登陆
 router.beforeEach((to, from, next) => {
-  console.log('to:',to)
-// 判断用户是否已经登录
+  console.log('to:', to)
+  // 判断用户是否已经登录
   const store = useStore();
   //const isLogin = store.state.user.is_login;
   const isLogin = true;
   console.log(store.state.user.is_login);
 
   if (to.path === '/login'
-  ||to.path=== '/register') {
+    || to.path === '/register') {
     // 需要用户权限的页面,如果用户已经登录，重定向到首页
     if (isLogin) {
       next('/')
