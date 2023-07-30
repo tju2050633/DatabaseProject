@@ -99,7 +99,14 @@ const routes = [
     path: '/PointItem/',
     name: 'PointItem',
     component: () => import('../views/PointItemView.vue')
-  }
+  },
+
+  //花园活动
+  {
+    path: '/GardenActivities/',
+    name: 'GardenActivities',
+    component: () => import('../views/GardenActivitiesView.vue')
+  },
 ]
 
 const router = createRouter({

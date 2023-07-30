@@ -354,6 +354,13 @@ toggleContent(index) {
 </script>
 
 <style scoped>
+.author-avatar-img {
+  cursor: pointer;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+}
 .personalinfo .el-header {
 position: relative;
 background-color: var(--el-color-primary-light-7);

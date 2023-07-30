@@ -1,0 +1,451 @@
+<template>
+  <body>
+    <div class="common-layout">
+      <el-container class="personalinfo" style="height:100vw">
+        <el-header>Header</el-header>
+        <el-container>
+          <el-aside width="200px"><el-row >
+            <el-col :span="3">
+              <el-menu>
+                <el-sub-menu index="1">
+                  <template #title>
+                    <el-icon><user /></el-icon>
+                    <span>账号管理</span>
+                  </template>
+                  <el-menu-item index="1-1" @click="this.$router.push({ name: 'personal' })">我的主页</el-menu-item>
+                  <el-menu-item index="1-2" @click="this.$router.push({ name: 'personalInfo' })">登入/登出</el-menu-item>
+                </el-sub-menu>
+                <el-sub-menu index="2">
+                  <template #title>
+                    <el-icon><position /></el-icon>
+                    <span>校园地图</span>
+                  </template>
+                  <el-menu-item index="2-1" @click="this.$router.push('/login/')">四平路校区</el-menu-item>
+                  <el-menu-item index="2-2" @click="this.$router.push('/login/')">嘉定校区</el-menu-item>
+                  <el-menu-item index="2-3" @click="this.$router.push('/login/')">沪西校区</el-menu-item>
+                </el-sub-menu>
+                <el-sub-menu index="3">
+                  <template #title>
+                    <el-icon><house /></el-icon>
+                    <span>花园管理</span>
+                  </template>
+                  <el-menu-item index="3-1" @click="this.$router.push('/login/')">精选花园</el-menu-item>
+                  <el-menu-item index="3-2" @click="this.$router.push('/login/')">我的花园</el-menu-item>
+                </el-sub-menu>
+                <el-sub-menu index="4">
+                  <template #title>
+                    <el-icon><chatSquare /></el-icon>
+                    <span>博客论坛</span>
+                  </template>
+                  <el-menu-item index="4-1" @click="this.$router.push('/login/')">精选博客</el-menu-item>
+                  <el-menu-item index="4-2" @click="this.$router.push('/login/')">我的发表</el-menu-item>
+                </el-sub-menu>
+              </el-menu>
+            </el-col>
+          </el-row></el-aside>
+
+          <el-container class="info">
+            <el-main>
+              <el-row class="top-image" body-style="heigh:500px ">
+                <el-col :span='24'>
+                   <el-image style="width: 100vw; height: 30vh" :src="url" :fit="fill" />
+                </el-col>
+              </el-row>
+
+
+                <el-row :gutter="20" >
+                  <el-col :span="4">
+                    <el-avatar :size="350" :src="avaUrl" />
+                    <span size="large" style="font-size:xx-large">{{ UserInfo.name }}</span>
+                  </el-col>
+                  
+                  <el-col :span="6" style="margin-bottom:0"><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+                    <span style="font-size:x-large">个人描述：</span>
+                    <el-row>
+                    <span  v-if="!change" style="text-align:center">{{ UserInfo.Description }}</span>
+                    <el-input class="username-change" style="font-size:large" v-if="change"  v-model="UserInfo.Description" @change="InfoHasChanged()"/></el-row>
+                  </el-col>
+                  <el-col :span="6"><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><el-button type="danger" @click="changeInfo">修改信息</el-button></el-col>
+                </el-row>
+                <br/>
+
+                <el-card style="width=50vw">
+                <el-row :gutter='30'>
+                  <el-col :span="6"><span style="font-size:x-large">邮箱：</span>
+                    <el-row>
+                    <span v-if="!change">{{ UserInfo.email }}</span>
+                    <el-input class="email-change" v-if="change" v-model="UserInfo.email" @change="InfoHasChanged()"/>
+                    </el-row>
+                  </el-col>
+                  <el-col :span="6"><span style="font-size:x-large">注册时间：</span>
+                    <el-row><span >{{ UserInfo.registerTime }}</span></el-row>
+                  </el-col>
+                </el-row>
+                
+                <br/>
+                <el-row :gutter='30'>
+                  <el-col :span="6"><span style="font-size:x-large">积分：</span>
+                    <el-row><span >{{ UserInfo.points }}</span></el-row>
+                  </el-col>
+                  <el-col :span="8"> 
+                    <el-row>
+                      <el-col :span='10'><el-button type="primary" icon="Lock" circle size="medium" @click="ifshowTel"/><span style="font-size:x-large">手机号：</span>
+                      <el-row v-if="!change"><span v-if="showtel&&!change">{{ UserInfo.tel }}</span> <span v-if="!showtel&&!change">***</span></el-row>
+                      <el-input class="tel-change" v-if="change" v-model="UserInfo.tel" @change="InfoHasChanged()"/></el-col>
+                    </el-row>
+                  </el-col>
+                  <el-col :span="4"></el-col>
+                </el-row></el-card>
+
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <el-row :gutter="30">
+                  <el-col :offset="1">
+                  <el-breadcrumb separator="|" style="font-size:x-large">
+                    <el-breadcrumb-item :to="{}" ></el-breadcrumb-item>
+                    <el-breadcrumb-item :to="{}" @click="refresh(1)">互动</el-breadcrumb-item>
+                    <el-breadcrumb-item :to="{}" @click="refresh(2)">博客</el-breadcrumb-item>
+                    <el-breadcrumb-item :to="{}" @click="refresh(3)">花园</el-breadcrumb-item>
+                    <el-breadcrumb-item :to="{}" @click="refresh(4)">工作记录</el-breadcrumb-item>
+                    <el-breadcrumb-item :to="{}" ></el-breadcrumb-item>
+                  </el-breadcrumb>
+                </el-col>
+                </el-row>
+
+                <el-container class="functions">
+                  <br/><br/><br/><br/>
+                  <!-- 等待组件插入在这里-->
+                  <div class="interact" style="margin-left:200px" v-if="chooseComponent==1">
+                                        <!-- 互动组件 -->
+                  <el-card v-for="(item, index) in GardenComment" :key="index" style="margin-top: 20px;">
+                    <h2>
+                      <img class="author-avatar-img" :src="item.avatar" @click="this.$router.push('/personalInfo/')" alt="作者头像">
+                      <span @click="this.$router.push('/personal/')">{{ item.author }}</span>
+                    </h2>
+                    <h4> <span @click="this.$router.push('/personal/')">{{ item.title }}</span></h4>
+                    <div @click="this.$router.push('/personal/')"><img :src="item.imageurl" alt="花园" style="width: 50vw; height: 30vh"></div>
+                    <h4 style="padding-top: 20px;">
+                      <el-icon style="user: 10px;"><User /></el-icon>
+                      <span>{{ UserInfo.name }}：{{ item.comment }}</span>
+                    </h4>
+                  </el-card>
+
+                  <el-card v-for="(item, index) in GardenLike" :key="index" style="margin-top: 20px;"> 
+                    <h4><span>点赞了花园</span></h4>
+                    <h2>
+                      <img class="author-avatar-img" :src="item.avatar" @click="this.$router.push('/personalInfo/')" alt="作者头像">
+                      <span @click="this.$router.push('/personal/')">{{ item.author }}</span>
+                    </h2>
+                    <h4> <span @click="this.$router.push('/personal/')">{{ item.title }}</span></h4>
+                    <div @click="this.$router.push('/personal/')"><img :src="item.imageurl" alt="花园" style="width: 50vw; height: 30vh"></div>
+                  </el-card>
+
+                  <el-card v-for="(card, index) in BlogComment" :key="index" class="card" style="width: 52vw;">
+                    <div class="card-header">
+                        <h1 class="blog-name">{{ card.blogName }}</h1>
+                        <img class="author-avatar-img" :src="card.avatar" @click="this.$router.push('/personalInfo/')"
+                            alt="作者头像">
+                        <h2 class="author-name" @click="this.$router.push('/personalInfo/')">{{ card.author }}</h2>
+                    </div>
+                    <div class="card-content">
+                      <p v-if="!card.showFullContent">
+                          {{ card.partialContent }}
+                      </p>
+                      <p v-else>
+                          {{ card.fullContent }}
+                      </p>
+                      <button class="read-more-button" @click="toggleContentBlogCom(index)">
+                          {{ card.showFullContent ? '收起' : '阅读全文' }}
+                      </button>
+                    </div>
+                    <h3>
+                        <el-icon style="star: 10px;"><Star/></el-icon>
+                        {{ card.totalLikes }}
+                        &ensp;&ensp;&ensp;
+                        <el-icon style="chat: 10px;"><ChatLineSquare /></el-icon>
+                        {{ card.totalComment }}
+                      </h3>
+                    <h4 class="card-comment">
+                      <el-row>
+                        <el-icon style="user: 10px;"><User /></el-icon>
+                        <span>{{ UserInfo.name }}：{{ card.comment }}</span>
+                      </el-row>
+                    </h4>
+                  </el-card>
+
+                  <el-card v-for="(card, index) in BlogLike" :key="index" class="card" style="width: 52vw;">
+                    <h4><span>点赞了博客</span></h4>
+                    <div class="card-header">
+                        <h1 class="blog-name">{{ card.blogName }}</h1>
+                        <img class="author-avatar-img" :src="card.avatar" @click="this.$router.push('/personalInfo/')"
+                            alt="作者头像">
+                        <h2 class="author-name" @click="this.$router.push('/personalInfo/')">{{ card.author }}</h2>
+                    </div>
+                    <div class="card-content">
+                      <p v-if="!card.showFullContent">
+                          {{ card.partialContent }}
+                      </p>
+                      <p v-else>
+                          {{ card.fullContent }}
+                      </p>
+                      <button class="read-more-button" @click="toggleContentBlogLike(index)">
+                          {{ card.showFullContent ? '收起' : '阅读全文' }}
+                      </button>
+                      <h3>
+                        <el-icon style="star: 10px;"><Star/></el-icon>
+                        {{ card.totalLikes }}
+                        &ensp;&ensp;&ensp;
+                        <el-icon style="chat: 10px;"><ChatLineSquare /></el-icon>
+                        {{ card.totalComment }}
+                      </h3>
+                    </div>
+                  </el-card>
+                  </div>
+
+                  <div class="blog" style="margin-left:200px" v-if="chooseComponent==2">
+                    
+                    <el-card v-for="(card, index) in BlogLike" :key="index" class="card" style="width: 52vw;">
+
+                    <div class="card-header">
+                        <h1 class="blog-name">{{ card.blogName }}</h1>
+                        <img class="author-avatar-img" :src="card.avatar" @click="this.$router.push('/personalInfo/')"
+                            alt="作者头像">
+                        <h2 class="author-name" @click="this.$router.push('/personalInfo/')">{{ card.author }}</h2>
+                    </div>
+                    <div class="card-content">
+                      <p v-if="!card.showFullContent">
+                          {{ card.partialContent }}
+                      </p>
+                      <p v-else>
+                          {{ card.fullContent }}
+                      </p>
+                      <button class="read-more-button" @click="toggleContentBlogLike(index)">
+                          {{ card.showFullContent ? '收起' : '阅读全文' }}
+                      </button>
+                      <h3>
+                        <el-icon style="star: 10px;"><Star/></el-icon>
+                        {{ card.totalLikes }}
+                        &ensp;&ensp;&ensp;
+                        <el-icon style="chat: 10px;"><ChatLineSquare /></el-icon>
+                        {{ card.totalComment }}
+                      </h3>
+                    </div>
+                  </el-card>
+
+                  </div>
+
+                  <div class="garden" style="margin-left:200px" v-if="chooseComponent==3">
+                    <el-card v-for="(Garden, index) in Garden" :key="index" class="card">
+                      <h2>
+                        <el-icon style="user: 10px;"><User /></el-icon>
+                        <span >{{ Garden.author }}</span>
+                      </h2>
+                      <h1> <span >{{ Garden.title }}</span></h1>
+                      <el-image style="width: 50vw; height: 30vh" :src="Garden.cover" :fit="fill" />
+                    </el-card>
+                  </div>
+
+                  <div class="record" style="margin-left:200px" v-if="chooseComponent==4">
+                    <el-card v-for="(Records, index) in Records" :key="index" class="card">
+                      <h2>
+                        时间：
+                        <span >{{ Records.date }}</span>
+                      </h2>
+                      <h2>
+                        地点：
+                        <span >{{ Records.location }}</span>
+                      </h2>
+                      <h2>
+                        详情：
+                      </h2>
+                       <p v-if="!Records.showFullContent">
+                          {{ Records.partialContent }}
+                       </p>
+                       <p v-else>
+                          {{ Records.fullContent }}
+                       </p>
+                       <button class="read-more-button" @click="toggleContent(index)">
+                          {{ Records.showFullContent ? '收起' : '展开' }}
+                       </button>
+                    </el-card>
+                  </div>
+                </el-container>
+
+            </el-main>
+          </el-container>
+
+        </el-container>
+      </el-container>
+    </div>
+  </body>
+
+</template>
+
+<script>
+export default{
+name:'PersonalInfoPage',
+data(){
+  return{
+    ifInfoChanged:false,
+    change:false,
+    showtel:true,
+    chooseComponent:1,
+    url:'https://img2.baidu.com/it/u=3194475248,8547823&fm=253&fmt=auto&app=138&f=JPEG?w=800&h=500',
+    avaUrl:'',
+    GardenComment:[
+    {
+      author:'王浩',
+      title:'浩哥的后宫',
+      avatar: require('../assets/author-avatar.jpg'),
+      imageurl:require('../assets/Garden.jpg'),
+      comment:'晚上就把浩哥撅了'
+    },
+  ],
+  GardenLike:[
+    {
+      author:'王浩',
+      avatar: require('../assets/author-avatar.jpg'),
+      title:'浩哥的后宫',
+      imageurl:require('../assets/Garden.jpg'),
+    },
+  ],
+  BlogComment:[
+    {
+      author: '王浩',
+      avatar: require('../assets/author-avatar.jpg'),
+      blogName: '只因你太美',
+      partialContent: `(字体暂未确定)这里是文章内容的一小部分...只因你太美 baby只因你太美 baby只因你实在是太美 baby只因你太美 baby迎面走来的你让我如此蠢蠢欲动`,
+      fullContent: `(字体暂未确定)这里是文章内容的一小部分...只因你太美 baby只因你太美 baby只因你实在是太美 baby只因你太美 baby迎面走来的你让我如此蠢蠢欲动
+                  这种感觉我从未有Cause I got a crush on you who you你是我的我是你的谁再多一眼看一眼就会爆炸再近
+                  一点靠近点快被融化想要把你占为己有 baby bae不管走到哪里都会想起的人是你 you you我应该拿你怎样Uh 
+                  所有人都在看着你我的心总是不安Oh 我现在已病入膏肓Eh oh难道真的因你而疯狂吗我本来不是这种人因你变
+                  成奇怪的人第一次呀变成这样的我不管我怎么去否认只因你太美 baby只因你太美 baby只因你实在是太美
+                  baby只因你太美 babyOh eh oh现在确认地告诉我Oh eh oh你到底属于谁Oh eh oh`,
+      showFullContent: false,
+      isOpen: false,
+      totalLikes: 114,
+      totalComment:514,
+      comment:'晚上就把浩哥撅了'
+    }
+  ],
+  BlogLike:[
+    {
+      author: '王浩',
+      avatar: require('../assets/author-avatar.jpg'),
+      blogName: '只因你太美',
+      partialContent: `(字体暂未确定)这里是文章内容的一小部分...只因你太美 baby只因你太美 baby只因你实在是太美 baby只因你太美 baby迎面走来的你让我如此蠢蠢欲动`,
+      fullContent: `(字体暂未确定)这里是文章内容的一小部分...只因你太美 baby只因你太美 baby只因你实在是太美 baby只因你太美 baby迎面走来的你让我如此蠢蠢欲动
+                  这种感觉我从未有Cause I got a crush on you who you你是我的我是你的谁再多一眼看一眼就会爆炸再近
+                  一点靠近点快被融化想要把你占为己有 baby bae不管走到哪里都会想起的人是你 you you我应该拿你怎样Uh 
+                  所有人都在看着你我的心总是不安Oh 我现在已病入膏肓Eh oh难道真的因你而疯狂吗我本来不是这种人因你变
+                  成奇怪的人第一次呀变成这样的我不管我怎么去否认只因你太美 baby只因你太美 baby只因你实在是太美
+                  baby只因你太美 babyOh eh oh现在确认地告诉我Oh eh oh你到底属于谁Oh eh oh`,
+      showFullContent: false,
+      isOpen: false,
+      totalLikes: 114,
+      totalComment:514,
+    }
+  ],
+    UserInfo:{
+      'name':'楚杰',
+      'Description':'我真的不卷。。。',
+      'email':'123@tongji.edu.cn',
+      'registerTime':'2020年1月',
+      'tel':'123456',
+      'points':'114',
+      'id':'1919810',
+
+    },
+    Garden:[
+      {
+      'author':'楚杰',
+      'title':'安楼的花园',
+      'cover':'https://img2.baidu.com/it/u=3194475248,8547823&fm=253&fmt=auto&app=138&f=JPEG?w=800&h=500',
+    },
+    {
+      'author':'楚杰',
+      'title':'博楼的花园',
+      'cover':'https://img2.baidu.com/it/u=3194475248,8547823&fm=253&fmt=auto&app=138&f=JPEG?w=800&h=500',
+    }
+    ],
+    Records:[
+      {
+        'date':'2023.1.1',
+        'location':'19号楼',
+        'partialContent': `(字体暂未确定)这里是文章内容的一小部分...只因你太美 baby只因你太美 baby只因你实在是太美 baby只因你太美 baby迎面走来的你让我如此蠢蠢欲动`,
+        'fullContent':`(字体暂未确定)这里是文章内容的一小部分...只因你太美 baby只因你太美 baby只因你实在是太美 baby只因你太美 baby迎面走来的你让我如此蠢蠢欲动
+                  这种感觉我从未有Cause I got a crush on you who you你是我的我是你的谁再多一眼看一眼就会爆炸再近
+                  一点靠近点快被融化想要把你占为己有 baby bae不管走到哪里都会想起的人是你 you you我应该拿你怎样Uh 
+                  所有人都在看着你我的心总是不安Oh 我现在已病入膏肓Eh oh难道真的因你而疯狂吗我本来不是这种人因你变
+                  成奇怪的人第一次呀变成这样的我不管我怎么去否认只因你太美 baby只因你太美 baby只因你实在是太美
+                  baby只因你太美 babyOh eh oh现在确认地告诉我Oh eh oh你到底属于谁Oh eh oh`,
+        'showFullContent': false,
+        'isOpen': false,
+      },
+      {
+        'date':'2023.1.2',
+        'location':'B楼',
+        'partialContent': `(字体暂未确定)这里是文章内容的一小部分...只因你太美 baby只因你太美 baby只因你实在是太美 baby只因你太美 baby迎面走来的你让我如此蠢蠢欲动`,
+        'fullContent':`(字体暂未确定)这里是文章内容的一小部分...只因你太美 baby只因你太美 baby只因你实在是太美 baby只因你太美 baby迎面走来的你让我如此蠢蠢欲动
+                  这种感觉我从未有Cause I got a crush on you who you你是我的我是你的谁再多一眼看一眼就会爆炸再近
+                  一点靠近点快被融化想要把你占为己有 baby bae不管走到哪里都会想起的人是你 you you我应该拿你怎样Uh 
+                  所有人都在看着你我的心总是不安Oh 我现在已病入膏肓Eh oh难道真的因你而疯狂吗我本来不是这种人因你变
+                  成奇怪的人第一次呀变成这样的我不管我怎么去否认只因你太美 baby只因你太美 baby只因你实在是太美
+                  baby只因你太美 babyOh eh oh现在确认地告诉我Oh eh oh你到底属于谁Oh eh oh`,
+        'showFullContent': false,
+        'isOpen': false,
+      },
+    ]
+  }
+},
+methods:{
+  changeInfo(){
+    this.change=!this.change
+  },
+  ifshowTel(){
+    this.showtel=!this.showtel
+  },
+  refresh(index){
+    this.chooseComponent=index //通过v-if 展示四个不同的组件 还没写
+  },
+  InfoHasChanged(){
+    alert('信息改变！')
+    //此处应该向后端发送请求修改数据
+  },
+  toggleContentBlogLike(index) {
+  this.BlogLike[index].showFullContent = !this.BlogLike[index].showFullContent;
+},
+toggleContentBlogCom(index) {
+  this.BlogComment[index].showFullContent = !this.BlogComment[index].showFullContent;
+},
+toggleContent(index) {
+          this.Records[index].showFullContent = !this.Records[index].showFullContent;
+      }
+}
+}
+</script>
+
+<style scoped>
+.personalinfo .el-header {
+position: relative;
+background-color: var(--el-color-primary-light-7);
+color: var(--el-text-color-primary);
+}
+.personalinfo .el-menu {
+border-right: none;
+}
+.personalinfo .el-main {
+padding: 0;
+background-color: rgb(223, 245, 223);
+}
+.personalinfo .toolbar {
+display: inline-flex;
+align-items: center;
+justify-content: center;
+height: 100%;
+right: 20px;
+}
+</style>
