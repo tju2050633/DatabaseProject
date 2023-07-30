@@ -6,7 +6,6 @@
     <el-row id="mainpart">
         <!-- 侧边栏 -->
         <SideBar/>
-
         <!-- 主体 -->
         <el-col :span="13">
             <el-container>

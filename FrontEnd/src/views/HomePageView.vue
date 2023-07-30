@@ -85,7 +85,7 @@
             <el-card
               shadow="hover"
               body-style="height:100px"
-              @click="this.$router.push('/404/')"
+              @click="this.$router.push('/DataVisualization/')"
             >
               <div class="navigator-card" style="text-align: center">
                 <el-icon><video-camera></video-camera></el-icon>
