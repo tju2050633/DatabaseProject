@@ -357,6 +357,32 @@ toggleContent(index) {
 </script>
 
 <style scoped>
+.author-avatar-img {
+  cursor: pointer;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+.read-more-button {
+  display: block;
+  margin: 10px auto;
+  width: 20%;
+  height: 50%;
+  line-height: 40px;
+  text-align: center;
+  font-size: 16px;
+  color: white;
+  background-color: rgb(0, 110, 255);
+  border: 0px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+.read-more-button:hover {
+  background-color: #2403f9;
+  color: white;
+}
 .personalinfo .el-header {
 position: relative;
 background-color: var(--el-color-primary-light-7);
