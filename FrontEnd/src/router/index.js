@@ -112,7 +112,15 @@ const routes = [
     path: '/GardenActivities/',
     name: 'GardenActivities',
     component: () => import('../views/GardenActivitiesView.vue')
-  }
+  },
+
+  // 志愿者招募
+  {
+    path: '/VolunteerRecruitment/',
+    name: 'VolunteerRecruitment',
+    component: () => import('../views/VolunteerRecruitment.vue')
+  },
+  
 ]
 
 const router = createRouter({
