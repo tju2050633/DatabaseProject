@@ -8,14 +8,14 @@ namespace Garden.BLL
     {
         AccountDAL accountDAL = new();
         BlogDAL blogDAL = new();
-        public Blog Get(string id)
+        public Blog GetSingleBlog(string id)
         {
-            //Blog blog = blogDAL.GetBlogById(id, out status);
-            //if (status == 0)
-            //{
-            //    return null;
-            //}
             return blogDAL.GetBlogById(id, out _);
+        }
+
+        public List<Blog> GetUserBlogs(string id)
+        {
+            return blogDAL.GetBlogByOwnerId(id, out _);
         }
 
         public string Insert(Blog blog)
@@ -25,13 +25,30 @@ namespace Garden.BLL
             {
                 return "用户错误。";
             }
-            if (blogDAL.Insert(blog))
+            if (blogDAL.Insert(blog, out _))
             {
                 return "上传成功，等待审核。";
             }
             else
             {
                 return "上传失败，请重试。";
+            }
+        }
+
+        //public string Update(Blog blog)
+        //{
+        //    return "";
+        //}
+
+        public string Delete(string id)
+        {
+            if (blogDAL.Delete(id, out _))
+            {
+                return "删除成功。";
+            }
+            else
+            {
+                return "删除失败。";
             }
         }
     }
