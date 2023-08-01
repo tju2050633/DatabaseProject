@@ -124,7 +124,6 @@
               body-style="height:100px"
               style="background-color: rgb(174, 243, 197)"
               @click="this.$router.push('/PointMall/')">
-            >
               <div class="navigator-card" style="text-align: center">
                 <el-icon><video-camera></video-camera></el-icon>
                 <el-text>积分商城</el-text>
