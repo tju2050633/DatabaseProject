@@ -43,17 +43,17 @@ namespace Garden.DAL
                     new OracleParameter("id", OracleDbType.Char) { Value = id });
                 if (dt.Rows.Count != 1)
                 {
-                    status = 0;
+                    status = 2;
                     return null;
                 }
-                status = 1;
+                status = 0;
                 DataRow dr = dt.Rows[0];
                 return ToModel(dr);
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
-                status = -1;
+                status = 1;
                 return null;
             }
         }
@@ -72,17 +72,17 @@ namespace Garden.DAL
  
                 if (dt.Rows.Count != 1)
                 {
-                    status = 0;
+                    status = 2;
                     return null;
                 }
                 DataRow dr = dt.Rows[0];
-                status = 1;
+                status = 0;
                 return ToModel(dr);
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
-                status = -1;
+                status = 1;
                 return null;
             }
         }
@@ -99,7 +99,7 @@ namespace Garden.DAL
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
-                status = -1;
+                status = 1;
                 return false;
             }
         }
@@ -116,7 +116,7 @@ namespace Garden.DAL
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
-                status = -1;
+                status = 1;
                 return false;
             }
         }

@@ -17,22 +17,41 @@ namespace Garden.Controllers
         }
 
         [HttpGet]
-        public ActionResult<Blog> Get(string id)
+        public ActionResult<Blog> GetSingleBlog(string id)
         {
-            return _blogBLL.Get(id);
+            return _blogBLL.GetSingleBlog(id);
+        }
+
+        [HttpGet("user")]
+        public IEnumerable<Blog> GetUserBlogs(string id)
+        {
+            return _blogBLL.GetUserBlogs(id);
         }
 
         [HttpPost]
-        public ActionResult<string> Insert(string owner_id, string title, string content)
+        public ActionResult<string> Insert(string owner_id, string title, string content, string imagePath = "")
         {
-            Blog blog = new();
-            blog.OwnerId = owner_id;
-            blog.Title = title;
-            blog.Content = content;
-            blog.ReleaseTime = DateTime.Now;
-            blog.AgreeNum = 0;
-            blog.CommentNum = 0;
+            Blog blog = new()
+            {
+                OwnerId = owner_id,
+                Title = title,
+                Content = content,
+                ImageUrl = imagePath,
+                ReleaseTime = DateTime.Now
+            };
             return _blogBLL.Insert(blog);
+        }
+
+        //[HttpPut]
+        //public ActionResult<string> Update(string owner_id, string title, string content, string imagePath = "")
+        //{
+        //    return "";
+        //}
+
+        [HttpDelete]
+        public ActionResult<string> Delete(string id)
+        {
+            return _blogBLL.Delete(id);
         }
     }
 }

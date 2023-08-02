@@ -1,8 +1,8 @@
 ﻿namespace Garden.Models
 {
-    public class Garden
+    public class GardenEntity
     {
-        public int GardenId { get; set; }
+        public string GardenId { get; set; }
         public string OwnerId { get; set; }
         public string? Pictures { get; set; }
         public DateTime CreateTime { get; set; }
