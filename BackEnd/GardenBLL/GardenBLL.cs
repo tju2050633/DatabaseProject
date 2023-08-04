@@ -7,12 +7,12 @@ namespace Garden.BLL
     public class GardenBLL : IGardenBLL
     {
         GardenDAL gardenDAL = new();
-        public Garden Get(string id)
+        public GardenEntity Get(string id)
         {
             return gardenDAL.GetGardenById(id, out _);
         }
 
-        public string Insert(Garden garden)
+        public string Insert(GardenEntity garden)
         {
             gardenDAL.GetGardenById(garden.GardenId, out int status);
             if (status == 1)

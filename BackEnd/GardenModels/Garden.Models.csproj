@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Aliyun.OSS.SDK.NetCore" Version="2.13.0" />
+  </ItemGroup>
+
 </Project>
