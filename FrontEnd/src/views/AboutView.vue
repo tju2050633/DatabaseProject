@@ -10,13 +10,13 @@
                 <div class="col-2">
                     <nav id="navbar" class="h-100 flex-column align-items-stretch pe-4 ps-4 border-end">
                         <nav class="nav nav-pills flex-column">
-                            <a class="btn btn-success" href="#project">
+                            <a class="nav-item" href="#project">
                                 我们的项目
                             </a>
-                            <a class="btn btn-success" href="#vision">
+                            <a class="nav-item" href="#vision">
                                 我们的愿景
                             </a>
-                            <a class="btn btn-success" href="#mission">
+                            <a class="nav-item" href="#mission">
                                 我们的使命
                             </a>
                         </nav>
@@ -31,15 +31,31 @@
                         <h1 class="heading">关于我们</h1>
 
                         <div class="d-flex justify-content-center">
-                            <!-- 联系方式按钮 -->
-                            <button class="btn btn-success btn-lg" type="button" data-bs-toggle="offcanvas"
-                                data-bs-target="#offcanvasContact" aria-controls="offcanvasContact"
-                                style="margin-right: 5vw;">联系方式</button>
+                            <!-- 联系方式 -->
+                            <div class="canvas-trigger" data-bs-toggle="offcanvas" data-bs-target="#offcanvasContact"
+                                aria-controls="offcanvasContact">
+                                联系方式
+                                <!-- 图标 -->
+                                <svg xmlns="http://www.w3.org/2000/svg" width="30" fill="currentColor"
+                                    class="bi bi-envelope-fill" viewBox="0 0 16 16">
+                                    <path
+                                        d="M.05 3.555A2 2 0 0 1 2 2h12a2 2 0 0 1 1.95 1.555L8 8.414.05 3.555ZM0 4.697v7.104l5.803-3.558L0 4.697ZM6.761 8.83l-6.57 4.027A2 2 0 0 0 2 14h12a2 2 0 0 0 1.808-1.144l-6.57-4.027L8 9.586l-1.239-.757Zm3.436-.586L16 11.801V4.697l-5.803 3.546Z" />
+                                </svg>
+                            </div>
 
-                            <!-- 团队成员按钮 -->
-                            <button class="btn btn-success btn-lg" type="button" data-bs-toggle="offcanvas"
-                                data-bs-target="#offcanvasTeam" aria-controls="offcanvasTeam"
-                                style="margin-left: 5vw;">开发团队</button>
+                            <!-- 团队成员 -->
+                            <div class="canvas-trigger" data-bs-toggle="offcanvas" data-bs-target="#offcanvasTeam"
+                                aria-controls="offcanvasTeam">
+                                开发团队
+                                <!-- 图标 -->
+                                <svg xmlns="http://www.w3.org/2000/svg" width="30" fill="currentColor"
+                                    class="bi bi-microsoft-teams" viewBox="0 0 16 16">
+                                    <path
+                                        d="M9.186 4.797a2.42 2.42 0 1 0-2.86-2.448h1.178c.929 0 1.682.753 1.682 1.682v.766Zm-4.295 7.738h2.613c.929 0 1.682-.753 1.682-1.682V5.58h2.783a.7.7 0 0 1 .682.716v4.294a4.197 4.197 0 0 1-4.093 4.293c-1.618-.04-3-.99-3.667-2.35Zm10.737-9.372a1.674 1.674 0 1 1-3.349 0 1.674 1.674 0 0 1 3.349 0Zm-2.238 9.488c-.04 0-.08 0-.12-.002a5.19 5.19 0 0 0 .381-2.07V6.306a1.692 1.692 0 0 0-.15-.725h1.792c.39 0 .707.317.707.707v3.765a2.598 2.598 0 0 1-2.598 2.598h-.013Z" />
+                                    <path
+                                        d="M.682 3.349h6.822c.377 0 .682.305.682.682v6.822a.682.682 0 0 1-.682.682H.682A.682.682 0 0 1 0 10.853V4.03c0-.377.305-.682.682-.682Zm5.206 2.596v-.72h-3.59v.72h1.357V9.66h.87V5.945h1.363Z" />
+                                </svg>
+                            </div>
                         </div>
 
                         <!-- 分隔线 -->
@@ -50,15 +66,7 @@
                             aria-labelledby="offcanvasContactLabel">
                             <!-- 标题 -->
                             <div class="offcanvas-header">
-                                <h5 id="offcanvasContactLabel">
-                                    联系我们
-                                    <!-- 图标 -->
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="30" fill="currentColor"
-                                        class="bi bi-envelope-fill" viewBox="0 0 16 16">
-                                        <path
-                                            d="M.05 3.555A2 2 0 0 1 2 2h12a2 2 0 0 1 1.95 1.555L8 8.414.05 3.555ZM0 4.697v7.104l5.803-3.558L0 4.697ZM6.761 8.83l-6.57 4.027A2 2 0 0 0 2 14h12a2 2 0 0 0 1.808-1.144l-6.57-4.027L8 9.586l-1.239-.757Zm3.436-.586L16 11.801V4.697l-5.803 3.546Z" />
-                                    </svg>
-                                </h5>
+                                <h5 id="offcanvasContactLabel">联系我们</h5>
                                 <!-- 关闭按钮 -->
                                 <button type="button" class="btn-close" data-bs-dismiss="offcanvas"
                                     aria-label="Close"></button>
@@ -78,17 +86,7 @@
                             aria-labelledby="offcanvasTeamLabel">
                             <!-- 标题 -->
                             <div class="offcanvas-header">
-                                <h5 id="offcanvasTeamLabel">
-                                    团队成员
-                                    <!-- 图标 -->
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="30" fill="currentColor"
-                                        class="bi bi-microsoft-teams" viewBox="0 0 16 16">
-                                        <path
-                                            d="M9.186 4.797a2.42 2.42 0 1 0-2.86-2.448h1.178c.929 0 1.682.753 1.682 1.682v.766Zm-4.295 7.738h2.613c.929 0 1.682-.753 1.682-1.682V5.58h2.783a.7.7 0 0 1 .682.716v4.294a4.197 4.197 0 0 1-4.093 4.293c-1.618-.04-3-.99-3.667-2.35Zm10.737-9.372a1.674 1.674 0 1 1-3.349 0 1.674 1.674 0 0 1 3.349 0Zm-2.238 9.488c-.04 0-.08 0-.12-.002a5.19 5.19 0 0 0 .381-2.07V6.306a1.692 1.692 0 0 0-.15-.725h1.792c.39 0 .707.317.707.707v3.765a2.598 2.598 0 0 1-2.598 2.598h-.013Z" />
-                                        <path
-                                            d="M.682 3.349h6.822c.377 0 .682.305.682.682v6.822a.682.682 0 0 1-.682.682H.682A.682.682 0 0 1 0 10.853V4.03c0-.377.305-.682.682-.682Zm5.206 2.596v-.72h-3.59v.72h1.357V9.66h.87V5.945h1.363Z" />
-                                    </svg>
-                                </h5>
+                                <h5 id="offcanvasTeamLabel">团队成员</h5>
                                 <!-- 关闭按钮 -->
                                 <button type="button" class="btn-close" data-bs-dismiss="offcanvas"
                                     aria-label="Close"></button>
@@ -110,7 +108,6 @@
 
                         <!-- 我们的项目 -->
                         <div id="project">
-                            <br>
                             <br>
                             <!-- 子标题 -->
                             <h4 class="subheading">
@@ -191,32 +188,43 @@
                                 <div class="row row-cols-3">
                                     <div class="col">
                                         <div class="card">
-                                            绿化环境：我们希望通过共享花园项目，促进城市绿化和环境保护。每个共享花园都将成为一个绿洲，为城市增添生机和美丽。
+                                            绿化环境：<br>
+                                            我们希望通过共享花园项目，促进城市绿化和环境保护。
+                                            每个共享花园都将成为一个绿洲，为城市增添生机和美丽。
                                         </div>
                                     </div>
                                     <div class="col">
                                         <div class="card">
-                                            社区凝聚：我们希望拉近社区居民之间的距离，促进邻里之间的交流和合作。花园成为人们相聚、交流的场所，增进社区凝聚力。
+                                            社区凝聚：<br>
+                                            我们希望拉近社区居民之间的距离，促进邻里之间的交流和合作。
+                                            花园成为人们相聚、交流的场所，增进社区凝聚力。
                                         </div>
                                     </div>
                                     <div class="col">
                                         <div class="card">
-                                            教育与启发：我们希望共享花园不仅仅是花草树木的聚集地，更是一个教育和启发的场所。通过举办园艺知识分享、绿色环保活动等，让人们更深入了解大自然，提高生态意识。
+                                            教育与启发：<br>
+                                            我们希望共享花园不仅仅是花草树木的聚集地，更是一个教育和启发的场所。
+                                            通过举办园艺知识分享、绿色环保活动等，让人们更深入了解大自然，提高生态意识。
                                         </div>
                                     </div>
                                     <div class="col">
                                         <div class="card">
-                                            健康与幸福：我们相信花园的美景和绿色环境对人们的身心健康有着积极的影响。我们希望让更多人拥有身心愉悦的时刻，感受大自然的美好。
+                                            健康与幸福：<br>
+                                            我们相信花园的美景和绿色环境对人们的身心健康有着积极的影响。
+                                            我们希望让更多人拥有身心愉悦的时刻，感受大自然的美好。
                                         </div>
                                     </div>
                                     <div class="col">
                                         <div class="card">
-                                            社会责任：我们视社会责任为己任，在项目的运营和管理中，积极参与社会公益活动，回馈社会，推动可持续发展。
+                                            社会责任：<br>
+                                            我们视社会责任为己任，在项目的运营和管理中，积极参与社会公益活动，回馈社会，推动可持续发展。
                                         </div>
                                     </div>
                                     <div class="col">
                                         <div class="card">
-                                            创新与共享：我们鼓励创新思维和共享精神。共享花园项目不仅仅是一个地方，更是一个社群，鼓励学生、园艺爱好者和各界人士共同参与和贡献。
+                                            创新与共享：<br>
+                                            我们鼓励创新思维和共享精神。共享花园项目不仅仅是一个地方，更是一个社群，
+                                            鼓励学生、园艺爱好者和各界人士共同参与和贡献。
                                         </div>
                                     </div>
                                 </div>
@@ -264,37 +272,43 @@
                                 <div class="row row-cols-3">
                                     <div class="col">
                                         <div class="card">
-                                            推动环保与可持续发展：我们致力于推动环保和可持续发展理念在社会中的传播和实践。
-                                            通过共享花园，我们鼓励人们关注生态环境，采取更环保的生活方式，减少对自然资源的消耗，共同构建可持续的未来。
+                                            推动环保与可持续发展：<br>
+                                            我们致力于推动环保和可持续发展理念在社会中的传播和实践。通过共享花园，我们鼓励人们关注生态环境，
+                                            采取更环保的生活方式，减少对自然资源的消耗，共同构建可持续的未来。
                                         </div>
                                     </div>
                                     <div class="col">
                                         <div class="card">
-                                            促进社区互助与合作：我们希望通过共享花园项目，搭建起一个社区互助和合作的平台。
+                                            促进社区互助与合作：<br>
+                                            我们希望通过共享花园项目，搭建起一个社区互助和合作的平台。
                                             花园成为人们共同参与、共同管理的场所，增进社区居民之间的友谊和互动，共同创造美好的花园环境。
                                         </div>
                                     </div>
                                     <div class="col">
                                         <div class="card">
-                                            传承园艺文化与知识：我们珍视园艺文化的传承和知识的传递。共享花园不仅是花草树木的聚集地，
+                                            传承园艺文化与知识：<br>
+                                            我们珍视园艺文化的传承和知识的传递。共享花园不仅是花草树木的聚集地，
                                             更是园艺知识的分享和学习平台。我们鼓励人们相互交流园艺心得，传承园艺智慧，让园艺文化薪火相传。
                                         </div>
                                     </div>
                                     <div class="col">
                                         <div class="card">
-                                            促进城市绿化和美化：我们希望共享花园成为城市绿化和美化的助力。通过共同努力，
+                                            促进城市绿化和美化：<br>
+                                            我们希望共享花园成为城市绿化和美化的助力。通过共同努力，
                                             让每个角落都充满花园的美丽，打造一个令人心旷神怡的城市绿洲。
                                         </div>
                                     </div>
                                     <div class="col">
                                         <div class="card">
-                                            培养生态意识与责任感：我们认为生态意识和责任感是每个人应当具备的品质。
+                                            培养生态意识与责任感：<br>
+                                            我们认为生态意识和责任感是每个人应当具备的品质。
                                             在共享花园项目中，我们鼓励人们学习尊重大自然、保护环境的观念，从小事做起，践行绿色生活。
                                         </div>
                                     </div>
                                     <div class="col">
                                         <div class="card">
-                                            共创美好未来：我们相信每个人的努力都能汇聚成美好的力量。
+                                            共创美好未来：<br>
+                                            我们相信每个人的努力都能汇聚成美好的力量。
                                             共享花园项目是一个共同创造的过程，我们鼓励学生、志愿者和社区成员一起携手，共创美好未来。
                                         </div>
                                     </div>
@@ -346,6 +360,7 @@ body {
     background-repeat: no-repeat;
     position: relative;
     background-position: top right;
+    animation: fade-in 3s forwards;
 }
 
 #vision {
@@ -354,6 +369,7 @@ body {
     background-repeat: no-repeat;
     position: relative;
     background-position: top right;
+    animation: fade-in 3s forwards;
 }
 
 #mission {
@@ -362,6 +378,17 @@ body {
     background-repeat: no-repeat;
     position: relative;
     background-position: top right;
+    animation: fade-in 3s forwards;
+}
+
+@keyframes fade-in {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
 }
 
 #navbar {
@@ -370,14 +397,48 @@ body {
     margin: 0;
 }
 
-.btn {
+.canvas-trigger {
     margin-top: 3vh;
     margin-bottom: 3vh;
+    margin-left: 5vw;
+    margin-right: 5vw;
+    font-size: 3vh;
+    color: rgb(12, 60, 38);
+    animation: slide-in-from-top 2s;
 }
 
-.btn:hover {
+.canvas-trigger:hover {
+    cursor: pointer;
+    font-weight: bold;
     transform: scale(1.2);
     transition: 500ms;
+}
+
+.nav-item {
+    padding: 5px;
+    margin: 10px;
+    border-width: 0vh;
+    font-size: 2.5vh;
+    color: rgb(12, 60, 38);
+    background-color: rgb(244, 237, 228);
+    text-decoration: none;
+    animation: slide-in-from-left 2.5s;
+}
+
+.nav-item:hover {
+    font-weight: bold;
+    transform: scale(1.2);
+    transition: 500ms;
+}
+
+@keyframes slide-in-from-left {
+    from {
+        transform: translateX(-200%);
+    }
+
+    to {
+        transform: translateX(0);
+    }
 }
 
 .colored-line {
@@ -392,8 +453,19 @@ body {
     font-weight: bold;
     font-size: 6vh;
     color: rgb(12, 60, 38);
-    margin-top: 10vh;
-    margin-bottom: 10vh;
+    margin-top: 8vh;
+    margin-bottom: 8vh;
+    animation: slide-in-from-top 1.5s;
+}
+
+@keyframes slide-in-from-top {
+    from {
+        transform: translateY(-200%);
+    }
+
+    to {
+        transform: translateY(0);
+    }
 }
 
 .subheading {
