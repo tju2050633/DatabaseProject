@@ -38,17 +38,6 @@ body {
     position: relative;
     background-position: right;
     background-attachment: fixed;
-    animation: fade-in 3s forwards;
-}
-
-@keyframes fade-in {
-    0% {
-        opacity: 0;
-    }
-
-    100% {
-        opacity: 1;
-    }
 }
 
 .d-flex {
