@@ -274,6 +274,11 @@ export default {
     animation: slide-in-from-bottom 1s;
 }
 
+.subcontent:hover {
+    transform: scale(1.05);
+    transition: 1000ms;
+}
+
 /* 设置滚动条轨道的样式 */
 .content::-webkit-scrollbar-track {
     background-color: #f1f1f1;
