@@ -1,0 +1,103 @@
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+body {
+  background-color: rgb(244, 237, 228);
+}
+
+.top-image {
+  position: initial;
+  width: 100%;
+  height: auto;
+}
+.top-image .el-image {
+  max-width: 100%;
+  height: auto;
+}
+
+.spaninfohead {
+  font-size: 3vh;
+  color: rgb(12, 60, 38);
+  margin: 10px;
+  border-width: 0vh;
+  white-space: nowrap;
+}
+
+.spaninfo {
+  font-size: 2vh;
+  color: rgb(12, 60, 38);
+  margin: 10px;
+  border-width: 0vh;
+}
+
+.el-card {
+  background-color: rgb(223, 245, 223);
+}
+
+.navtag {
+  font-size: 3.5vh;
+  color: rgb(12, 60, 38) !important;
+}
+
+.active {
+  font-size: 3.5vh;
+  color: rgb(0, 110, 255) !important;
+}
+
+.card-img {
+  width: 50vw;
+  height: auto;
+}
+
+.author-avatar-img {
+  cursor: pointer;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+.read-more-button {
+  display: block;
+  margin: 10px auto;
+  width: 20%;
+  height: 50%;
+  line-height: 40px;
+  text-align: center;
+  font-size: 16px;
+  color: rgba(252, 249, 249, 0.934);
+  background-color: rgb(151, 212, 137);
+  border: 0px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+.read-more-button:hover {
+  background-color: #99ddf2;
+  color: white;
+}
+.personalinfo .el-header {
+  position: relative;
+  background-color: var(--el-color-primary-light-7);
+  color: var(--el-text-color-primary);
+}
+.personalinfo .el-menu {
+  border-right: none;
+}
+.personalinfo .el-main {
+  padding: 0;
+  background-color: rgb(223, 245, 223);
+}
+.personalinfo .toolbar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  right: 20px;
+}
