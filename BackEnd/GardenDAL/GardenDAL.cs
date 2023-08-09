@@ -42,13 +42,8 @@ namespace Garden.DAL
             try
             {
                 string sql = "SELECT * FROM garden WHERE garden_id=:id";
-<<<<<<< HEAD
                 DataTable dt = OracleHelper.ExecuteTable(sql,
                     new OracleParameter("id", OracleDbType.Char) { Value = id });
-=======
-                DataTable dt = OracleHelper.ExecuteTable(sql, 
-                    new OracleParameter("id", OracleDbType.Char) { Value = garden_id });
->>>>>>> f33fe834c1bbbd939f68b35c9e89abaac44e8d53
                 if (dt.Rows.Count != 1)
                 {
                     status = 2;
@@ -79,11 +74,7 @@ namespace Garden.DAL
                     new OracleParameter("pictures", OracleDbType.Varchar2) { Value = garden.Pictures },
                     new OracleParameter("create_time", OracleDbType.Date) { Value = garden.CreateTime},
                     new OracleParameter("description", OracleDbType.Clob) { Value = garden.Description },
-<<<<<<< HEAD
                     new OracleParameter("position", OracleDbType.Varchar20) { Value =  garden.Position },
-=======
-                    new OracleParameter("position", OracleDbType.Varchar2) { Value =  garden.Position },
->>>>>>> f33fe834c1bbbd939f68b35c9e89abaac44e8d53
                     new OracleParameter("stars", OracleDbType.Int32) { Value = garden.Stars },
                     new OracleParameter("status", OracleDbType.Int32) { Value = garden.Status }
                 };
