@@ -1,0 +1,34 @@
+.mainmapbody {
+  background-color: rgb(244, 237, 228);
+  background-image: url("https://img1.imgtp.com/2023/08/09/H5ZO8ylf.jpg");
+  background-size: auto;
+  background-repeat: no-repeat;
+  position: relative;
+  background-position: top right;
+  animation: fade-in 3s forwards;
+  padding-bottom: 10%;
+}
+
+.infohead {
+  font-size: 2vh;
+  color: rgb(12, 60, 38);
+  margin: 10px;
+  border-width: 0vh;
+  white-space: nowrap;
+}
+
+.TJMapHead{
+  font-size: 5vh;
+  color: rgb(12, 60, 38);
+  margin: 10px;
+  margin-top: 120px;
+  border-width: 3vh;
+  white-space: nowrap;
+}
+
+.tjimg{
+    margin-top: 120px;
+    margin-left: 300px;
+    width: 100px;
+    height: 100px;
+}

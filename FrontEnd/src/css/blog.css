@@ -1,0 +1,175 @@
+/* 定义过渡效果 */
+.star-on-transition-enter-active,
+.star-on-transition-leave-active {
+  transition: transform 0.2s;
+}
+
+.star-on-transition-enter,
+.star-on-transition-leave-to
+
+/* .star-on-transition-leave-active in <2.1.8 */ {
+  transform: scale(1);
+  /* 初始状态和离开状态设置为正常大小 */
+}
+
+.star-on-transition-enter-to,
+.star-on-transition-leave
+
+/* .star-on-transition-enter-active in <2.1.8 */ {
+  transform: scale(2);
+  /* 进入状态和离开后状态设置为放大两倍 */
+}
+
+body {
+  font-family: Arial, sans-serif;
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+}
+
+@keyframes slide-in-from-top {
+    from {
+        transform: translateY(-200%);
+    }
+
+    to {
+        transform: translateY(0);
+    }
+}
+
+.author-avatar-img {
+  cursor: pointer;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  animation: slide-in-from-top 2s;
+}
+
+.author-name {
+  cursor: pointer;
+  font-size: 2.7vh;
+  color: rgb(18, 84, 54);
+  margin-left: 10px;
+}
+
+.blog-name {
+  width: 60%;
+  font-size: 3vh;
+  text-align: left;
+  color: rgb(18, 84, 54);
+}
+
+.card-content {
+  margin-top: 20px;
+  font-size: 2vh;
+  color: rgb(37, 93, 42);
+}
+
+.read-more-button {
+  display: block;
+  margin: 10px auto;
+  width: 20%;
+  height: 50%;
+  line-height: 40px;
+  text-align: center;
+  font-size: 16px;
+  color: white;
+  background-color: rgb(0, 110, 255);
+  border: 0px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.read-more-button:hover {
+  background-color: #2403f9;
+  color: white;
+}
+
+.expanded-content {
+  display: none;
+}
+
+.card-footer {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.comment-container {
+  width: 700px;
+  background-color: white;
+}
+
+.custom-input .el-input__inner {
+  width: 500px;
+  /* 自定义宽度 */
+  height: 40px;
+  /* 自定义高度 */
+}
+
+.custom-input .el-input__inner {
+  font-size: 16px;
+  /* 自定义字体大小 */
+}
+
+/*新增的css*/
+.blogBody{
+    background-color: rgb(244, 237, 228);
+    background-image: url("https://img1.imgtp.com/2023/08/09/NwJQnCO8.jpg");
+    background-size: 200px 200px;
+    background-repeat: repeat-y;
+    position: relative;
+    background-position: left;
+    animation: fade-in 3s backwards;
+}
+
+.blog-card {
+  width: 800px;
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin: 20px auto;
+  border-radius: 5px;
+  background-color: rgb(233, 218, 197);
+}
+
+@keyframes slide-in-from-right {
+    from {
+        transform: translateX(50%);
+    }
+
+    to {
+        transform: translateX(0);
+    }
+}
+
+.blogmainpart{
+    background-image: url("../assets/img-all-kinds-of-companies.jpg");
+    background-size: 1000px 1000px;
+    background-repeat: no-repeat;
+    position: relative;
+    background-position: right;
+    animation: slide-in-from-right 3s forwards;
+}
+
+@keyframes rotateSlideIn {
+  0% {
+    opacity: 0;
+    transform: rotate(-90deg) translateX(-100%);
+  }
+  100% {
+    opacity: 1;
+    transform: rotate(0) translateX(0);
+  }
+}
+
+.head-img{
+    animation: rotateSlideIn 1s ease-in-out;
+    background-image: URL("https://img1.imgtp.com/2023/08/09/8iMpX8Ag.jpg");
+    background-size: auto;
+    background-repeat: no-repeat;
+    position: relative;
+}

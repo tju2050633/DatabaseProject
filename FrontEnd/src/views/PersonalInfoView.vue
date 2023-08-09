@@ -1,5 +1,5 @@
 <template>
-  <body>
+  <body class="infomainbody">
     <div class="container" style="margin-top: 60px">
       <!-- 导航栏 -->
       <NavBar />
@@ -61,7 +61,9 @@
                 <br />
 
                 <!-- 个人信息 -->
-                <el-card style="width=50vw">
+                <el-card
+                  style="width=50vw; background-color: rgb(244, 237, 228)"
+                >
                   <!-- 邮箱+注册时间 -->
                   <el-row :gutter="30">
                     <el-col :span="12"
@@ -172,14 +174,14 @@
                   <!-- 互动-->
                   <div
                     class="interact"
-                    style="margin-left: 150px"
+                    style="margin-left: 100px"
                     v-if="chooseComponent == 1"
                   >
                     <!-- 互动组件 -->
                     <el-card
                       v-for="(item, index) in GardenComment"
                       :key="index"
-                      style="margin-top: 20px"
+                      class="info-card"
                     >
                       <h2>
                         <img
@@ -216,7 +218,7 @@
                     <el-card
                       v-for="(item, index) in GardenLike"
                       :key="index"
-                      style="margin-top: 20px"
+                      class="info-card"
                     >
                       <h4><span class="spaninfohead">点赞了花园</span></h4>
                       <h2>
@@ -248,8 +250,7 @@
                     <el-card
                       v-for="(card, index) in BlogComment"
                       :key="index"
-                      class="card"
-                      style="width: 52vw"
+                      class="info-card"
                     >
                       <div class="spaninfohead">
                         <h1 class="spaninfohead">{{ card.blogName }}</h1>
@@ -303,8 +304,7 @@
                     <el-card
                       v-for="(card, index) in BlogLike"
                       :key="index"
-                      class="card"
-                      style="width: 52vw"
+                      class="info-card"
                     >
                       <h4><span class="spaninfohead">点赞了博客</span></h4>
                       <div class="card-header">
@@ -351,15 +351,14 @@
                   <!-- 博客 -->
                   <div
                     class="blog"
-                    style="margin-left: 150px"
+                    style="margin-left: 100px"
                     v-if="chooseComponent == 2"
                   >
                     <br />
                     <el-card
                       v-for="(card, index) in BlogLike"
                       :key="index"
-                      class="card"
-                      style="width: 52vw"
+                      class="info-card"
                     >
                       <PersonalBlogBlock :card="card" />
                     </el-card>
@@ -368,14 +367,14 @@
                   <!-- 花园 -->
                   <div
                     class="garden"
-                    style="margin-left: 150px"
+                    style="margin-left: 100px"
                     v-if="chooseComponent == 3"
                   >
                     <br />
                     <el-card
                       v-for="(Garden, index) in Garden"
                       :key="index"
-                      class="card"
+                      class="info-card"
                     >
                       <PersonalGardenBlock :Garden="Garden" />
                       <br />
@@ -392,7 +391,7 @@
                     <el-card
                       v-for="(Record, index) in Records"
                       :key="index"
-                      class="card"
+                      class="info-card"
                     >
                       <PersonalRecordBlock :Record="Record" />
                       <br />
