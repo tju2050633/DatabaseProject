@@ -8,8 +8,34 @@
   }
 }
 
-body {
+@keyframes slide-in-from-left {
+    from {
+        transform: translateX(-200%);
+    }
+
+    to {
+        transform: translateX(0);
+    }
+}
+
+@keyframes slide-in-from-top {
+    from {
+        transform: translateY(-200%);
+    }
+
+    to {
+        transform: translateY(0);
+    }
+}
+
+.infomainbody {
   background-color: rgb(244, 237, 228);
+  background-image: url("../assets/img-all-kinds-of-companies.jpg");
+  background-size: auto;
+  background-repeat: no-repeat;
+  position: relative;
+  background-position: left;
+  animation: fade-in 3s forwards;
 }
 
 .top-image {
@@ -28,6 +54,7 @@ body {
   margin: 10px;
   border-width: 0vh;
   white-space: nowrap;
+  animation: 2s;
 }
 
 .spaninfo {
@@ -37,8 +64,12 @@ body {
   border-width: 0vh;
 }
 
-.el-card {
-  background-color: rgb(223, 245, 223);
+.info-card {
+  background-color: rgb(244, 237, 228) !important;
+  width: 62vw;
+  height: auto;
+  margin-top: 20px;
+  animation: slide-in-from-top 1s;
 }
 
 .navtag {
@@ -52,8 +83,9 @@ body {
 }
 
 .card-img {
-  width: 50vw;
+  width: 30vw;
   height: auto;
+  animation: slide-in-from-left 2s;
 }
 
 .author-avatar-img {

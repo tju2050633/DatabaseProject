@@ -1,140 +1,39 @@
 <template>
-  <div class="container" style="margin-top: 60px">
-    <!-- 导航栏 -->
-    <NavBar />
+  <body class="blogBody">
+    <div class="container" style="margin-top: 60px">
+      <!-- 导航栏 -->
+      <NavBar />
 
-    <el-row id="mainpart">
-      <!-- 侧边栏 -->
-      <SideBar />
+      <el-row id="mainpart" class="blogmainpart">
+        <!-- 侧边栏 -->
+        <SideBar />
 
-      <el-col :span="14">
-        <div id="app">
-          <el-card class="card">
-            <img src="../assets/blog-logo.png" />
-          </el-card>
-          <el-card v-for="(card, index) in cards" :key="index" class="card">
-            <BlogBlock :card="card" />
-          </el-card>
-          <div>
-            <button @click="loadMoreBlogs">加载更多</button>
+        <el-col :span="14">
+          <div id="app">
+            <el-card class="blog-card">
+              <el-row>
+                <img class="head-img" src="../assets/blog-logo.png" />
+              </el-row>
+            </el-card>
+            <el-card
+              v-for="(card, index) in cards"
+              :key="index"
+              class="blog-card"
+            >
+              <BlogBlock :card="card" />
+            </el-card>
+            <div>
+              <button @click="loadMoreBlogs">加载更多</button>
+            </div>
           </div>
-        </div>
-      </el-col>
-    </el-row>
-  </div>
+        </el-col>
+      </el-row>
+    </div>
+  </body>
 </template>
 
-<style>
-/* 定义过渡效果 */
-.star-on-transition-enter-active,
-.star-on-transition-leave-active {
-  transition: transform 0.2s;
-}
-
-.star-on-transition-enter,
-.star-on-transition-leave-to
-
-/* .star-on-transition-leave-active in <2.1.8 */ {
-  transform: scale(1);
-  /* 初始状态和离开状态设置为正常大小 */
-}
-
-.star-on-transition-enter-to,
-.star-on-transition-leave
-
-/* .star-on-transition-enter-active in <2.1.8 */ {
-  transform: scale(2);
-  /* 进入状态和离开后状态设置为放大两倍 */
-}
-
-body {
-  font-family: Arial, sans-serif;
-}
-
-.card {
-  width: 800px;
-  border: 1px solid #ccc;
-  padding: 10px;
-  margin: 20px auto;
-  border-radius: 5px;
-}
-
-.card-header {
-  display: flex;
-  align-items: center;
-}
-
-.author-avatar-img {
-  cursor: pointer;
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
-  object-fit: cover;
-}
-
-.author-name {
-  cursor: pointer;
-  font-size: 30px;
-  margin-left: 10px;
-}
-
-.blog-name {
-  width: 60%;
-  font-size: 35px;
-  text-align: left;
-}
-
-.card-content {
-  margin-top: 20px;
-}
-
-.read-more-button {
-  display: block;
-  margin: 10px auto;
-  width: 20%;
-  height: 50%;
-  line-height: 40px;
-  text-align: center;
-  font-size: 16px;
-  color: white;
-  background-color: rgb(0, 110, 255);
-  border: 0px;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.read-more-button:hover {
-  background-color: #2403f9;
-  color: white;
-}
-
-.expanded-content {
-  display: none;
-}
-
-.card-footer {
-  margin-top: 20px;
-  display: flex;
-  flex-direction: column;
-}
-
-.comment-container {
-  width: 700px;
-  background-color: white;
-}
-
-.custom-input .el-input__inner {
-  width: 500px;
-  /* 自定义宽度 */
-  height: 40px;
-  /* 自定义高度 */
-}
-
-.custom-input .el-input__inner {
-  font-size: 16px;
-  /* 自定义字体大小 */
-}
+<style scoped>
+@import url("../css/blog.css");
 </style>
 
 <script>
