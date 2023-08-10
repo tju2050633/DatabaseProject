@@ -250,7 +250,7 @@ export default {
     border-width: 0vh;
     border-radius: 5vh;
     box-shadow: 8px 8px 24px rgba(0, 0, 0, 0.2);
-    background-color: rgb(228, 220, 220);
+    background-color: rgb(222, 217, 207);
     margin-top: 3vh;
     margin-bottom: 3vh;
 }

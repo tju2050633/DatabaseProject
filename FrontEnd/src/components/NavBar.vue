@@ -16,7 +16,7 @@
           v-model="state.searchTerm" @input="filterSearchHistory" />
 
         <!-- 搜索按钮 -->
-        <button class="btn btn-secondary" id="search-btn" type="submit" @click="search">
+        <button class="btn" id="search-btn" type="submit" @click="search">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search"
             viewBox="0 0 16 16">
             <path
@@ -26,7 +26,7 @@
       </form>
 
       <!-- 搜索历史记录下拉框 -->
-      <li class="nav-item dropdown" style="color: white;">
+      <li class="nav-item dropdown" id="history">
         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
           搜索历史
         </a>
@@ -173,7 +173,7 @@ export default {
 
 <style scoped>
 .navbar {
-  background-color: rgb(50, 133, 101);
+  background-color: rgb(53, 115, 90);
 }
 
 .navbar-brand {
@@ -185,7 +185,7 @@ export default {
 }
 
 #search-area {
-  width: 70vw;
+  width: 53vw;
   flex-direction: row;
   align-items: center;
 }
@@ -198,13 +198,22 @@ export default {
 }
 
 #search-btn {
-  margin-right: 15vw;
   border-width: 0vh;
-  background-color: #f0f0f0;
+  border-radius: 50%;
+
+  background-color: white;
   color: rgb(12, 60, 38);
 }
 
+#history {
+  margin-left: 1vw;
+  margin-right: 15vw;
+  list-style: none;
+  color: white;
+  font-size: 2.5vh;
+}
+
 .navbar-nav {
-  margin-right: 10vw;
+  margin-right: 5vw;
 }
 </style>
