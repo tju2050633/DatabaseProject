@@ -20,11 +20,6 @@ namespace Garden.BLL
 
         public string Insert(Blog blog)
         {
-            accountDAL.GetAccountById(blog.OwnerId, out int status);
-            if (status != 1)
-            {
-                return "用户错误。";
-            }
             if (blogDAL.Insert(blog, out _))
             {
                 return "上传成功，等待审核。";
