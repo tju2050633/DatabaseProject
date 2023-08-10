@@ -43,7 +43,7 @@ namespace Garden.DAL
             {
                 string sql = "SELECT * FROM garden WHERE garden_id=:id";
                 DataTable dt = OracleHelper.ExecuteTable(sql,
-                    new OracleParameter("id", OracleDbType.Char) { Value = id });
+                    new OracleParameter("id", OracleDbType.Char) { Value = garden_id });
                 if (dt.Rows.Count != 1)
                 {
                     status = 2;
@@ -74,7 +74,7 @@ namespace Garden.DAL
                     new OracleParameter("pictures", OracleDbType.Varchar2) { Value = garden.Pictures },
                     new OracleParameter("create_time", OracleDbType.Date) { Value = garden.CreateTime},
                     new OracleParameter("description", OracleDbType.Clob) { Value = garden.Description },
-                    new OracleParameter("position", OracleDbType.Varchar20) { Value =  garden.Position },
+                    new OracleParameter("position", OracleDbType.Varchar2) { Value =  garden.Position },
                     new OracleParameter("stars", OracleDbType.Int32) { Value = garden.Stars },
                     new OracleParameter("status", OracleDbType.Int32) { Value = garden.Status }
                 };
