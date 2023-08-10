@@ -141,6 +141,7 @@
 <style></style>
 
 <script>
+import {getVolunteerList,getVolunteerContent,submitForm} from '../api/VolunteerAPI'
 export default {
   el: "#mainpart",
   data() {
@@ -288,6 +289,40 @@ export default {
         this.displayedImageList = this.imageList.slice(0, this.maxDisplayCount); // 仅显示前maxDisplayCount张图片
       }
     },
+    async getVolunteerContent() {
+            try {
+                    const { username, gardenname,location,describe,imageUrl } = await getVolunteerContent();
+                    this.volunteerContent.username=username;
+                    this.volunteerContent.gardenname=gardenname;
+                    this.volunteerContent.location=location;
+                    this.volunteerContent.describe=describe;
+                    this.volunteerContent.imageUrl=imageUrl;
+                }
+            catch (error) {
+                console.error('Error', error);
+            }
+        },
+    async getVolunteerList() {
+            try {
+                    const { username, Points} = await getVolunteerList();
+                    this.getVolunteerList.username=username;
+                    this.getVolunteerList.myPoints=Points;
+                }
+            catch (error) {
+                console.error('Error', error);
+            }
+        },
+    async submitForm() {
+      try {
+        const response = await submitForm();
+        console.log('Data saved:', response.data);
+        // 清空表单
+        this.volunteerDialog.volunteername = '';
+        this.formData.email = '';
+      } catch (error) {
+        console.error('Error', error);
+      }
+    }
   },
   created() {
     this.updateDisplayedImages(); // 初始化时根据showMore状态设置图片数量
