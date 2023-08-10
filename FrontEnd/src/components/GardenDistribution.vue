@@ -5,8 +5,26 @@
 
 <script>
 import * as echarts from 'echarts';
+import { getTotalUser, getActiveUser, getCampusNum} from '../api/DataVisualization/GardenDistribution'
 export default{
   name:'GardenDistribution',
+  data(){
+    return{
+      begin_date:'',
+      end_date:'',
+      timeperiod:['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],//generate locally
+      total_user_num:[
+        242, 545, 657, 737, 858, 976, 1435, 2116, 2932, 3620, 4666, 5843
+      ],
+      active_user_num:[100, 235, 357, 437, 558, 676, 935, 1116, 1232, 1220, 1266, 1343],
+
+    campus_distribution:[
+        { value: 430, name: '四平路校区' },
+        { value: 518, name: '嘉定校区' },
+        { value: 226, name: '沪西校区' },
+      ],
+    }
+  },
   methods:{
     createChart(){
       var chartDom = document.getElementById('GardenDistribution');
@@ -42,7 +60,8 @@ export default{
         alignWithLabel: true
       },
       // prettier-ignore
-      data: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+      data: this.timeperiod
+      //data:['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
     }
   ],
   yAxis: [
@@ -79,17 +98,19 @@ export default{
   ],
   series: [
     {
-      name: '总用户数量',
+      name: '总花园数量',
       type: 'bar',
-      data: [
-        242, 545, 657, 737, 858, 976, 1435, 2116, 2932, 3620, 4666, 5843
-      ]
+      data: this.total_garden_num
+      // data:[
+      //   242, 545, 657, 737, 858, 976, 1435, 2116, 2932, 3620, 4666, 5843
+      // ],
     },
     {
-      name: '活跃用户数量',
+      name: '活跃花园数量',
       type: 'line',
       yAxisIndex: 1,
-      data: [100, 235, 357, 437, 558, 676, 935, 1116, 1232, 1220, 1266, 1343]
+      data: this.active_garden_num
+      //data:[100, 235, 357, 437, 558, 676, 935, 1116, 1232, 1220, 1266, 1343]
     }
   ]
 };
@@ -138,22 +159,49 @@ option = {
       itemStyle: {
         borderRadius: 3
       },
-      data: [
-        { value: 430, name: '四平路校区' },
-        { value: 518, name: '嘉定校区' },
-        { value: 226, name: '沪西校区' },
-      ]
+      data: this.campus_distribution
     }
   ]
 };
 
 option && myChart.setOption(option);
 
-}
+},
+
+getData(){
+      getActiveUser({
+        begin_date:this.begin_date,
+        end_date:this.end_date
+      }).then(res=>{
+        console.log(res)
+        //将activeuser数组保存到本地 假定传回的就叫active user
+        this.active_garden_num=res.data.active_user_num
+      })
+
+      getTotalUser({
+        begin_date:this.begin_date,
+        end_date:this.end_date
+      }).then(res=>{
+        console.log(res)
+        //将totaluser写入到本地
+        this.total_garden_num=res.data.total_user_num
+      })
+
+      getCampusNum({
+      }).then(res=>{
+        console.log(res)
+        //将totaluser写入到本地
+        this.campus_distribution=res.data.campus_distribution
+      })
+    }
+
+  },
+  created:{
   },
   mounted(){
+    //this.getData();
     this.createChart();
-    this.createPie()
+    this.createPie();
   }
 }
 </script>

@@ -3,9 +3,21 @@
 </template>
 
 <script>
+import {getGradeTable} from '../api/DataVisualization/GradeDistribution'
 import * as echarts from 'echarts';
 export default{
   name:'GradeDistribution',
+  data(){
+    return{
+      table:[
+        { value: 130, name: '大一' },
+        { value: 218, name: '大二' },
+        { value: 126, name: '大三' },
+        { value: 94, name: '大四' },
+        { value: 82, name: '其他（硕士、博士）' },
+      ]
+    }
+  },
   methods:{
     createChart(){
         var chartDom = document.getElementById('GradeDistribution');
@@ -51,21 +63,22 @@ option = {
       itemStyle: {
         borderRadius: 5
       },
-      data: [
-        { value: 130, name: '大一' },
-        { value: 218, name: '大二' },
-        { value: 126, name: '大三' },
-        { value: 94, name: '大四' },
-        { value: 82, name: '其他（硕士、博士）' },
-      ]
+      data: this.table
     }
   ]
 };
 
 option && myChart.setOption(option);
+    },
+    getData(){
+      getGradeTable().then(res=>{
+        console.log(res)
+        this.table=res.data.table
+      })
     }
   },
   mounted(){
+    this.getData()
     this.createChart()
   }
 }
