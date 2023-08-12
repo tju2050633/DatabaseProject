@@ -15,7 +15,7 @@ namespace Garden.DAL
             account.Password = row["password"].ToString();
             account.Email = row["email"].ToString();
             account.Phone = row["phone"].ToString();
-            account.Portrait = row["portrait"].ToString() ;
+            account.Portrait = row["portrait"].ToString();
             account.Bio = row["bio"].ToString();
             account.AccountName = row["account_name"].ToString();
             account.Points = Convert.ToInt32(row["points"]);
@@ -69,7 +69,7 @@ namespace Garden.DAL
                     new OracleParameter("pwd", OracleDbType.Varchar2) {Value = pwd}
                 };
                 DataTable dt = OracleHelper.ExecuteTable(sql, oracleParameters);
- 
+
                 if (dt.Rows.Count != 1)
                 {
                     status = 2;
@@ -153,5 +153,33 @@ namespace Garden.DAL
             }
         }
 
+        //获取用户个人积分
+        public int GetPoints(string user_id, out int status)
+        {
+
+            try
+            {
+                string sql = "SELECT points FROM user WHERE user_id=:id";
+                DataTable dt = OracleHelper.ExecuteTable(sql,
+                    new OracleParameter("id", OracleDbType.Char) { Value = user_id });
+                if (dt.Rows.Count != 1)
+                {
+                    status = 2;
+                    return -1;
+                }
+                status = 0;
+                DataRow dr = dt.Rows[0];
+                int value = Convert.ToInt32(dr["price"]);
+                return value;
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                status = 1;
+                return -1;
+            }
+
+        }
     }
 }
