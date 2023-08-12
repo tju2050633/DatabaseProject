@@ -7,5 +7,6 @@ namespace Garden.Models
         public int Price { get; set; }
         public string ItemStorage { get; set; }
         public int Sales { get; set; }
+
     }
 }

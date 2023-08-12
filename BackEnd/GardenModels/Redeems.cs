@@ -6,5 +6,6 @@ namespace Garden.Models
         public string Redeemer { get; set; }
         public string ItemId { get; set; }
         public DateTime RedeemTime { get; set; }
+
     }
 }
