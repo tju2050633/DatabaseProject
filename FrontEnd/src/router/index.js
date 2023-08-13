@@ -121,6 +121,13 @@ const routes = [
     component: () => import('../views/VolunteerRecruitment.vue')
   },
   
+  //搜索结果
+  {
+    path: '/SearchResults/:results',
+    name: 'SearchResults',
+    component: () => import('../views/SearchResultsView.vue'),
+    props: true // 启用props来接收参数
+  }
 ]
 
 const router = createRouter({
