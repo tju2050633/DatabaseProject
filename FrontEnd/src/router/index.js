@@ -64,12 +64,12 @@ const routes = [
     name: 'personalInfo',
     component: () => import('../views/PersonalInfoView.vue'),
   },
-    // 数据展示
-    {
-      path:'/DataVisualization/',
-      name:'DataVisualization',
-      component: () => import('../views/DataVisualization.vue'),
-    },
+  // 数据展示
+  {
+    path: '/DataVisualization/',
+    name: 'DataVisualization',
+    component: () => import('../views/DataVisualization.vue'),
+  },
 
   // 博客
   {
@@ -82,17 +82,6 @@ const routes = [
     name: 'TJMap',
     component: () => import('../views/TJMap.vue'),
     props: true // 开启props传参
-  },
-
-  // 404
-  {
-    path: '/404/',
-    name: '404',
-    component: () => import('../views/NotFoundView.vue'),
-  },
-  {
-    path: '/:catchAll(.*)',
-    redirect: '/404/'
   },
 
   // 积分商城
@@ -120,13 +109,31 @@ const routes = [
     name: 'VolunteerRecruitment',
     component: () => import('../views/VolunteerRecruitment.vue')
   },
-  
-  //搜索结果
+
+  // 搜索结果
   {
     path: '/SearchResults/:results',
     name: 'SearchResults',
     component: () => import('../views/SearchResultsView.vue'),
     props: true // 启用props来接收参数
+  },
+
+  // 当前热榜
+  {
+    path: '/CurrentHotList/',
+    name: 'CurrentHotList',
+    component: () => import('../views/CurrentHotList.vue')
+  },
+
+  // 404
+  {
+    path: '/404/',
+    name: '404',
+    component: () => import('../views/NotFoundView.vue'),
+  },
+  {
+    path: '/:catchAll(.*)',
+    redirect: '/404/'
   }
 ]
 

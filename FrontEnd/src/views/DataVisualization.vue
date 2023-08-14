@@ -58,7 +58,7 @@ export default {
   name: "DataVisualization",
   data() {
     return {
-      activeTab: 1,
+      activeTab: "user",
     }
   },
   methods: {
@@ -90,6 +90,9 @@ body {
 
 .data-menu {
   padding: 1vh;
+  margin-bottom: 3vh;
+
+  font-weight: bold;
 
   border-width: 0vh;
   border-radius: 2vh;
@@ -97,7 +100,6 @@ body {
   box-shadow: 8px 8px 24px rgba(0, 0, 0, 0.2);
   background-color: rgb(246, 243, 239);
 
-  margin-bottom: 3vh;
 }
 
 .data-card {
