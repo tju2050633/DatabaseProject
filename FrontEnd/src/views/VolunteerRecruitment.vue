@@ -124,7 +124,7 @@
 
 <style scoped>
 body {
-  background-color: rgb(244, 237, 228);
+  background-color: rgb(245, 235, 226);
   background-image: url("../assets/img-volunteer.jpg");
   background-size: 30vw;
   background-repeat: no-repeat;

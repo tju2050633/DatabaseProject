@@ -1,14 +1,8 @@
 <template>
-  <!-- 导航栏 -->
-  <NavBar />
-
   <body>
-    <br>
-    <br>
-    <br>
+    <div class="container">
+      <NavBar /> <!-- 导航栏 -->
 
-    <!-- 整体布局 -->
-    <div class="d-flex">
       <div class="row" style="width: 100%;">
 
         <!-- 侧边栏 -->
@@ -192,8 +186,8 @@
         </div>
 
       </div>
-    </div>
 
+    </div>
   </body>
 </template>
 
@@ -202,9 +196,8 @@ body {
   background-color: rgb(244, 237, 228);
 }
 
-.d-flex {
-  margin-left: 10vw;
-  width: 80vw;
+.container {
+  margin-top: 60px;
 }
 
 .images-field {
