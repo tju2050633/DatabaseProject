@@ -22,6 +22,7 @@ import GardenDistribution from '@/components/GardenDistribution'
 import GradeDistribution from '@/components/GradeDistribution'
 import BlogDistribution from '@/components/BlogDistribution'
 import VolunteerBlock from '@/components/VolunteerBlock.vue'
+import SearchResults from '@/components/SearchResults.vue'
 
 //引入bootstrp
 import 'bootstrap/dist/css/bootstrap.css'
@@ -74,5 +75,6 @@ app.component('ActiveUsers', ActiveUsers)
 app.component('GradeDistribution',GradeDistribution)
 app.component('GardenDistribution',GardenDistribution)
 app.component('BlogDistribution',BlogDistribution)
-app.component('VolunteerBlock',VolunteerBlock)
+app.component('VolunteerBlock', VolunteerBlock)
+app.component('SearchResults',SearchResults)
 app.mount('#app')
