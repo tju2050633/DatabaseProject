@@ -1,0 +1,60 @@
+body{
+    background-color: rgb(244, 237, 228) !important;
+}
+
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+.result-body{
+  background-image: url("../assets/img-what-you-need.jpg");
+  background-size: auto;
+  background-repeat: repeat-y;
+  position: relative;
+  background-position: right;
+  animation: fade-in 3s forwards;
+}
+
+@keyframes slide-in-from-right {
+    from {
+        transform: translateX(150%);
+    }
+
+    to {
+        transform: translateX(0);
+    }
+}
+
+@keyframes rotateSlideIn {
+  0% {
+    opacity: 0;
+    transform: rotate(-90deg) translateX(-100%);
+  }
+  100% {
+    opacity: 1;
+    transform: rotate(0) translateX(0);
+  }
+}
+
+.result-header{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 950px;
+  height: 200px;
+  padding: 0px;
+  margin: 20px auto;
+  border-radius: 5px;
+  background-color: rgb(244, 237, 228);
+  animation: slide-in-from-right 3s forwards;
+}
+
+.all-img-head{
+    animation: rotateSlideIn 2s ease-in-out;
+}
