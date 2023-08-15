@@ -13,5 +13,10 @@ namespace Garden.BLL.Interfaces
         //public string Update(Blog blog);
 
         public string Delete(string id);
+
+        public List<BlogComments> GetComments(string blog_id);
+
+        public string Insert_Comments(string blog_comment_id, string owner_id, string blog_id, string content);
+
     }
 }
