@@ -248,9 +248,9 @@ export default {
 .card {
     padding: 2vh;
     border-width: 0vh;
-    border-radius: 5vh;
+    border-radius: 2vh;
     box-shadow: 8px 8px 24px rgba(0, 0, 0, 0.2);
-    background-color: rgb(222, 217, 207);
+    background-color: rgb(246, 243, 239);
     margin-top: 3vh;
     margin-bottom: 3vh;
 }
@@ -268,7 +268,8 @@ export default {
 }
 
 .subcontent {
-    margin-bottom: 6vh;
+    margin-top: 0vh;
+    margin-bottom: 3vh;
     width: 100%;
     background-color: rgb(244, 237, 228);
     animation: slide-in-from-bottom 1s;

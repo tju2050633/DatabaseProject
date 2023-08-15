@@ -73,10 +73,10 @@
 
 <style scoped>
 .el-menu {
-  padding: 0vh;
+  padding: 1vh;
 
   border-width: 0vh;
-  border-radius: 3vh;
+  border-radius: 2vh;
 
   box-shadow: 8px 8px 24px rgba(0, 0, 0, 0.2);
   background-color: rgb(244, 237, 228);

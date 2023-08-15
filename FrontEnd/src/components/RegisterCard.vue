@@ -169,9 +169,9 @@ export default {
   height: 61vh;
   width: 22vw;
 
-  border-width: 1vh;
+  border-width: 3px;
   border-color: rgb(99, 110, 115);
-  border-radius: 5vh;
+  border-radius: 3vh;
 
   background-color: rgb(228, 220, 220);
 

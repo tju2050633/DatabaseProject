@@ -1,14 +1,15 @@
 <template>
-    <div class="point-item-block">
-        <el-card :body-style="{ padding: '0px' }">
-            <img :src="item.image" class="item-image" alt="Product Image" @load="resizeCard" />
-            <div class="item-info">
-                <div class="item-name">{{ item.name }}</div>
-                <div class="item-price">{{ item.price }} 积分</div>
-                <div class="item-exchange-count">已兑换：{{ item.exchangeCount }}&nbsp;&nbsp;剩余：{{ item.remainCount }}</div>
+    <el-card class="item-card">
+        <img :src="item.image" class="item-image" alt="Product Image" @load="resizeCard" />
+        <div class="item-info">
+            <div class="item-name">{{ item.name }}</div>
+            <div class="item-price">{{ item.price }} 积分</div>
+            <div class="item-exchange-count">
+                已兑换：{{ item.exchangeCount }}&nbsp;&nbsp;
+                剩余：{{ item.remainCount }}
             </div>
-        </el-card>
-    </div>
+        </div>
+    </el-card>
 </template>
   
 <script>
@@ -31,50 +32,51 @@ export default {
 };
 </script>
   
-<style>
-.point-item-block {
-    margin: 10px;
-    width: 90%;
+<style scoped>
+.item-card {
+    background-color: rgb(246, 243, 239);
+    border-radius: 3vh;
+    margin: 2vh;
     text-align: center;
     cursor: pointer;
-    transition: transform 0.3s;
+}
+
+.item-card:hover {
+    transform: scale(1.05);
+    transition: 0.5s;
 }
 
 .item-image {
-    margin: 15px;
-    width: 80%;
+    width: 90%;
     height: auto;
-    transition: transform 0.3s;
+    border-radius: 1vh;
 }
 
-.point-item-block:hover {
+.item-card:hover .item-image {
     transform: scale(1.1);
-}
-
-.point-item-block:hover .item-image {
-    transform: scale(1.2);
+    transition: 0.5s;
 }
 
 .item-info {
-    padding: 10px;
+    padding: 2vh;
     text-align: left;
 }
 
 .item-name {
-    font-size: 16px;
+    font-size: 2.5vh;
     font-weight: bold;
-    margin-bottom: 5px;
+    color: rgb(12, 60, 38);
 }
 
 .item-price {
-    font-size: 14px;
-    color: #888;
-    margin-bottom: 5px;
+    font-size: 2vh;
+    font-weight: bold;
+    color: rgb(99, 110, 115);
 }
 
 .item-exchange-count {
-    font-size: 12px;
-    color: #666;
+    font-size: 2vh;
+    color: rgb(99, 110, 115);
 }
 </style>
   

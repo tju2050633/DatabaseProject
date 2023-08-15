@@ -1,14 +1,8 @@
 <template>
-    <!-- 导航栏 -->
-    <NavBar />
-
     <body>
-        <br>
-        <br>
-        <br>
+        <div class="container">
+            <NavBar /> <!-- 导航栏 -->
 
-        <!-- 整体布局 -->
-        <div class="d-flex">
             <div class="row" style="width: 100%;">
 
                 <!-- 侧边栏 -->
@@ -17,7 +11,7 @@
                 </div>
 
                 <!-- 主体内容 -->
-                <div class="col-10">
+                <div class="col-8">
 
                     <!-- 标题卡片 -->
                     <div class="card heading-card">
@@ -131,10 +125,6 @@
 
             </div>
         </div>
-
-        <br>
-        <br>
-        <br>
     </body>
 </template>
 
@@ -205,27 +195,34 @@ body {
     background-attachment: fixed;
 }
 
-.d-flex {
-    margin-left: 10vw;
-    width: 65vw;
+.container {
+    margin-top: 60px;
+}
+
+.col-8 {
+    padding: 3vh;
 }
 
 .heading-card {
+    /* background-color: rgb(228, 220, 220); */
     border-width: 0vh;
-    border-radius: 5vh;
+    border-radius: 2vh;
 
-    background-color: rgb(228, 220, 220);
+    margin-bottom: 3vh;
+
+    color: rgb(4, 145, 59);
+    background-color: rgb(244, 237, 228);
     box-shadow: 8px 8px 24px rgba(0, 0, 0, 0.2);
 
     text-align: center;
     user-select: none;
     position: relative;
 
-    animation: slide-in-from-top 2s;
+    animation: slide-in-from-top 1s;
 }
 
 .heading-card:hover {
-    transform: scale(1.1);
+    transform: scale(1.02);
     transition: 1000ms;
 }
 
@@ -243,7 +240,7 @@ body {
     padding: 2vh;
 
     border-width: 0vh;
-    border-radius: 5vh;
+    border-radius: 2vh;
 
     box-shadow: 8px 8px 24px rgba(0, 0, 0, 0.2);
     background-color: rgb(244, 237, 228);
@@ -272,7 +269,8 @@ body {
 
 .author-avatar-img {
     cursor: pointer;
-    width: 3vw;
+    width: 50px;
+    height: 50px;
     border-radius: 50%;
     object-fit: cover;
 }

@@ -1,91 +1,61 @@
 <template>
-  <div class="container" style="margin-top: 60px">
-    <!-- 导航栏 -->
-    <NavBar />
+  <body>
+    <div class="container">
+      <NavBar /> <!-- 导航栏 -->
 
-    <el-row id="mainpart">
-      <!-- 侧边栏 -->
-      <SideBar />
-      <!-- 主体 -->
-      <el-col :span="13">
-        <el-container>
-          <!-- 标签栏 -->
-          <br />
-          <el-header><h1>志愿者招募</h1></el-header>
-          <!-- 志愿信息 -->
-          <el-main>
+      <el-row id="mainpart">
+        <SideBar /> <!-- 侧边栏 -->
+
+        <!-- 志愿者招募 -->
+        <el-col :span="13">
+          <el-container>
+
+            <!-- 标题 -->
+            <el-header class="heading-field">
+              <h1 class="heading">
+                <svg xmlns="http://www.w3.org/2000/svg" width="44" fill="currentColor" class="bi bi-person-lines-fill"
+                  viewBox="0 0 16 16">
+                  <path
+                    d="M6 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm-5 6s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zM11 3.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1h-4a.5.5 0 0 1-.5-.5zm.5 2.5a.5.5 0 0 0 0 1h4a.5.5 0 0 0 0-1h-4zm2 3a.5.5 0 0 0 0 1h2a.5.5 0 0 0 0-1h-2zm0 3a.5.5 0 0 0 0 1h2a.5.5 0 0 0 0-1h-2z" />
+                </svg>
+                &nbsp;志愿者招募
+              </h1>
+            </el-header>
+
+            <!-- 志愿信息 -->
             <!--这里实际项目中应该为数据库读取并展示-->
-            <el-card
-              v-for="(content, index) in volunteerContent"
-              :key="index"
-              style="margin: 20px; box-shadow: 0 10px 18px rgba(0, 0, 0, 0.53)"
-            >
+            <div v-for="(content, index) in volunteerContent" :key="index">
               <VolunteerBlock :content="content" />
 
               <!--志愿问卷-->
-              <span>
-                <el-button
-                  @click="volunteerDialog.dialogVisible = true"
-                  style="margin-top: 10px"
-                >
+              <div class="button-field">
+                <button class="btn btn-outline-secondary" @click="volunteerDialog.dialogVisible = true">
                   {{ "我要报名" }}
-                </el-button>
-                <el-button
-                  @click="this.$router.push('/garden/')"
-                  style="margin-top: 10px"
-                >
+                </button>
+                <button class="btn btn-outline-secondary" @click="this.$router.push('/garden/')">
                   {{ "进入花园" }}
-                </el-button>
-              </span>
+                </button>
+              </div>
 
               <!--报名弹窗-->
-              <el-dialog
-                v-model="volunteerDialog.dialogVisible"
-                title="Shipping address"
-              >
+              <el-dialog v-model="volunteerDialog.dialogVisible" title="报名表">
                 <el-form :model="form">
                   <el-form-item label="你的名字" :label-width="formLabelWidth">
-                    <el-input
-                      v-model="volunteerDialog.volunteername"
-                      style="width: 140px"
-                      autocomplete="off"
-                    />
+                    <el-input v-model="volunteerDialog.volunteername" style="width: 140px" autocomplete="off" />
                   </el-form-item>
                   <el-form-item label="电话号码" :label-width="formLabelWidth">
-                    <el-input
-                      v-model="volunteerDialog.phonenumber"
-                      style="width: 200px"
-                      autocomplete="off"
-                    />
+                    <el-input v-model="volunteerDialog.phonenumber" style="width: 200px" autocomplete="off" />
                   </el-form-item>
                   <el-form-item label="选择日期" :label-width="formLabelWidth">
-                    <el-select
-                      v-model="volunteerDialog.dayOfWeek"
-                      class="m-2"
-                      placeholder="星期"
-                    >
-                      <el-option
-                        v-for="item in week"
-                        :key="item.value"
-                        :label="item.label"
-                        :value="item.value"
-                      />
+                    <el-select v-model="volunteerDialog.dayOfWeek" class="m-2" placeholder="星期">
+                      <el-option v-for="item in week" :key="item.value" :label="item.label" :value="item.value" />
                     </el-select>
-                    <el-time-select
-                      v-model="volunteerDialog.time"
-                      start="08:30"
-                      step="00:15"
-                      end="18:30"
-                      placeholder="选择时间"
-                    />
+                    <el-time-select v-model="volunteerDialog.time" start="08:30" step="00:15" end="18:30"
+                      placeholder="选择时间" />
                   </el-form-item>
                   <el-form-item label="自我描述" :label-width="formLabelWidth">
-                    <el-input
-                      v-model="volunteerDialog.describe"
-                      :autosize="{ minRows: 2, maxRows: 10 }"
-                      type="textarea"
-                      placeholder="here"
-                    />
+                    <el-input v-model="volunteerDialog.describe" :autosize="{ minRows: 2, maxRows: 10 }" type="textarea"
+                      placeholder="here" />
                     <div style="margin: 20px 0" />
                   </el-form-item>
                 </el-form>
@@ -94,54 +64,146 @@
                     <el-button @click="volunteerDialog.dialogVisible = false">
                       Cancel
                     </el-button>
-                    <el-button
-                      type="primary"
-                      @click="volunteerDialog.dialogVisible = false"
-                    >
+                    <el-button type="primary" @click="volunteerDialog.dialogVisible = false">
                       Confirm
                     </el-button>
                   </span>
                 </template>
               </el-dialog>
-            </el-card>
-          </el-main>
-        </el-container>
-      </el-col>
+            </div>
 
-      <!-- 志愿工作榜 -->
-      <el-col :span="8">
-        <el-container>
-          <br />
-          <i class="el-icon-star-on"></i>
-          <el-header><h2>志愿工作榜</h2></el-header>
-          <el-main>
-            <el-col v-for="(item, index) in displayedImageList" :key="index">
-              <el-card @click="this.$router.push('/personalInfo/')">
-                <span
-                  ><h4>
-                    {{ item.description }}&ensp;
-                    <el-icon style="margin-top: 20px"><user /></el-icon>
-                    {{ item.username }}&ensp;
-                    {{ item.myPoints }}
-                  </h4></span
-                >
-              </el-card>
-            </el-col>
-            <br />
-            <el-button @click="toggleShowMore" style="margin-top: 10px">{{
-              showMore ? "收起" : "显示更多"
-            }}</el-button>
-          </el-main>
-        </el-container>
-      </el-col>
-    </el-row>
-  </div>
+          </el-container>
+        </el-col>
+
+        <!-- 志愿工作榜 -->
+        <el-col :span="8">
+          <el-container>
+
+            <!-- 标题 -->
+            <el-header class="heading-field">
+              <h1 class="heading">
+                <svg xmlns="http://www.w3.org/2000/svg" width="44" fill="currentColor" class="bi bi-list-ul"
+                  viewBox="0 0 16 16">
+                  <path fill-rule="evenodd"
+                    d="M5 11.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zm-3 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm0 4a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm0 4a1 1 0 1 0 0-2 1 1 0 0 0 0 2z" />
+                </svg>
+                &nbsp;志愿工作榜
+              </h1>
+            </el-header>
+
+            <el-main>
+              <el-col v-for="(item, index) in displayedImageList" :key="index">
+                <div class="card volunteer-list" @click="this.$router.push('/personalInfo/')">
+                  <span>
+                    <h4 class="volunteer-list-text">
+                      {{ item.description }}&ensp;
+                      <el-icon style="margin-top: 20px">
+                        <user />
+                      </el-icon>
+                      {{ item.username }}&ensp;
+                      {{ item.myPoints }}
+                    </h4>
+                  </span>
+                </div>
+              </el-col>
+
+              <br />
+
+              <button class="btn btn-secondary" @click="toggleShowMore" style="margin-top: 10px">
+                {{ showMore ? "收起" : "显示更多" }}</button>
+            </el-main>
+
+          </el-container>
+        </el-col>
+
+      </el-row>
+
+    </div>
+  </body>
 </template>
 
-<style></style>
+<style scoped>
+body {
+  background-color: rgb(245, 235, 226);
+  background-image: url("../assets/img-volunteer.jpg");
+  background-size: 30vw;
+  background-repeat: no-repeat;
+  position: relative;
+  background-position: 65vw 35vh;
+  background-attachment: fixed;
+}
+
+.container {
+  margin-top: 60px
+}
+
+.heading-field {
+  margin-top: 6vh;
+  margin-bottom: 3vh;
+}
+
+.heading {
+  text-align: center;
+  font-size: 6vh;
+  font-weight: bold;
+  color: rgb(12, 60, 38);
+
+  animation: fade-in 2s;
+}
+
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+.button-field {
+  text-align: center;
+}
+
+.btn {
+  margin-top: 1vh;
+  margin-bottom: 5vh;
+  margin-left: 3vh;
+  margin-right: 3vh;
+}
+
+.btn:hover {
+  transform: scale(1.1);
+  transition: 500ms;
+}
+
+.volunteer-list {
+  padding: 2vh;
+  margin-bottom: 1vh;
+
+  border-width: 0vh;
+  border-radius: 2vh;
+
+  box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.2);
+  background-color: rgb(246, 243, 239);
+
+}
+
+.volunteer-list:hover {
+  cursor: pointer;
+  transform: scale(1.05);
+  transition: 300ms;
+}
+
+.volunteer-list-text {
+  font-size: 2.5vh;
+  font-weight: bold;
+  color: rgb(99, 110, 115);
+}
+</style>
 
 <script>
-import {getVolunteerList,getVolunteerContent,submitForm} from '../api/VolunteerAPI'
+import { getVolunteerList, getVolunteerContent, submitForm } from '../api/VolunteerAPI'
 export default {
   el: "#mainpart",
   data() {
@@ -290,28 +352,28 @@ export default {
       }
     },
     async getVolunteerContent() {
-            try {
-                    const { username, gardenname,location,describe,imageUrl } = await getVolunteerContent();
-                    this.volunteerContent.username=username;
-                    this.volunteerContent.gardenname=gardenname;
-                    this.volunteerContent.location=location;
-                    this.volunteerContent.describe=describe;
-                    this.volunteerContent.imageUrl=imageUrl;
-                }
-            catch (error) {
-                console.error('Error', error);
-            }
-        },
+      try {
+        const { username, gardenname, location, describe, imageUrl } = await getVolunteerContent();
+        this.volunteerContent.username = username;
+        this.volunteerContent.gardenname = gardenname;
+        this.volunteerContent.location = location;
+        this.volunteerContent.describe = describe;
+        this.volunteerContent.imageUrl = imageUrl;
+      }
+      catch (error) {
+        console.error('Error', error);
+      }
+    },
     async getVolunteerList() {
-            try {
-                    const { username, Points} = await getVolunteerList();
-                    this.getVolunteerList.username=username;
-                    this.getVolunteerList.myPoints=Points;
-                }
-            catch (error) {
-                console.error('Error', error);
-            }
-        },
+      try {
+        const { username, Points } = await getVolunteerList();
+        this.getVolunteerList.username = username;
+        this.getVolunteerList.myPoints = Points;
+      }
+      catch (error) {
+        console.error('Error', error);
+      }
+    },
     async submitForm() {
       try {
         const response = await submitForm();
