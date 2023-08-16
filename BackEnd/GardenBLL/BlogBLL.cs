@@ -8,6 +8,8 @@ namespace Garden.BLL
     {
         AccountDAL accountDAL = new();
         BlogDAL blogDAL = new();
+        BlogCommentsDAL blogcommentsDAL = new();
+
         public Blog GetSingleBlog(string id)
         {
             return blogDAL.GetBlogById(id, out _);
@@ -44,6 +46,34 @@ namespace Garden.BLL
             else
             {
                 return "删除失败。";
+            }
+        }
+
+
+        public List<BlogComments> GetComments(string blog_id)
+        {
+            return blogcommentsDAL.GetCommentsById(blog_id, out _);
+        }
+
+        public string Insert_Comments(string blog_comment_id, string owner_id, string blog_id, string content)
+        {
+            BlogComments blogcomments_info = new()
+            {
+                BlogCommentId = blog_comment_id,
+                OwnerId = owner_id,
+                BlogId = blog_id,
+                ReleaseTime = DateTime.Now,
+                Content = content
+            };
+
+            bool Ins = blogcommentsDAL.Insert_Comment(blogcomments_info);
+            if (Ins)
+            {
+                return "评论发布成功";
+            }
+            else
+            {
+                return "评论发布失败，请重试";
             }
         }
     }
