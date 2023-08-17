@@ -10,15 +10,18 @@ namespace Garden.DAL
 
         private static GardenEntity ToModel(DataRow row)
         {
-            GardenEntity garden = new();
-            garden.GardenId = row["garden_id"].ToString();
-            garden.OwnerId = row["owner_id"].ToString();
-            garden.Pictures = row["pictures"].ToString();
-            garden.CreateTime = Convert.ToDateTime(row["create_time"]);
-            garden.Description = row["description"].ToString();
-            garden.Position = row["position"].ToString();
-            garden.Stars = Convert.ToInt32(row["stars"]);
-            garden.Status = Convert.ToInt32(row["status"]);
+            GardenEntity garden = new()
+            {
+                GardenId = row["garden_id"].ToString(),
+                OwnerId = row["owner_id"].ToString(),
+                Name = row["name"].ToString(),
+                Pictures = row["pictures"].ToString(),
+                CreateTime = Convert.ToDateTime(row["create_time"]),
+                Description = row["description"].ToString(),
+                Position = row["position"].ToString(),
+                Stars = Convert.ToInt32(row["stars"]),
+                Status = Convert.ToInt32(row["status"])
+            };
 
             return garden;
         }
@@ -35,10 +38,8 @@ namespace Garden.DAL
             return G;
         }
 
-
         public GardenEntity GetGardenById(string garden_id, out int status)
         {
-
             try
             {
                 string sql = "SELECT * FROM garden WHERE garden_id=:id";
@@ -62,15 +63,78 @@ namespace Garden.DAL
             }
         }
 
+        public List<GardenEntity> GetGardensByOwnerId(string owner_id)
+        {
+            try
+            {
+                string sql = "SELECT * FROM garden WHERE owner_id=:id";
+                DataTable dt = OracleHelper.ExecuteTable(sql,
+                    new OracleParameter("id", OracleDbType.Char) { Value = owner_id });
+                return ToModelList(dt);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return null;
+            }
+        }     
+
+        public List<GardenEntity> GetPopularGardens(int offset)
+        {
+            try
+            {
+                string sql = "SELECT * FROM garden WHERE status=0 ORDER BY stars DESC OFFSET :offset ROWS FETCH NEXT 10 ROWS ONLY";
+                DataTable dt = OracleHelper.ExecuteTable(sql,
+                    new OracleParameter("offset", OracleDbType.Int32) { Value = offset });
+                return ToModelList(dt);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return null;
+            }
+        }
+
+        public List<GardenEntity> GetRecentGardens(int offset)
+        {
+            try
+            {
+                string sql = "SELECT * FROM garden WHERE status=0 ORDER BY create_time DESC OFFSET :offset ROWS FETCH NEXT 10 ROWS ONLY";
+                DataTable dt = OracleHelper.ExecuteTable(sql,
+                    new OracleParameter("offset", OracleDbType.Int32) { Value = offset });
+                return ToModelList(dt);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return null;
+            }
+        }
+
+        public List<GardenEntity> GetTopGardens()
+        {
+            try
+            {
+                string sql = "SELECT * FROM garden WHERE status=0 ORDER BY stars DESC FETCH FIRST 5 ROWS ONLY";
+                DataTable dt = OracleHelper.ExecuteTable(sql);
+                return ToModelList(dt);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return null;
+            }
+        }
+
         public bool Insert(GardenEntity garden)
         {
             try
             {
-                string sql = "INSERT INTO garden(garden_id, owner_id, pictures, create_time, description, position, stars, status) VALUES(garden_seq.NEXTVAL, :garden_id, :owner_id, :pictures, :create_time, :description, :position, :stars, :status)";
+                string sql = "INSERT INTO garden(garden_id, owner_id, name, pictures, create_time, description, position, stars, status) VALUES(garden_seq.NEXTVAL, :owner_id, :name, :pictures, :create_time, :description, :position, :stars, :status)";
                 OracleParameter[] oracleParameters = new OracleParameter[]
                 {
-                    new OracleParameter("garden_id", OracleDbType.Char) { Value = garden.GardenId },
                     new OracleParameter("owner_id", OracleDbType.Char) { Value = garden.OwnerId },
+                    new OracleParameter("name", OracleDbType.Varchar2) { Value = garden.Name },
                     new OracleParameter("pictures", OracleDbType.Varchar2) { Value = garden.Pictures },
                     new OracleParameter("create_time", OracleDbType.Date) { Value = garden.CreateTime},
                     new OracleParameter("description", OracleDbType.Clob) { Value = garden.Description },
@@ -83,17 +147,15 @@ namespace Garden.DAL
                 return true;
             }
 
-
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
                 if (ex.Message.Contains("ORA-02185"))
                 {
                     return true;
                 }
+                Console.WriteLine(ex.Message);
                 return false;
             }
         }
     }
-
 }

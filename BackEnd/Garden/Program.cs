@@ -15,6 +15,7 @@ builder.Services.AddSingleton<IAccountBLL, AccountBLL>();
 builder.Services.AddSingleton<IBlogBLL, BlogBLL>();
 builder.Services.AddSingleton<IGardenBLL, GardenBLL>();
 builder.Services.AddSingleton<IVolunteerBLL, VolunteerBLL>();
+builder.Services.AddSingleton<IItemsBLL, ItemsBLL>();
 
 var app = builder.Build();
 

@@ -6,7 +6,7 @@
         public string GardenId { get; set; }
         public DateTime? MaintenanceTime { get; set; }
         public string VolunteerId { get; set; }
-        public string? MaintenanceDescription { get; set; }
+        public string? Description { get; set; }
         public int? Point { get; set; }
     }
 }
