@@ -1,5 +1,6 @@
 ﻿using Garden.BLL.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using Garden.Models;
 
 namespace Garden.Controllers
 {
@@ -31,5 +32,24 @@ namespace Garden.Controllers
             return _accountBLL.Register(id, pwd, name);
         }
 
+        // 输入账号id
+        // 返回Account：
+        /*{
+            "accountId": "1         ",
+            "studentStaffId": "3         ",
+            "password": "123",
+            "accountName": "test",
+            "email": "",
+            "phone": "",
+            "portrait": "",
+            "bio": "",
+            "joinTime": "2023-07-04T00:30:00",
+            "points": 0
+        }*/
+    [HttpGet("id")]
+        public ActionResult<Account> GetAllInfo(string id) 
+        {
+            return _accountBLL.GetAllInfo(id);
+        }
     }
 }

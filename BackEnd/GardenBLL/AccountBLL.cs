@@ -47,5 +47,11 @@ namespace Garden.BLL
             accountDAL.Insert(password, accountName, System.DateTime.Now, ssid);
             return "注册成功";
         }
+
+        public Account GetAllInfo(string id)
+        {
+            int status;
+            return accountDAL.GetAccountById(id, out status);
+        }
     }
 }
