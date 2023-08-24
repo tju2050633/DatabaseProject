@@ -62,3 +62,30 @@ body{
 .all-img-head{
     animation: rotateSlideIn 2s ease-in-out;
 }
+
+.navtag {
+  font-size: 3.5vh;
+  color: rgb(12, 60, 38) !important;
+}
+
+.gardenResults{
+    background-color: rgb(244, 237, 228) !important;
+    animation: fade-in 3s backwards;
+    margin: 20px;
+    box-shadow: 0 10px 18px rgba(0, 0, 0, 0.53);
+    width: 700px;
+    height: auto;
+}
+
+.volunteerResults{
+    background-color: rgb(244, 237, 228) !important;
+    animation: fade-in 3s backwards;
+    margin: 20px;
+    box-shadow: 0 10px 18px rgba(0, 0, 0, 0.53);
+    width: 700px;
+    height: auto;
+}
+
+.upload-container{
+  margin-left: 0px;
+}
