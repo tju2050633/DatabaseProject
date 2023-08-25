@@ -164,25 +164,6 @@
 
           <div class="colored-line"></div> <!-- 分隔线 -->
 
-          <!-- 博客详情展示-->
-          <div class="blog-field">
-
-            <!-- 两列布局 -->
-            <div class="row row-cols-2">
-              <div class="col" v-for="(blog, index) in blogs" :key="index">
-
-                <!-- 博客卡片 -->
-                <div class="card item-card">
-                  <BlogBlock :card="blog" />
-                </div>
-
-              </div>
-            </div>
-
-          </div>
-
-          <div class="colored-line"></div> <!-- 分隔线 -->
-
           <!-- 花园详情展示-->
           <div class="garden-field">
 
@@ -198,6 +179,11 @@
               </div>
             </div>
 
+          </div>
+
+          <!-- 加载更多 -->
+          <div>
+            <button class="btn btn-outline-success show-more-btn" @click="loadMoreGardens">加载更多</button>
           </div>
 
         </div>
@@ -324,197 +310,161 @@ body {
 
   padding: 2vh;
 }
+
+.show-more-btn {
+  margin: 2vh auto 10vh 0vh;
+}
 </style>
 
 <script>
+import { reactive, ref, onMounted } from "vue";
+import API from "@/api/basicApi.js";
+
 export default {
   name: "HomePageView",
-  data() {
+  setup() {
+    const mainPageDem = reactive([
+      { description: "", src: require("../assets/logo.png") },
+      { description: "", src: require("../assets/mainpage.jpeg") },
+      { description: "", src: require("../assets/mainpage.jpeg") },
+      { description: "", src: require("../assets/mainpage.jpeg") },
+    ]);
+
+    const hotImages = reactive([
+      {
+        imageUrl: require("../assets/Garden-e.jpg"),
+        username: "Student1",
+        gardenname: "Garden1",
+        hot: "90",
+      },
+      {
+        imageUrl: require("../assets/Garden-e.jpg"),
+        username: "Student2",
+        gardenname: "Garden2",
+        hot: "80",
+      },
+      {
+        imageUrl: require("../assets/Garden-e.jpg"),
+        username: "Student3",
+        gardenname: "Garden3",
+        hot: "70",
+      },
+      {
+        imageUrl: require("../assets/Garden-e.jpg"),
+        username: "Student4",
+        gardenname: "Garden4",
+        hot: "60",
+      },
+    ]);
+
+    //定义花园读取要用的变量
+    const state = reactive({
+      currentPage: 1, //当前的花园页面，用于花园分页与无限刷新
+      gardens: [], //花园列表
+      pageSize: 10, //花园分页大小
+    });
+
+    //错误信息
+    let errMessage = ref("");
+
+    // 执行一些初始化逻辑
+    onMounted(() => {
+      // this.loadBlogs();测试已有接口不掉用该函数
+      loadGardenUsingId();
+    });
+
+    //跳转到花园页面时获取初始的花园数据
+    const loadGardens = () => {
+      console.log("开始花园读取");
+      API({
+        url: "/Garden/",
+        method: "get",
+        params: {
+          page: state.currentPage,
+          pagesize: state.pageSize,
+        },
+      }).then(
+        function (res) {
+          console.log("获取成功");
+          state.gardens = res.data;
+        },
+        function (err) {
+          console.log("获取失败");
+          errMessage.value = err.data;
+        }
+      );
+    };
+
+    //加载更多的花园数据
+    const loadMoreGardens = () => {
+      console.log("开始花园读取");
+      API({
+        url: "/Garden/",
+        method: "get",
+        params: {
+          page: state.currentPage,
+          pagesize: state.pageSize,
+        },
+      }).then(
+        function (res) {
+          console.log("获取更多成功");
+          state.currentPage++;
+          state.gardens.push(res.data);
+        },
+        function (err) {
+          console.log("获取更多失败");
+          errMessage.value = err.data;
+        }
+      );
+    };
+
+    //下面用于测试已有的接口
+    //将后端返回的数据格式改为前端使用的cards
+    const toCard = (garden) => {
+      console.log(garden.content);
+      var card = {
+        imageUrl: require("../assets/Garden-e.jpg"), //后端数据库没有
+        username: garden.username,
+        gardenname: garden.gardenname,
+        hot: garden.hot,
+      };
+      return card;
+    };
+
+    const loadGardenUsingId = () => {
+      console.log("开始花园读取测试");
+      API({
+        url: "/Garden/",
+        method: "get",
+        params: {
+          id: 2, //测试数据写死
+        },
+      }).then(
+        function (res) {
+          console.log("测试成功");
+          //测试获得的内容
+          console.log(res.data);
+          state.gardens.push(res.data);
+          hotImages.push(toCard(res.data));
+        },
+        function (err) {
+          console.log("测试失败");
+          errMessage.value = err.data;
+        }
+      );
+    };
+
     return {
-      searchHistory: [
-        "111",
-        "222",
-        "333",
-        "444",
-        "555",
-        "666",
-        "777",
-        "888",
-        "999",
-        "000",
-      ],
-      hotsListFlag: true,
-      focusFlag: false,
-
-      blogs: [
-        {
-          author: "作者1",
-          avatar: require("../assets/author-avatar.jpg"),
-          blogName: "博客名称1",
-          partialContent: `(字体暂未确定)这里是文章内容的一小部分...只因你太美 baby只因你太美 baby只因你实在是太美 baby只因你太美 baby迎面走来的你让我如此蠢蠢欲动`,
-          fullContent: `(字体暂未确定)这里是文章内容的一小部分...只因你太美 baby只因你太美 baby只因你实在是太美 baby只因你太美 baby迎面走来的你让我如此蠢蠢欲动
-                    这种感觉我从未有Cause I got a crush on you who you你是我的我是你的谁再多一眼看一眼就会爆炸再近
-                    一点靠近点快被融化想要把你占为己有 baby bae不管走到哪里都会想起的人是你 you you我应该拿你怎样Uh 
-                    所有人都在看着你我的心总是不安Oh 我现在已病入膏肓Eh oh难道真的因你而疯狂吗我本来不是这种人因你变
-                    成奇怪的人第一次呀变成这样的我不管我怎么去否认只因你太美 baby只因你太美 baby只因你实在是太美
-                    baby只因你太美 babyOh eh oh现在确认地告诉我Oh eh oh你到底属于谁Oh eh oh`,
-          showFullContent: false,
-          isOpen: false,
-          comments: [
-            { user: "User1", content: "Comment 1" },
-            { user: "User2", content: "Comment 2" },
-            // Add more comments here
-          ],
-          liked: false, // 是否已点赞
-          totalLikes: 114, // 总点赞次数
-          showInput: false,
-          comment: "",
-        },
-        {
-          author: "作者2",
-          avatar: require("../assets/author-avatar.jpg"),
-          blogName: "博客名称2",
-          partialContent: `(字体暂未确定)这里是文章内容的一小部分...只因你太美 baby只因你太美 baby只因你实在是太美 baby只因你太美 baby迎面走来的你让我如此蠢蠢欲动`,
-          fullContent: `(字体暂未确定)这里是文章内容的一小部分...只因你太美 baby只因你太美 baby只因你实在是太美 baby只因你太美 baby迎面走来的你让我如此蠢蠢欲动
-                    这种感觉我从未有Cause I got a crush on you who you你是我的我是你的谁再多一眼看一眼就会爆炸再近
-                    一点靠近点快被融化想要把你占为己有 baby bae不管走到哪里都会想起的人是你 you you我应该拿你怎样Uh 
-                    所有人都在看着你我的心总是不安Oh 我现在已病入膏肓Eh oh难道真的因你而疯狂吗我本来不是这种人因你变
-                    成奇怪的人第一次呀变成这样的我不管我怎么去否认只因你太美 baby只因你太美 baby只因你实在是太美
-                    baby只因你太美 babyOh eh oh现在确认地告诉我Oh eh oh你到底属于谁Oh eh oh`,
-          showFullContent: false,
-          isOpen: false,
-          comments: [
-            { user: "User3", content: "Comment 3" },
-            { user: "User4", content: "Comment 4" },
-            // Add more comments here
-          ],
-          liked: false, // 是否已点赞
-          totalLikes: 514, // 总点赞次数
-          showInput: false,
-          comment: "",
-        },
-        {
-          author: "作者3",
-          avatar: require("../assets/author-avatar.jpg"),
-          blogName: "博客名称3",
-          partialContent: `(字体暂未确定)这里是文章内容的一小部分...只因你太美 baby只因你太美 baby只因你实在是太美 baby只因你太美 baby迎面走来的你让我如此蠢蠢欲动`,
-          fullContent: `(字体暂未确定)这里是文章内容的一小部分...只因你太美 baby只因你太美 baby只因你实在是太美 baby只因你太美 baby迎面走来的你让我如此蠢蠢欲动
-                    这种感觉我从未有Cause I got a crush on you who you你是我的我是你的谁再多一眼看一眼就会爆炸再近
-                    一点靠近点快被融化想要把你占为己有 baby bae不管走到哪里都会想起的人是你 you you我应该拿你怎样Uh 
-                    所有人都在看着你我的心总是不安Oh 我现在已病入膏肓Eh oh难道真的因你而疯狂吗我本来不是这种人因你变
-                    成奇怪的人第一次呀变成这样的我不管我怎么去否认只因你太美 baby只因你太美 baby只因你实在是太美
-                    baby只因你太美 babyOh eh oh现在确认地告诉我Oh eh oh你到底属于谁Oh eh oh`,
-          showFullContent: false,
-          isOpen: false,
-          comments: [
-            { user: "User5", content: "Comment 5" },
-            { user: "User6", content: "Comment 6" },
-            // Add more comments here
-          ],
-          liked: false, // 是否已点赞
-          totalLikes: 19, // 总点赞次数
-          showInput: false,
-          comment: "",
-        },
-        {
-          author: "作者4",
-          avatar: require("../assets/author-avatar.jpg"),
-          blogName: "博客名称4",
-          partialContent: `(字体暂未确定)这里是文章内容的一小部分...只因你太美 baby只因你太美 baby只因你实在是太美 baby只因你太美 baby迎面走来的你让我如此蠢蠢欲动`,
-          fullContent: `(字体暂未确定)这里是文章内容的一小部分...只因你太美 baby只因你太美 baby只因你实在是太美 baby只因你太美 baby迎面走来的你让我如此蠢蠢欲动
-                    这种感觉我从未有Cause I got a crush on you who you你是我的我是你的谁再多一眼看一眼就会爆炸再近
-                    一点靠近点快被融化想要把你占为己有 baby bae不管走到哪里都会想起的人是你 you you我应该拿你怎样Uh 
-                    所有人都在看着你我的心总是不安Oh 我现在已病入膏肓Eh oh难道真的因你而疯狂吗我本来不是这种人因你变
-                    成奇怪的人第一次呀变成这样的我不管我怎么去否认只因你太美 baby只因你太美 baby只因你实在是太美
-                    baby只因你太美 babyOh eh oh现在确认地告诉我Oh eh oh你到底属于谁Oh eh oh`,
-          showFullContent: false,
-          isOpen: false,
-          comments: [
-            { user: "User7", content: "Comment 7" },
-            { user: "User8", content: "Comment 8" },
-            // Add more comments here
-          ],
-          liked: false, // 是否已点赞
-          totalLikes: 19, // 总点赞次数
-          showInput: false,
-          comment: "",
-        },
-        {
-          author: "作者5",
-          avatar: require("../assets/author-avatar.jpg"),
-          blogName: "博客名称5",
-          partialContent: `(字体暂未确定)这里是文章内容的一小部分...只因你太美 baby只因你太美 baby只因你实在是太美 baby只因你太美 baby迎面走来的你让我如此蠢蠢欲动`,
-          fullContent: `(字体暂未确定)这里是文章内容的一小部分...只因你太美 baby只因你太美 baby只因你实在是太美 baby只因你太美 baby迎面走来的你让我如此蠢蠢欲动
-                    这种感觉我从未有Cause I got a crush on you who you你是我的我是你的谁再多一眼看一眼就会爆炸再近
-                    一点靠近点快被融化想要把你占为己有 baby bae不管走到哪里都会想起的人是你 you you我应该拿你怎样Uh 
-                    所有人都在看着你我的心总是不安Oh 我现在已病入膏肓Eh oh难道真的因你而疯狂吗我本来不是这种人因你变
-                    成奇怪的人第一次呀变成这样的我不管我怎么去否认只因你太美 baby只因你太美 baby只因你实在是太美
-                    baby只因你太美 babyOh eh oh现在确认地告诉我Oh eh oh你到底属于谁Oh eh oh`,
-          showFullContent: false,
-          isOpen: false,
-          comments: [
-            { user: "User9", content: "Comment 9" },
-            { user: "User10", content: "Comment 10" },
-            // Add more comments here
-          ],
-          liked: false, // 是否已点赞
-          totalLikes: 810, // 总点赞次数
-          showInput: false,
-          comment: "",
-        },
-        // 添加更多卡片...
-      ],
-
-      hotImages: [
-        {
-          imageUrl: require("../assets/Garden-e.jpg"),
-          username: "Student1",
-          gardenname: "Garden1",
-          hot: "90",
-        },
-        {
-          imageUrl: require("../assets/Garden-e.jpg"),
-          username: "Student2",
-          gardenname: "Garden2",
-          hot: "80",
-        },
-        {
-          imageUrl: require("../assets/Garden-e.jpg"),
-          username: "Student3",
-          gardenname: "Garden3",
-          hot: "70",
-        },
-        {
-          imageUrl: require("../assets/Garden-e.jpg"),
-          username: "Student4",
-          gardenname: "Garden4",
-          hot: "60",
-        },
-        {
-          imageUrl: require("../assets/Garden-e.jpg"),
-          username: "Student5",
-          gardenname: "Garden5",
-          hot: "50",
-        },
-      ],
-
-      UserInfo: { name: "未登录", accountId: "#", type: "#" },
-      mainPageDem: [
-        { description: "", src: require("../assets/logo.png") },
-        { description: "", src: require("../assets/mainpage.jpeg") },
-        { description: "", src: require("../assets/mainpage.jpeg") },
-        { description: "", src: require("../assets/mainpage.jpeg") },
-      ],
-      avatarUrl:
-        "https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png",
-      searchData: "",
-      currentDate: new Date(),
-      blockData: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
-      len: 10,
+      mainPageDem,
+      hotImages,
+      state,
+      errMessage,
+      loadGardens,
+      loadMoreGardens,
+      toCard,
+      loadGardenUsingId,
     };
   },
-  methods: {},
-  computed: {},
 };
 </script>
 
