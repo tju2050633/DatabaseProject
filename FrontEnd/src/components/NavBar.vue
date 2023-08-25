@@ -192,6 +192,8 @@
 import { useStore } from "vuex";
 import { reactive, onMounted } from "vue";
 import router from "@/router";
+import "../api/searchApi.js";
+import { getSearchResults } from "../api/searchApi.js";
 
 export default {
   name: "NavBar",
@@ -237,29 +239,6 @@ export default {
               showInput: false,
               comment: "",
             },
-            {
-              author: "作者2",
-              avatar: require("../assets/author-avatar.jpg"),
-              blogName: "博客名称2",
-              partialContent: `(字体暂未确定)这里是文章内容的一小部分...只因你太美 baby只因你太美 baby只因你实在是太美 baby只因你太美 baby迎面走来的你让我如此蠢蠢欲动`,
-              fullContent: `(字体暂未确定)这里是文章内容的一小部分...只因你太美 baby只因你太美 baby只因你实在是太美 baby只因你太美 baby迎面走来的你让我如此蠢蠢欲动
-                    这种感觉我从未有Cause I got a crush on you who you你是我的我是你的谁再多一眼看一眼就会爆炸再近
-                    一点靠近点快被融化想要把你占为己有 baby bae不管走到哪里都会想起的人是你 you you我应该拿你怎样Uh 
-                    所有人都在看着你我的心总是不安Oh 我现在已病入膏肓Eh oh难道真的因你而疯狂吗我本来不是这种人因你变
-                    成奇怪的人第一次呀变成这样的我不管我怎么去否认只因你太美 baby只因你太美 baby只因你实在是太美
-                    baby只因你太美 babyOh eh oh现在确认地告诉我Oh eh oh你到底属于谁Oh eh oh`,
-              showFullContent: false,
-              isOpen: false,
-              comments: [
-                { user: "User3", content: "Comment 3" },
-                { user: "User4", content: "Comment 4" },
-                // Add more comments here
-              ],
-              liked: false, // 是否已点赞
-              totalLikes: 514, // 总点赞次数
-              showInput: false,
-              comment: "",
-            },
           ],
         },
         {
@@ -271,12 +250,6 @@ export default {
               username: "Student1",
               gardenname: "Garden1",
               hot: "90",
-            },
-            {
-              imageUrl: require("../assets/Garden-e.jpg"),
-              username: "Student2",
-              gardenname: "Garden2",
-              hot: "80",
             },
           ],
         },
@@ -295,18 +268,6 @@ export default {
               dialogVisible: false, //是否出现弹窗
               username: "Student1",
               gardenname: "王浩的后宫1",
-              location: "嘉定校区19号楼",
-              describe: `诚邀您来维护本花园，主要工作如下：
-                    首先，帮我把花园的土给翻了
-                    然后，我的花园一盆花都没有，帮我全买了 
-                    最后帮我浇水
-                    谢谢你`,
-            },
-            {
-              imageUrl: require("../assets/Garden-e.jpg"),
-              dialogVisible: false,
-              username: "Student2",
-              gardenname: "Garden2",
               location: "嘉定校区19号楼",
               describe: `诚邀您来维护本花园，主要工作如下：
                     首先，帮我把花园的土给翻了
@@ -361,6 +322,75 @@ export default {
     }
 
     //添加一个函数处理返回的搜索结果为前端所用的数据结构
+    //将后端返回的数据格式改为前端使用的cards
+    const toCard = (backendData) => {
+      backendData.forEach((item) => {
+        const type = item.type;
+        const data = item.data;
+
+        let formattedItem = {};
+
+        if (type === "blog") {
+          // 如果类型为博客(blog)
+          const blogData = data.map((blog) => ({
+            author: blog.author,
+            avatar: require("../assets/author-avatar.jpg"), // 根据需要设置正确的路径
+            blogName: blog.blogName,
+            partialContent: blog.partialContent,
+            fullContent: blog.fullContent,
+            showFullContent: blog.showFullContent,
+            isOpen: blog.isOpen,
+            comments: blog.comments,
+            liked: blog.liked,
+            totalLikes: blog.totalLikes,
+            showInput: blog.showInput,
+            comment: blog.comment,
+          }));
+
+          formattedItem = {
+            type: "blog",
+            data: blogData,
+          };
+        } else if (type === "garden") {
+          // 如果类型为花园(garden)
+          const gardenData = data.map((garden) => ({
+            imageUrl: require("../assets/Garden-e.jpg"), // 根据需要设置正确的路径
+            username: garden.username,
+            gardenname: garden.gardenname,
+            hot: garden.hot,
+          }));
+
+          formattedItem = {
+            type: "garden",
+            data: gardenData,
+          };
+        } else if (type === "item") {
+          // 如果类型为物品(item)
+          // 这里可以根据需要设置物品数据的格式
+          formattedItem = {
+            type: "item",
+            data: [], // 物品数据为空
+          };
+        } else if (type === "volunteer") {
+          // 如果类型为志愿者(volunteer)
+          const volunteerData = data.map((volunteer) => ({
+            imageUrl: require("../assets/Garden-e.jpg"), // 根据需要设置正确的路径
+            dialogVisible: volunteer.dialogVisible,
+            username: volunteer.username,
+            gardenname: volunteer.gardenname,
+            location: volunteer.location,
+            describe: volunteer.describe,
+          }));
+
+          formattedItem = {
+            type: "volunteer",
+            data: volunteerData,
+          };
+        }
+
+        state.searchResults.push(formattedItem);
+      });
+    };
 
     // 监听搜索表单的提交事件，保存新的搜索记录（这里实现正式的搜索算法）
     function search() {
@@ -372,10 +402,24 @@ export default {
           JSON.stringify(state.searchHistory)
         );
         state.searchTerm = "";
+        state.filteredSearchHistory = [...state.searchHistory];
       }
       console.log("搜索成功");
 
-      //写搜索接口，通过API接口将搜索关键字传到后端，后端访问数据库给出处理并返回结果
+      //通过API接口将搜索关键字传到后端，后端访问数据库给出处理并返回结果
+      getSearchResults(state.searchTerm).then(
+        function (res) {
+          console.log("获取成功");
+          //测试获得的内容
+          console.log(res.data);
+          //转换格式
+          toCard(res.data);
+        },
+        function (err) {
+          console.log("获取失败", err.data);
+        }
+      );
+
       const isSearchResultsEmpty = state.searchResults.every(
         (result) => result.data.length === 0
       );
@@ -404,6 +448,7 @@ export default {
       search,
       selectSearchTerm,
       clearSearchHistory,
+      toCard,
       scrollToTop,
     };
   },

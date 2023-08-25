@@ -120,11 +120,15 @@ body {
 .blogBody{
     background-color: rgb(244, 237, 228);
     background-image: url("https://img1.imgtp.com/2023/08/09/NwJQnCO8.jpg");
-    background-size: 200px 200px;
-    background-repeat: repeat-y;
+    background-size: 400px 400px;
+    /* background-repeat: repeat-y;
     position: relative;
     background-position: left;
-    animation: fade-in 3s backwards;
+    animation: fade-in 3s backwards; */
+      background-repeat: no-repeat;
+  position: relative;
+  background-position: left;
+  background-attachment: fixed;
 }
 
 .blog-card {

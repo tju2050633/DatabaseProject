@@ -8,85 +8,155 @@
             src="../assets/searchResults.png"
           /> </el-card
       ></el-col>
-      <el-row class="d-flex">
-        <el-col :span="14" :offset="2">
-          <div>
-            <img class="all-img-head" src="../assets/blog-header.png" />
-          </div>
-          <el-card
-            v-for="(card, index) in blogResults"
-            :key="index"
-            class="blogResults"
-          >
-            <BlogBlock :card="card" />
-          </el-card>
-          <div>
-            <button @click="loadMore('BlogView')">查看更多</button>
-          </div>
+
+      <!-- 标签栏 -->
+
+      <br /><br />
+
+      <el-row :gutter="30">
+        <el-col :offset="0">
+          <el-breadcrumb separator="|">
+            <el-breadcrumb-item :to="{}" class="navtag"></el-breadcrumb-item>
+            <el-breadcrumb-item
+              :to="{}"
+              @click="refresh(1)"
+              :class="{ active: chooseComponent === 1 }"
+              class="navtag"
+              >博客</el-breadcrumb-item
+            >
+            <el-breadcrumb-item
+              :to="{}"
+              @click="refresh(2)"
+              :class="{ active: chooseComponent === 2 }"
+              class="navtag"
+              >花园</el-breadcrumb-item
+            >
+            <el-breadcrumb-item
+              :to="{}"
+              @click="refresh(3)"
+              :class="{ active: chooseComponent === 3 }"
+              class="navtag"
+              >志愿</el-breadcrumb-item
+            >
+            <el-breadcrumb-item
+              :to="{}"
+              @click="refresh(4)"
+              :class="{ active: chooseComponent === 4 }"
+              class="navtag"
+              >其他</el-breadcrumb-item
+            >
+            <el-breadcrumb-item :to="{}" class="navtag"></el-breadcrumb-item>
+          </el-breadcrumb>
         </el-col>
       </el-row>
-    </div>
-    <br />
-    <br />
-    <br />
-    <div>
-      <el-row>
-        <el-col :span="14" :offset="2">
-          <div>
-            <img class="all-img-head" src="../assets/garden-header.png" />
-          </div>
-          <el-card
-            v-for="(image, index) in gardenResults"
-            :key="index"
-            class="gardenResults"
-          >
-            <GardenBlock :image="image" />
-          </el-card>
-          <div>
-            <button @click="loadMore('display')">查看更多</button>
-          </div>
-        </el-col>
-      </el-row>
-    </div>
-    <br />
-    <br />
-    <br />
-    <div>
-      <el-row>
-        <el-col :span="14" :offset="2">
-          <div>
-            <img class="all-img-head" src="../assets/volunteer-header.png" />
-          </div>
-          <el-card
-            v-for="(content, index) in volunteerResults"
-            :key="index"
-            class="gardenResults"
-          >
-            <VolunteerBlock :content="content" />
-          </el-card>
-          <div>
-            <button @click="loadMore('VolunteerRecruitment')">查看更多</button>
-          </div>
-        </el-col>
-      </el-row>
-    </div>
-    <br />
-    <br />
-    <br />
-    <div class="item-field">
-      <el-row>
-        <el-col :span="14" :offset="2">
-          <div>
-            <img class="all-img-head" src="../assets/item-header.png" />
-          </div>
-          <div class="row" v-for="i in 2" :key="i">
-            <ItemBlock />
-          </div>
-          <div>
-            <button @click="loadMore('home')">查看更多</button>
-          </div>
-        </el-col>
-      </el-row>
+
+      <!-- 功能页 -->
+      <el-container class="functions">
+        <!-- 博客 -->
+        <div
+          class="blog"
+          style="margin-left: 100px"
+          v-if="chooseComponent == 1"
+        >
+          <br />
+          <el-row class="d-flex">
+            <el-col :span="14" :offset="2">
+              <div>
+                <img class="all-img-head" src="../assets/blog-header.png" />
+              </div>
+              <el-card
+                v-for="(card, index) in blogResults"
+                :key="index"
+                class="blogResults"
+              >
+                <BlogBlock :card="card" />
+              </el-card>
+              <div>
+                <button @click="loadMore('BlogView')">查看更多</button>
+              </div>
+            </el-col>
+          </el-row>
+        </div>
+
+        <!-- 花园 -->
+        <div
+          class="garden"
+          style="margin-left: 100px"
+          v-if="chooseComponent == 2"
+        >
+          <br />
+          <el-row>
+            <el-col :span="14" :offset="2">
+              <div>
+                <img class="all-img-head" src="../assets/garden-header.png" />
+              </div>
+              <el-card
+                v-for="(image, index) in gardenResults"
+                :key="index"
+                class="gardenResults"
+              >
+                <GardenBlock :image="image" />
+              </el-card>
+              <div>
+                <button @click="loadMore('display')">查看更多</button>
+              </div>
+            </el-col>
+          </el-row>
+        </div>
+
+        <!-- 志愿 -->
+        <div
+          class="volunteer"
+          style="margin-left: 100px"
+          v-if="chooseComponent == 3"
+        >
+          <br />
+          <el-row>
+            <el-col :span="14" :offset="2">
+              <div>
+                <img
+                  class="all-img-head"
+                  src="../assets/volunteer-header.png"
+                />
+              </div>
+              <el-card
+                v-for="(content, index) in volunteerResults"
+                :key="index"
+                class="volunteerResults"
+              >
+                <VolunteerBlock :content="content" />
+              </el-card>
+              <div>
+                <button @click="loadMore('VolunteerRecruitment')">
+                  查看更多
+                </button>
+              </div>
+            </el-col>
+          </el-row>
+        </div>
+
+        <!-- 其他 -->
+        <div
+          class="others"
+          style="margin-left: 100px"
+          v-if="chooseComponent == 4"
+        >
+          <br />
+          <el-row>
+            <el-col :span="14" :offset="2">
+              <div>
+                <img class="all-img-head" src="../assets/item-header.png" />
+              </div>
+              <div class="row" v-for="i in 2" :key="i">
+                <ItemBlock />
+              </div>
+              <div>
+                <button @click="loadMore('home')">查看更多</button>
+              </div>
+            </el-col>
+          </el-row>
+        </div>
+      </el-container>
     </div>
 
     <!--回到顶部-->
@@ -113,6 +183,7 @@
 
 <script>
 import router from "@/router/index";
+import { ref } from "vue";
 
 export default {
   name: "searchResults",
@@ -134,6 +205,9 @@ export default {
       (result) => result.type === "volunteer"
     )?.data;
 
+    //标签选项
+    const chooseComponent = ref(1);
+
     // 页面滚动到顶部
     function scrollToTop() {
       window.scrollTo({ top: 0, behavior: "smooth" });
@@ -147,13 +221,21 @@ export default {
       });
     }
 
+    //通过v-if 展示四个不同的组件
+    function refresh(index) {
+      chooseComponent.value = index;
+      console.log(chooseComponent);
+    }
+
     return {
       blogResults,
       gardenResults,
       itemResults,
       volunteerResults,
+      chooseComponent,
       scrollToTop,
       loadMore,
+      refresh,
     };
   },
 };
