@@ -6,9 +6,11 @@ namespace Garden.BLL
 {
     public class SearchBLL : ISearchBLL
     {
+        static SearchDAL searchDAL = new();
+
         public List<MySearchResult> GetSearchResults(string searchTerm)
         {
-            return SearchDAL.GetResults(searchTerm, out _);
+            return searchDAL.GetResults(searchTerm, out _);
         }
     }
 }

@@ -5,6 +5,6 @@
         public string InvitationId { get; set; }
         public string InvitorId { get; set; }
         public string InviteeId { get; set; }
-        public string GardenId { get; set; }
+        public string ActivityId { get; set; }
     }
 }
