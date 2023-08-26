@@ -4,7 +4,7 @@ using Garden.Models;
 
 namespace Garden.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class AccountController : ControllerBase
     {
