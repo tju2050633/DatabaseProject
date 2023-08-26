@@ -49,6 +49,21 @@ namespace Garden.DAL
             }
         }
 
+        public GardenActivity GetActivityRandomly()
+        {
+            try
+            {
+                string sql = "SELECT * FROM garden_activity WHERE time > SYSDATE ORDER BY DBMS_RANDOM.VALUE";
+                DataTable dt = OracleHelper.ExecuteTable(sql);
+                return ToModel(dt.Rows[0]);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return null;
+            }
+        }
+
         public List<GardenActivity> GetActivitiesByGardenId(string garden_id)
         {
             try

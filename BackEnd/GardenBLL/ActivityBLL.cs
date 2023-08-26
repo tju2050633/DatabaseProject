@@ -14,6 +14,11 @@ namespace Garden.BLL
             return activityDAL.GetAvailableActivities();
         }
 
+        public GardenActivity GetActivityRandomly()
+        {
+            return activityDAL.GetActivityRandomly();
+        }
+
         public List<GardenActivity> GetActivitiesByGarden(string garden_id)
         {
             return activityDAL.GetActivitiesByGardenId(garden_id);

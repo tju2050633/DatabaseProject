@@ -33,6 +33,15 @@ namespace Garden.Controllers
             return _volunteerBLL.GetSingleRecruit(id);
         }
 
+        // 查询
+        // 无输入
+        // 返回：一条随机的招募信息，[招募信息ID，花园ID，招募者ID，招募时间，招募信息内容]
+        [HttpGet("recruit/random")]
+        public ActionResult<VolunteerRecruit> GetRecruitRandomly()
+        {
+            return _volunteerBLL.GetRecruitRandomly();
+        }
+
         [HttpGet("recruit/garden")]
         public IEnumerable<VolunteerRecruit> GetGardenRecruits(string id)
         {

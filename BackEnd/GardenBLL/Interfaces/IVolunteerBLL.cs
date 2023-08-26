@@ -10,6 +10,8 @@ namespace Garden.BLL.Interfaces
 
         public VolunteerRecruit GetSingleRecruit(string id);
 
+        public VolunteerRecruit GetRecruitRandomly();
+
         public List<VolunteerRecruit> GetGardenRecruits(string id);
         
         public string InsertApply(VolunteerApply volunteerApply);
