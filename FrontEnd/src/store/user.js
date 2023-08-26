@@ -12,6 +12,7 @@ const ModuleUser = {
         is_login: false,
     },
     getters: {
+        getUserId: state => state.id,//添加从state中获取id的操作，应该比较常用 
     },
     mutations: {
         updateUser(state, user) {

@@ -40,13 +40,13 @@
                     >
                     <el-row style="margin-left: 100px">
                       <span v-if="!change" style="text-align: center">{{
-                        UserInfo.Description
+                        UserInfo.description
                       }}</span>
                       <el-input
                         class="username-change"
                         style="font-size: large"
                         v-if="change"
-                        v-model="UserInfo.Description"
+                        v-model="UserInfo.description"
                         @change="InfoHasChanged()"
                     /></el-row>
                   </el-col>
@@ -408,16 +408,35 @@
 </template>
 
 <script>
+import { getAllUserInfo,getBlogComment,getGardenComment,getGardenInfo,getGardenLike,getRecords,getBlogLike,postAllUserInfo } from '@/api/personalPageAPI';
+import { mapGetters } from 'vuex';
 export default {
   name: "PersonalInfoPage",
   data() {
     return {
+      //功能性变量
       ifInfoChanged: false,
       change: false,
       showtel: true,
       chooseComponent: 1,
       url: "https://img2.baidu.com/it/u=3194475248,8547823&fm=253&fmt=auto&app=138&f=JPEG?w=800&h=500",
       avaUrl: "",
+
+      // 以下是用户的数据 通过api获取 假数据先保留以备展示 
+
+      //用户信息
+      UserInfo: {
+        name: "楚杰",
+        description: "我真的不卷。。。",
+        email: "123@tongji.edu.cn",
+        registerTime: "2020年1月",
+        tel: "123456",
+        points: "114",
+        id: "1919810",
+      },
+
+
+      //互动：花园评论
       GardenComment: [
         {
           author: "王浩",
@@ -427,6 +446,9 @@ export default {
           comment: "晚上就把浩哥撅了",
         },
       ],
+
+
+      //互动：花园点赞
       GardenLike: [
         {
           author: "王浩",
@@ -435,32 +457,39 @@ export default {
           imageurl: require("../assets/Garden.jpg"),
         },
       ],
+
+      //博客：博客评论
       BlogComment: [
         {
           author: "王浩",
           avatar: require("../assets/author-avatar.jpg"),
           blogName: "只因你太美",
-          partialContent: `(字体暂未确定)这里是文章内容的一小部分...只因你太美 baby只因你太美 baby只因你实在是太美 baby只因你太美 baby迎面走来的你让我如此蠢蠢欲动`,
-          fullContent: `(字体暂未确定)这里是文章内容的一小部分...只因你太美 baby只因你太美 baby只因你实在是太美 baby只因你太美 baby迎面走来的你让我如此蠢蠢欲动
+          fullContent: `8564876(字体暂未确定)这里是文章内容的一小部分...只因你太美 baby只因你太美 baby只因你实在是太美 baby只因你太美 baby迎面走来的你让我如此蠢蠢欲动
                   这种感觉我从未有Cause I got a crush on you who you你是我的我是你的谁再多一眼看一眼就会爆炸再近
                   一点靠近点快被融化想要把你占为己有 baby bae不管走到哪里都会想起的人是你 you you我应该拿你怎样Uh 
                   所有人都在看着你我的心总是不安Oh 我现在已病入膏肓Eh oh难道真的因你而疯狂吗我本来不是这种人因你变
                   成奇怪的人第一次呀变成这样的我不管我怎么去否认只因你太美 baby只因你太美 baby只因你实在是太美
                   baby只因你太美 babyOh eh oh现在确认地告诉我Oh eh oh你到底属于谁Oh eh oh`,
-          showFullContent: false,
-          isOpen: false,
+          comment: "晚上就把浩哥撅了",
           totalLikes: 114,
           totalComment: 514,
-          comment: "晚上就把浩哥撅了",
+
+          //这些本地计算
+          showFullContent: false,
+          isOpen: false, 
+          partialContent: `这里是文章内容的一小部分...只因你太美 baby只因你太美 baby只因你实在是太美 baby只因你太美 baby迎面走来的你让我如此蠢蠢欲动`,
         },
       ],
+
+
+      //博客：博客点赞
       BlogLike: [
         {
           author: "王浩",
           avatar: require("../assets/author-avatar.jpg"),
           blogName: "只因你太美",
-          partialContent: `(字体暂未确定)这里是文章内容的一小部分...只因你太美 baby只因你太美 baby只因你实在是太美 baby只因你太美 baby迎面走来的你让我如此蠢蠢欲动`,
-          fullContent: `(字体暂未确定)这里是文章内容的一小部分...只因你太美 baby只因你太美 baby只因你实在是太美 baby只因你太美 baby迎面走来的你让我如此蠢蠢欲动
+          partialContent: `(字体暂未确定)这里是文章内容的一小部分...只因你太美 baby只因你太美 baby只因你实在是太美 baby只因你太美 baby迎面走来的你让我如此蠢蠢欲动`,//不能写死 还得computed
+          fullContent: `12312)这里是文章内容的一小部分...只因你太美 baby只因你太美 baby只因你实在是太美 baby只因你太美 baby迎面走来的你让我如此蠢蠢欲动
                   这种感觉我从未有Cause I got a crush on you who you你是我的我是你的谁再多一眼看一眼就会爆炸再近
                   一点靠近点快被融化想要把你占为己有 baby bae不管走到哪里都会想起的人是你 you you我应该拿你怎样Uh 
                   所有人都在看着你我的心总是不安Oh 我现在已病入膏肓Eh oh难道真的因你而疯狂吗我本来不是这种人因你变
@@ -472,15 +501,9 @@ export default {
           totalComment: 514,
         },
       ],
-      UserInfo: {
-        name: "楚杰",
-        Description: "我真的不卷。。。",
-        email: "123@tongji.edu.cn",
-        registerTime: "2020年1月",
-        tel: "123456",
-        points: "114",
-        id: "1919810",
-      },
+
+      
+      //花园：花园信息
       Garden: [
         {
           author: "楚杰",
@@ -495,17 +518,21 @@ export default {
             "https://img2.baidu.com/it/u=3194475248,8547823&fm=253&fmt=auto&app=138&f=JPEG?w=800&h=500",
         },
       ],
+
+      //工作记录：工作记录
       Records: [
         {
           date: "2023.1.1",
           location: "19号楼",
-          partialContent: `(字体暂未确定)这里是文章内容的一小部分...只因你太美 baby只因你太美 baby只因你实在是太美 baby只因你太美 baby迎面走来的你让我如此蠢蠢欲动`,
           fullContent: `(字体暂未确定)这里是文章内容的一小部分...只因你太美 baby只因你太美 baby只因你实在是太美 baby只因你太美 baby迎面走来的你让我如此蠢蠢欲动
                   这种感觉我从未有Cause I got a crush on you who you你是我的我是你的谁再多一眼看一眼就会爆炸再近
                   一点靠近点快被融化想要把你占为己有 baby bae不管走到哪里都会想起的人是你 you you我应该拿你怎样Uh 
                   所有人都在看着你我的心总是不安Oh 我现在已病入膏肓Eh oh难道真的因你而疯狂吗我本来不是这种人因你变
                   成奇怪的人第一次呀变成这样的我不管我怎么去否认只因你太美 baby只因你太美 baby只因你实在是太美
                   baby只因你太美 babyOh eh oh现在确认地告诉我Oh eh oh你到底属于谁Oh eh oh`,
+
+          //以下本地计算
+          partialContent: `(字体暂未确定)这里是文章内容的一小部分...只因你太美 baby只因你太美 baby只因你实在是太美 baby只因你太美 baby迎面走来的你让我如此蠢蠢欲动`,
           showFullContent: false,
           isOpen: false,
         },
@@ -536,8 +563,18 @@ export default {
       this.chooseComponent = index; //通过v-if 展示四个不同的组件 还没写
     },
     InfoHasChanged() {
-      alert("信息改变！");
+      console.log('信息改变')
       //此处应该向后端发送请求修改数据
+      
+      if(this.userId!=''){//为了展示假数据 但这样也会导致假数据被修改了无法恢复到最开始定义的假数据
+      let result=postAllUserInfo(this.UserInfo)
+      if(result==true){
+        alert('信息修改成功！')
+      }else{
+        alert('修改失败，请稍后再试！')
+        this.UserInfo=this.getUserInfo(this.userId)
+      }
+    }
     },
     toggleContentBlogLike(index) {
       this.BlogLike[index].showFullContent =
@@ -551,7 +588,77 @@ export default {
       this.Records[index].showFullContent =
         !this.Records[index].showFullContent;
     },
+
+    //有关api获取
+    PageInit(){
+      console.log('开始获取用户信息！')
+      if(this.userId!=''){ //这样可以展示假数据
+        this.UserInfo=getAllUserInfo(this.userId);
+        //数据初始化为互动模块
+        this.GardenComment=getGardenComment(this.userId)
+        this.GardenLike=getGardenLike(this.userId)
+      }
+    },
+
   },
+  mounted(){
+    this.PageInit()
+  },
+  computed:{
+    ...mapGetters(['getUserId']),
+    userId() {
+      return this.getUserId;
+    },
+    partialText(text){
+      var length=text.length
+      var cut = 50>=length/2? 50:length/2
+      return text.substring(0,cut)
+    }
+  },
+  watch:{
+    chooseComponent(oldValue,newValue){
+      console.log(`chooseComponent 变化！ ${oldValue} -> ${newValue}`);
+
+      if(this.userId!=''){//为了展示假数据
+      if(newValue==1){ //互动模块
+        this.GardenComment=getGardenComment(this.userId)
+        this.GardenLike=getGardenLike(this.userId)
+        //无本地需要配置的参数
+      }else if (newValue==2){ //博客模块
+        this.BlogComment=getBlogComment(this.userId)
+        this.BlogLike=getBlogLike(this.userId)
+        //配置本地需要的参数
+        for (let item of this.BlogComment){
+          console.log(item)
+          // 确保属性响应式
+          this.$set(item, 'partialContent', this.partialText(item.fullContent));
+          this.$set(item, 'isOpen', false);
+          this.$set(item, 'showFullContent', false);
+        }
+        for (let item of this.BlogLike){
+          console.log(item)
+          // 确保属性响应式
+          this.$set(item, 'partialContent', this.partialText(item.fullContent));
+          this.$set(item, 'isOpen', false);
+          this.$set(item, 'showFullContent', false);
+        }
+      }else if(newValue==3){ //花园模块
+        this.Garden=getGardenInfo(this.userId)
+        //无本地需要配置的参数
+      }else if(newValue==4){
+        this.Records=getRecords(this.userId)
+        //配置本地需要的参数
+        for (let item of this.Records){
+          console.log(item)
+          // 确保属性响应式
+          this.$set(item, 'partialContent', this.partialText(item.fullContent));
+          this.$set(item, 'isOpen', false);
+          this.$set(item, 'showFullContent', false);
+        }
+      }
+    }
+  }
+  }
 };
 </script>
 

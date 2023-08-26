@@ -1,14 +1,16 @@
 <template>
-    <div id="blog-distribution" style="height:500px;width:100%">hello！</div>
+    <div id="blog-distribution" ref="test0" style="height:500px;width:100%">hello！</div>
 </template>
 
 <script>
-import {getHotNum,getOriginNum} from '../api/DataVisualization/BlogDistribution'
 import * as echarts from 'echarts';
+import {getHotNum,getOriginNum} from '../api/DataVisualization/BlogDistribution'
 export default{
   name:'BlogDistribution',
   data(){
     return{
+      begin_date:'Jan',
+      end_date:'Dec',
       timeperiod:['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
       origin_num:[ 242, 545, 657, 737, 858, 976, 1435, 2116, 2932, 3620, 4666, 5843 ],
       hot_num:[100, 235, 357, 437, 558, 676, 935, 1116, 1232, 1220, 1266, 1343]
@@ -19,7 +21,6 @@ export default{
     var chartDom = document.getElementById('blog-distribution');
       var myChart = echarts.init(chartDom);
       var option;
-
       const colors = ['#5470C6', '#91CC75', '#EE6666'];
       option = {
   color: colors,
@@ -40,7 +41,7 @@ export default{
     }
   },
   legend: {
-    data: ['总花园数量', '热门花园数量']
+    data: ['总博客数量', '热门博客数量']
   },
   xAxis: [
     {
@@ -48,15 +49,13 @@ export default{
       axisTick: {
         alignWithLabel: true
       },
-      // prettier-ignore
-      //data: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
       data:this.timeperiod
     }
   ],
   yAxis: [
     {
       type: 'value',
-      name: '活跃用户数量(人)',
+      name: '热门博客数量(个)',
       position: 'right',
       alignTicks: true,
       axisLine: {
@@ -71,7 +70,7 @@ export default{
     },
     {
       type: 'value',
-      name: '总用户数量(人)',
+      name: '总博客数量(个)',
       position: 'left',
       alignTicks: true,
       axisLine: {
@@ -89,14 +88,12 @@ export default{
     {
       name: '原创内容数量',
       type: 'bar',
-     // data: [ 242, 545, 657, 737, 858, 976, 1435, 2116, 2932, 3620, 4666, 5843 ]
      data:this.origin_num
     },
     {
       name: '热门原创内容数量',
       type: 'line',
       yAxisIndex: 1,
-      //data: [100, 235, 357, 437, 558, 676, 935, 1116, 1232, 1220, 1266, 1343]
       data:this.hot_num
     }
   ]
@@ -106,27 +103,29 @@ option && myChart.setOption(option);
     },
     getData(){
       getOriginNum({
-        begin_date:this.begin_date,
-        end_date:this.end_date
       }).then(res=>{
         console.log(res)
         //将activeuser数组保存到本地 假定传回的就叫active user
         this.origin_num=res.data.origin_num
-      })
+      },
+      err=>{
+        console.log(err)
+      });
 
       getHotNum({
-        begin_date:this.begin_date,
-        end_date:this.end_date
       }).then(res=>{
         console.log(res)
         //将totaluser写入到本地
         this.hot_num=res.data.hot_num
+      },
+      err=>{
+        console.log(err)
       })
     }
   },
   mounted(){
-    this.getData()
     this.createChart()
+    this.getData()
   }
 }
 </script>
