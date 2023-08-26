@@ -10,12 +10,8 @@ export default{
   data(){
     return{
       timeperiod:['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-      begin_time:'',
-      end_time:'',
       active_user_num: [10, 23, 33, 45, 163, 222, 203, 234, 220, 215, 120, 362],
-      total_user_num:[
-         22, 45, 67, 237, 258, 376, 435, 516, 532, 620, 666, 843
-       ]
+      total_user_num:[22, 45, 67, 237, 258, 376, 435, 516, 532, 620, 666, 843]
     }
   },
   methods:{
@@ -92,16 +88,12 @@ option = {
     {
       name: '总用户数量',
       type: 'bar',
-      // data: [
-      //   22, 45, 67, 237, 258, 376, 435, 516, 532, 620, 666, 843
-      // ]
       data:this.total_user_num
     },
     {
       name: '活跃用户数量',
       type: 'line',
       yAxisIndex: 1,
-      //data: [10, 23, 33, 45, 163, 222, 203, 234, 220, 215, 120, 362]
       data:this.active_user_num
     }
   ]
@@ -112,21 +104,23 @@ option && myChart.setOption(option);
   
     getData(){
       getActiveUser({
-        begin_date:this.begin_date,
-        end_date:this.end_date
       }).then(res=>{
         console.log(res)
         //将activeuser数组保存到本地 假定传回的就叫active user
         this.active_user_num=res.data.active_user_num
-      })
+      },
+      err=>{
+        console.log(err)
+      });
 
       getTotalUser({
-        begin_date:this.begin_date,
-        end_date:this.end_date
       }).then(res=>{
         console.log(res)
         //将totaluser写入到本地
         this.total_user_num=res.data.total_user_num
+      },
+      err=>{
+        console.log(err)
       })
     }
   },
