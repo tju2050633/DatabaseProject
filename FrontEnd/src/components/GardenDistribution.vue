@@ -1,22 +1,20 @@
 <template>
     <div id="GardenDistribution" ref="test0" style="height:500px;width:100%">hello!</div>
-    <div id="Pie" ref="test0" style="height:500px;width:100%"></div>
+    <div id="Pie" ref="test1" style="height:500px;width:100%"></div>
 </template>
 
 <script>
 import * as echarts from 'echarts';
-import { getTotalUser, getActiveUser, getCampusNum} from '../api/DataVisualization/GardenDistribution'
+import { getTotalGarden,getActiveGarden, getCampusGardenNum} from '../api/DataVisualization/GardenDistribution'
 export default{
   name:'GardenDistribution',
   data(){
     return{
-      begin_date:'',
-      end_date:'',
+      begin_date:'Jan',
+      end_date:'Dec',
       timeperiod:['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],//generate locally
-      total_user_num:[
-        242, 545, 657, 737, 858, 976, 1435, 2116, 2932, 3620, 4666, 5843
-      ],
-      active_user_num:[100, 235, 357, 437, 558, 676, 935, 1116, 1232, 1220, 1266, 1343],
+      total_garden_num:[242, 545, 657, 737, 858, 976, 1435, 2116, 2932, 3620, 4666, 5843],
+      active_garden_num:[100, 235, 357, 437, 558, 676, 935, 1116, 1232, 1220, 1266, 1343],
 
     campus_distribution:[
         { value: 430, name: '四平路校区' },
@@ -59,9 +57,7 @@ export default{
       axisTick: {
         alignWithLabel: true
       },
-      // prettier-ignore
       data: this.timeperiod
-      //data:['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
     }
   ],
   yAxis: [
@@ -101,30 +97,25 @@ export default{
       name: '总花园数量',
       type: 'bar',
       data: this.total_garden_num
-      // data:[
-      //   242, 545, 657, 737, 858, 976, 1435, 2116, 2932, 3620, 4666, 5843
-      // ],
     },
     {
       name: '活跃花园数量',
       type: 'line',
       yAxisIndex: 1,
       data: this.active_garden_num
-      //data:[100, 235, 357, 437, 558, 676, 935, 1116, 1232, 1220, 1266, 1343]
     }
   ]
 };
-
 option && myChart.setOption(option);
 },
 createPie(){
   var chartDom = document.getElementById('Pie');
-        var myChart = echarts.init(chartDom);
-var option;
+  var myChart = echarts.init(chartDom);
+  var option;
 
 option = {
   title: {
-    text: '用户年级分布图',
+    text: '花园校区分布图',
     left: 'center'
   },
   tooltip: {
@@ -137,7 +128,7 @@ option = {
     data: [
       '四平路校区',
       '嘉定校区',
-      '沪西小区',
+      '沪西校区',
     ]
   },
   toolbox: {
@@ -169,37 +160,40 @@ option && myChart.setOption(option);
 },
 
 getData(){
-      getActiveUser({
-        begin_date:this.begin_date,
-        end_date:this.end_date
+      getActiveGarden({
       }).then(res=>{
         console.log(res)
         //将activeuser数组保存到本地 假定传回的就叫active user
         this.active_garden_num=res.data.active_user_num
+      },
+      err=>{
+        console.log(err)
       })
 
-      getTotalUser({
-        begin_date:this.begin_date,
-        end_date:this.end_date
+      getTotalGarden({
       }).then(res=>{
         console.log(res)
         //将totaluser写入到本地
         this.total_garden_num=res.data.total_user_num
+      },
+      err=>{
+        console.log(err)
       })
 
-      getCampusNum({
+      getCampusGardenNum({
       }).then(res=>{
         console.log(res)
         //将totaluser写入到本地
         this.campus_distribution=res.data.campus_distribution
+      },
+      err=>{
+        console.log(err)
       })
     }
 
   },
-  created:{
-  },
   mounted(){
-    //this.getData();
+    this.getData();
     this.createChart();
     this.createPie();
   }

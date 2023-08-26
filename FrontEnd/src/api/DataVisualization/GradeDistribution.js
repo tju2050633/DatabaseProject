@@ -15,9 +15,6 @@ export function getGradeTable(params) {
         url: '/DV/gradeD/getGradeTable',
         method: 'get',
         params,
-        // headers: {
-        //     'Authorization': JSON.parse(localStorage.Authorization)
-        // }
     })
 }
 

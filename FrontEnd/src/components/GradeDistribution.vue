@@ -74,6 +74,9 @@ option && myChart.setOption(option);
       getGradeTable().then(res=>{
         console.log(res)
         this.table=res.data.table
+      },
+      err=>{
+        console.log(err)
       })
     }
   },
