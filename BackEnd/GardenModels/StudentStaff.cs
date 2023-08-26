@@ -4,5 +4,7 @@
     {
         public int StudentStaffId { get; set; }
         public string Name { get; set; }
+
+        public string? Grade { get; set; }
     }
 }
