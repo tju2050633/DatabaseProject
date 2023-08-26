@@ -6,6 +6,8 @@ namespace Garden.BLL.Interfaces
     {
         public Blog GetSingleBlog(string id);
 
+        public Blog GetBlogRandomly();
+
         public List<Blog> GetUserBlogs(string id);
 
         public string Insert(Blog blog);

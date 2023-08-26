@@ -23,6 +23,11 @@ namespace Garden.BLL
             return volunteerRecruitDAL.GetRecruitById(id, out _);
         }
 
+        public VolunteerRecruit GetRecruitRandomly()
+        {
+            return volunteerRecruitDAL.GetRecruitRandomly();
+        }
+
         public List<VolunteerRecruit> GetGardenRecruits(string id)
         {
             return volunteerRecruitDAL.GetRecruitByGardenId(id, out _);

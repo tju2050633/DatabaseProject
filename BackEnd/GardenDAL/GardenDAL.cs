@@ -63,6 +63,26 @@ namespace Garden.DAL
             }
         }
 
+        public GardenEntity GetGardenRandomly()
+        {
+            try
+            {
+                string sql = "SELECT * FROM garden WHERE status=0 ORDER BY DBMS_RANDOM.VALUE() FETCH NEXT 1 ROWS ONLY";
+                DataTable dt = OracleHelper.ExecuteTable(sql);
+                if (dt.Rows.Count != 1)
+                {
+                    return null;
+                }
+                DataRow dr = dt.Rows[0];
+                return ToModel(dr);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return null;
+            }
+        }
+
         public List<GardenEntity> GetGardensByOwnerId(string owner_id)
         {
             try

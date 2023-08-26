@@ -21,6 +21,15 @@ namespace Garden.Controllers
             return _gardenBLL.GetGarden(id);
         }
 
+        // 查询
+        // 无输入
+        // 返回：一个随机的花园，[花园ID、花园主人ID、花园名、花园图片URL、创建时间、描述、位置、星数、状态]
+        [HttpGet("random")]
+        public ActionResult<GardenEntity> GetGardenRandomly()
+        {
+            return _gardenBLL.GetGardenRandomly();
+        }
+
         [HttpGet("user")]
         public IEnumerable<GardenEntity> GetUserGardens(string id)
         {

@@ -6,6 +6,8 @@ namespace Garden.BLL.Interfaces
     {
         public List<GardenActivity> GetActivities();
 
+        public GardenActivity GetActivityRandomly();
+
         public List<GardenActivity> GetActivitiesByGarden(string garden_id);
 
         public List<GardenActivityInvitation> GetInvitationsByActivity(string activity_id);

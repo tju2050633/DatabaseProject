@@ -26,6 +26,15 @@ namespace Garden.Controllers
         }
 
         // 查询
+        // 无输入
+        // 返回：一个随机的博客，[博客ID、博主ID、博客标题、正文、博客图片URL、发布时间、赞数、评论数]
+        [HttpGet("random")]
+        public ActionResult<Blog> GetBlogRandomly()
+        {
+            return _blogBLL.GetBlogRandomly();
+        }
+
+        // 查询
         // 输入博主ID(owner_id)
         // 返回状态：[博客ID、博主ID、博客标题、正文、博客图片URL、发布时间、评分、评分数]
         [HttpGet("user")]
