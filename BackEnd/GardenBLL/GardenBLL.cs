@@ -22,6 +22,11 @@ namespace Garden.BLL
             return gardenDAL.GetGardenById(id, out _);
         }
 
+        public GardenEntity GetGardenRandomly()
+        {
+            return gardenDAL.GetGardenRandomly();
+        }
+
         public List<GardenEntity> GetUserGardens(string id)
         {
             return gardenDAL.GetGardensByOwnerId(id);

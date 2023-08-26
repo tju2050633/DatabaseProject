@@ -58,6 +58,25 @@ namespace Garden.DAL
             }
         }
 
+        public Blog GetBlogRandomly()
+        {
+            try
+            {
+                DataTable dt = OracleHelper.ExecuteTable("SELECT * FROM blog ORDER BY DBMS_RANDOM.RANDOM");
+                if (dt.Rows.Count != 1)
+                {
+                    return null;
+                }
+                DataRow dr = dt.Rows[0];
+                return ToModel(dr);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return null;
+            }
+        }
+
         public List<Blog> GetBlogByOwnerId(string id, out int status)
         {
             try

@@ -54,6 +54,26 @@ namespace Garden.DAL
             }
         }
 
+        public VolunteerRecruit GetRecruitRandomly()
+        {
+              try
+            {
+                string sql = "SELECT * FROM volunteer_recruit ORDER BY DBMS_RANDOM.VALUE";
+                DataTable dt = OracleHelper.ExecuteTable(sql);
+                if (dt.Rows.Count == 0)
+                {
+                    return null;
+                }
+                DataRow dr = dt.Rows[0];
+                return ToModel(dr);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return null;
+            }
+        }
+
         public List<VolunteerRecruit> GetRecruitByGardenId(string garden_id, out int status)
         {
             try

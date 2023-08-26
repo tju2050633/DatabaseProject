@@ -15,6 +15,11 @@ namespace Garden.BLL
             return blogDAL.GetBlogById(id, out _);
         }
 
+        public Blog GetBlogRandomly()
+        {
+            return blogDAL.GetBlogRandomly();
+        }
+
         public List<Blog> GetUserBlogs(string id)
         {
             return blogDAL.GetBlogByOwnerId(id, out _);
