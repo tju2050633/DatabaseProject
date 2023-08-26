@@ -103,6 +103,8 @@
 </style>
 
 <script>
+import { getHotGarden,getNewGarden,getGardenList } from '@/api/gardenDisplayAPI';
+import { mapGetters } from 'vuex';
 export default {
   el: "#mainpart",
   data() {
@@ -234,9 +236,45 @@ export default {
         this.displayedImageList = this.imageList.slice(0, this.maxDisplayCount); // 仅显示前maxDisplayCount张图片
       }
     },
+    //有关api获取
+    getUserInfo(){
+      console.log('开始获取用户信息！')
+      if(this.userId!=''){ //这样可以展示假数据
+        this.imageList=getGardenList(this.userId);
+
+      }
+    },
   },
   created() {
     this.updateDisplayedImages(); // 初始化时根据showMore状态设置图片数量
   },
+  mounted(){
+    this.getUserInfo()
+  },
+  computed:{
+    ...mapGetters(['getUserId']),
+    userId() {
+      return this.getUserId;
+    },
+  },
+
+  watch:{
+    activeTab(oldValue,newValue){
+      console.log(`activeTab 变化！ ${oldValue} -> ${newValue}`);
+
+      if(this.userId!=''){
+      if(newValue=="hot"){ //互动模块
+        this.hotImages=getHotGarden(this.userId)
+        console.log('开始获取用户信息！')
+        //无本地需要配置的参数
+      }else if (newValue=="new"){ //博客模块
+        this.newImages=getNewGarden(this.userId)
+        console.log('开始获取用户信息！')
+        //无本地需要配置的参数
+      }
+    }
+  }
+  }
+
 };
 </script>
