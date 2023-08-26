@@ -15,7 +15,9 @@ namespace Garden.DAL
                 ActivityId = row["activity_id"].ToString(),
                 HolderId = row["holder_id"].ToString(),
                 Picture = row["picture"].ToString(),
-                Description = row["description"].ToString()
+                Description = row["description"].ToString(),
+                Time = Convert.ToDateTime(row["time"]),
+                Location = row["location"].ToString()
             };
             return activity;
         }
@@ -30,6 +32,21 @@ namespace Garden.DAL
                 al.Add(activity);
             }
             return al;
+        }
+
+        public List<GardenActivity> GetAvailableActivities()
+        {
+            try
+            {
+                string sql = "SELECT * FROM garden_activity WHERE time > SYSDATE";
+                DataTable dt = OracleHelper.ExecuteTable(sql);
+                return ToModelList(dt);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return null;
+            }
         }
 
         public List<GardenActivity> GetActivitiesByGardenId(string garden_id)
