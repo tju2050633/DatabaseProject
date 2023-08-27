@@ -190,14 +190,17 @@
 </template>
 
 <script>
-import { reactive } from 'vue';
+import { reactive, ref, onMounted } from 'vue';
+import "../api/messageApi.js";
+import API from "../api/messageApi.js";
+
 
 export default {
     name: 'MessageCard',
     components: {
     },
 
-    data() {
+    setup() {
         // 自定义响应式数组
         const messages = reactive([
             { userid: 3, text: '用户zzz给您发送了一条消息', time: '2023年3月3日 08:00' },
@@ -222,12 +225,256 @@ export default {
             { id: 1, userid: 114514, repliedid: 1, time: '2023年5月29日 20:00', content: '你说的对，但是《论语》 是由孔子的弟子及再传弟子自主记录孔子及其弟子言行而编成的一本全新语录文集。故事发生在一个被称作「春秋」的历史世界，在这里，被圣人选中的人将被授予「朝服」，导引儒家之力。你将扮演一位名为 「衍圣公」的神秘角色，在朝代的更迭中邂逅性格各异、能力独特的帝王们，和他们一起击败强敌，维护崩坏的礼乐——同时，逐步发掘「仁爱」的真相。' },
         ]);
 
+        //定义读取要用的变量
+        const state = reactive({
+            messages: [], //我的消息
+            notifications: [], //系统通知
+            likes: [], //收到的赞
+            replies: [], //回复我的
+        });
+
+        //错误信息
+        let errMessage = ref("");
+
+        // 执行一些初始化逻辑
+        onMounted(() => {
+            loadmessagesUsingId();
+            loadnotificationsUsingId();
+            loadlikesUsingId();
+            loadrepliesUsingId();
+        });
+
+        //加载初始信息
+        const loadmessages = () => {
+            console.log("信息获取开始");
+            API({
+                url: "/messages/",
+                method: "get",
+            }).then(
+                function (res) {
+                    console.log("获取成功");
+                    state.messages = res.data;
+                },
+                function (err) {
+                    console.log("获取失败");
+                    errMessage.value = err.data;
+                }
+            );
+        };
+
+        //加载初始通知
+        const loadnotifications = () => {
+            console.log("通知获取开始");
+            API({
+                url: "/messages/",
+                method: "get",
+            }).then(
+                function (res) {
+                    console.log("获取成功");
+                    state.notifications = res.data;
+                },
+                function (err) {
+                    console.log("获取失败");
+                    errMessage.value = err.data;
+                }
+            );
+        };
+
+        //加载初始点赞
+        const loadlikes = () => {
+            console.log("点赞获取开始");
+            API({
+                url: "/messages/",
+                method: "get",
+            }).then(
+                function (res) {
+                    console.log("获取成功");
+                    state.likes = res.data;
+                },
+                function (err) {
+                    console.log("获取失败");
+                    errMessage.value = err.data;
+                }
+            );
+        };
+
+        //加载初始回复
+        const loadreplies = () => {
+            console.log("回复获取开始");
+            API({
+                url: "/messages/",
+                method: "get",
+            }).then(
+                function (res) {
+                    console.log("获取成功");
+                    state.replies = res.data;
+                },
+                function (err) {
+                    console.log("获取失败");
+                    errMessage.value = err.data;
+                }
+            );
+        };
+
+        //信息卡片
+        const tomessagesCard = (_messages) => {
+            console.log(_messages.content);
+            var card = {
+                userid: _messages.userid,
+                text: _messages.text,
+                time: _messages.time,
+            };
+            return card;
+        };
+
+        //通知卡片
+        const tonotificationsCard = (_notifications) => {
+            console.log(_notifications.content);
+            var card = {
+                id: _notifications.id,
+                title: _notifications.title,
+                time: _notifications.time,
+                content: _notifications.content,
+            };
+            return card;
+        };
+
+        //点赞卡片
+        const tolikesCard = (_likes) => {
+            console.log(_likes.content);
+            var card = {
+                id: _likes.id,
+                userid: _likes.userid,
+                likedtype: _likes.liketype,
+                typeid: _likes.typeid,
+                time: _likes.time,
+            };
+            return card;
+        };
+
+        //回复卡片
+        const torepliesCard = (_replies) => {
+            console.log(_replies.content);
+            var card = {
+                id: _replies.id,
+                userid: _replies.userid,
+                repliedid: _replies.repliedid,
+                time: _replies.time,
+                content: _replies.content,
+            };
+            return card;
+        };
+
+        const loadmessagesUsingId = () => {
+            console.log("开始读取信息测试");
+            API({
+                url: "/messages/",
+                method: "get",
+                params: {
+                    id: 2, //测试数据写死
+                },
+            }).then(
+                function (res) {
+                    console.log("测试成功");
+                    console.log(res.data);
+                    state.messages.push(res.data);
+                    messages.push(tomessagesCard(res.data));
+                },
+                function (err) {
+                    console.log("测试失败");
+                    errMessage.value = err.data;
+                }
+            );
+        };
+
+        const loadnotificationsUsingId = () => {
+            console.log("开始读取通知测试");
+            API({
+                url: "/messages/",
+                method: "get",
+                params: {
+                    id: 2, //测试数据写死
+                },
+            }).then(
+                function (res) {
+                    console.log("测试成功");
+                    console.log(res.data);
+                    state.notifications.push(res.data);
+                    notifications.push(tonotificationsCard(res.data));
+                },
+                function (err) {
+                    console.log("测试失败");
+                    errMessage.value = err.data;
+                }
+            );
+        };
+
+        const loadlikesUsingId = () => {
+            console.log("开始读取点赞测试");
+            API({
+                url: "/messages/",
+                method: "get",
+                params: {
+                    id: 2, //测试数据写死
+                },
+            }).then(
+                function (res) {
+                    console.log("测试成功");
+                    console.log(res.data);
+                    state.likes.push(res.data);
+                    likes.push(tolikesCard(res.data));
+                },
+                function (err) {
+                    console.log("测试失败");
+                    errMessage.value = err.data;
+                }
+            );
+        };
+
+        const loadrepliesUsingId = () => {
+            console.log("开始读取通知测试");
+            API({
+                url: "/messages/",
+                method: "get",
+                params: {
+                    id: 2, //测试数据写死
+                },
+            }).then(
+                function (res) {
+                    console.log("测试成功");
+                    console.log(res.data);
+                    state.replies.push(res.data);
+                    replies.push(torepliesCard(res.data));
+                },
+                function (err) {
+                    console.log("测试失败");
+                    errMessage.value = err.data;
+                }
+            );
+        };
+
         return {
             activeTab: 'my-messages',
             messages,
             notifications,
             likes,
-            replies
+            replies,
+            state,
+
+            loadmessages,
+            loadnotifications,
+            loadlikes,
+            loadreplies,
+
+            loadmessagesUsingId,
+            loadnotificationsUsingId,
+            loadlikesUsingId,
+            loadrepliesUsingId,
+
+            tomessagesCard,
+            tonotificationsCard,
+            tolikesCard,
+            torepliesCard,
         };
     },
     methods: {

@@ -5,8 +5,8 @@
             <SideBar />
             <el-card class="item-display">
                 <el-carousel :interval="4000" type="card" height="300px" indicator-position="outside">
-                    <el-carousel-item v-for="(item, index) in carouselItems" :key="index">
-                        <img :src="item.imageUrl" class="carousel-image" alt="carousel-image" />
+                    <el-carousel-item v-for="(it, index) in item.carouselItems" :key="index">
+                        <img :src="it.imageUrl" class="carousel-image" alt="carousel-image" />
                     </el-carousel-item>
                 </el-carousel>
                 <hr />
@@ -39,18 +39,19 @@ export default {
                 price: null,
                 exchangeCount: null,
                 remainCount: null,
+                imagenum: null,
+                carouselItems: [
+                    {
+                        imageUrl: null,
+                    },
+                    {
+                        imageUrl: null,
+                    },
+                    {
+                        imageUrl: null,
+                    },
+                ],
             },
-            carouselItems: [
-                {
-                    imageUrl: require('../assets/item.png'),
-                },
-                {
-                    imageUrl: require('../assets/item.png'),
-                },
-                {
-                    imageUrl: require('../assets/item.png'),
-                },
-            ],
             myPoints: 0,
         };
     },
@@ -72,11 +73,16 @@ export default {
     async created() {
         try {
             this.myPoints = await fetchMyPoints();
-            const { name, price, exchangeCount, remainCount } = await fetchItemCounts(this.id); // 使用 API 请求函数获取商品详情数据
+            const { name, price, exchangeCount, remainCount, imagenum } = await fetchItemCounts(this.id); // 使用 API 请求函数获取商品详情数据
             this.item.name = name;
             this.item.price = price;
             this.item.exchangeCount = exchangeCount;
             this.item.remainCount = remainCount;
+            this.item.imagenum = imagenum;
+            //这里我的想法是商品的图片固定在assets文件夹中，通过传入特定商品的图片号码，再加上abc的编号来区分三张图片
+            this.item.carouselItems[0].imageUrl = require("../assets/itemimage" + imagenum + "a.png");
+            this.item.carouselItems[1].imageUrl = require("../assets/itemimage" + imagenum + "b.png");
+            this.item.carouselItems[2].imageUrl = require("../assets/itemimage" + imagenum + "c.png");
         } catch (error) {
             console.error('Error fetching item detail:', error);
         }
