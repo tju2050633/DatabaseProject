@@ -18,6 +18,7 @@ builder.Services.AddSingleton<IVolunteerBLL, VolunteerBLL>();
 builder.Services.AddSingleton<IItemsBLL, ItemsBLL>();
 builder.Services.AddSingleton<IStatisticsBLL, StatisticsBLL>();
 builder.Services.AddSingleton<IActivityBLL, ActivityBLL>();
+builder.Services.AddSingleton<IAdminBLL, AdminBLL>();
 
 var app = builder.Build();
 
