@@ -9,6 +9,7 @@ namespace Garden.Controllers
     public class AccountController : ControllerBase
     {
         private readonly IAccountBLL _accountBLL;
+        private readonly IAdminBLL _adminBLL;
 
         public AccountController(IAccountBLL accountBLL)
         {
@@ -16,9 +17,9 @@ namespace Garden.Controllers
         }
 
         // 输入账号(id)、密码(pwd)
-        // 返回状态：["账号或密码错误","发生错误","登陆成功"]
+        // 返回状态：["账号或密码错误","发生错误","登录成功"]
         // 登录成功时向login_info中插入一条数据
-        [HttpGet]
+        [HttpGet("login")]
         public ActionResult<string> Login(string id, string pwd)
         {
             return _accountBLL.Login(id, pwd);
@@ -26,7 +27,7 @@ namespace Garden.Controllers
 
         // 输入学工号(id)、密码(pwd)、用户名(name)
         // 返回状态：["用户名已存在","此学工号已被使用","发生错误","注册成功"]
-        [HttpPost]
+        [HttpPost("register")]
         public ActionResult<string> Register(string id, string pwd, string name)
         {
             return _accountBLL.Register(id, pwd, name);
@@ -46,10 +47,20 @@ namespace Garden.Controllers
             "joinTime": "2023-07-04T00:30:00",
             "points": 0
         }*/
-    [HttpGet("id")]
+        [HttpGet("info/{id}")]
         public ActionResult<Account> GetAllInfo(string id) 
         {
             return _accountBLL.GetAllInfo(id);
         }
+
+        // 输入账号(id)、密码(pwd)
+        // 返回状态：["账号或密码错误","发生错误","登录成功"]
+        // 供管理员登录
+        [HttpGet("admin")]
+        public ActionResult<string> AdminLogin(string id, string pwd) 
+        {
+            return _adminBLL.AdminLogin(id, pwd);   
+        }
+
     }
 }
