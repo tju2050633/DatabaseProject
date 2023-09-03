@@ -254,9 +254,18 @@ export default {
           ],
         },
         {
-          type: "item",
+          type: "activity",
           data: [
-            /* item 搜索结果 */
+            /* activity 搜索结果 */
+            {
+              author: "楚杰",
+              title: "杰哥的安楼自习室",
+              avatar: require("../assets/author-avatar.jpg"),
+              imageurl: require("../assets/Garden.jpg"),
+              time: "2020年1月1日",
+              address: "安楼后面的小树林",
+              detail: "给你看点好康的",
+            },
           ],
         },
         {
@@ -364,12 +373,21 @@ export default {
             type: "garden",
             data: gardenData,
           };
-        } else if (type === "item") {
-          // 如果类型为物品(item)
+        } else if (type === "activity") {
+          // 如果类型为活动(activity)
           // 这里可以根据需要设置物品数据的格式
+          const activityData = data.map((activity) => ({
+            author: activity.author,
+            title: activity.title,
+            avatar: require("../assets/author-avatar.jpg"), // 根据需要设置正确的路径
+            imageurl: require("../assets/Garden.jpg"), // 根据需要设置正确的路径
+            time: activity.time,
+            address: activity.address,
+            detail: activity.detail,
+          }));
           formattedItem = {
-            type: "item",
-            data: [], // 物品数据为空
+            type: "activity",
+            data: activityData,
           };
         } else if (type === "volunteer") {
           // 如果类型为志愿者(volunteer)
