@@ -94,7 +94,7 @@ namespace Garden.DAL
                 };
                 DataTable dt = OracleHelper.ExecuteTable(sql, oracleParameters);
 
-                if (dt.Rows.Count != 1)
+                if (dt.Rows.Count < 1)
                 {
                     status = 2;
                     return null;
@@ -107,6 +107,51 @@ namespace Garden.DAL
             {
                 Console.WriteLine(ex.Message);
                 status = 1;
+                return null;
+            }
+        }
+
+        public Account GetAccountBySSIdAndPwd(string ssid, string pwd, out int status)
+        {
+            try
+            {
+                string sql = "SELECT * FROM account WHERE student_staff_id=:ssid AND password=:pwd";
+                OracleParameter[] oracleParameters = new OracleParameter[]
+                {
+                    new OracleParameter("ssid", OracleDbType.Char) {Value = ssid},
+                    new OracleParameter("pwd", OracleDbType.Varchar2) {Value = pwd}
+                };
+                DataTable dt = OracleHelper.ExecuteTable(sql, oracleParameters);
+
+                if (dt.Rows.Count < 1)
+                {
+                    status = 2;
+                    return null;
+                }
+                DataRow dr = dt.Rows[0];
+                status = 0;
+                return ToModel(dr);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                status = 1;
+                return null;
+            }
+        }
+
+        public string? GetAccountBySSID(string ssid)
+        {
+            try
+            {
+                DataTable dt = OracleHelper.ExecuteTable("SELECT account_id FROM account WHERE student_staff_id=:ssid",
+                    new OracleParameter("ssid", OracleDbType.Char) { Value = ssid });
+                if(dt.Rows.Count != 1) { return null; }
+                return dt.Rows[0]["account_id"].ToString();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
                 return null;
             }
         }
@@ -128,7 +173,7 @@ namespace Garden.DAL
             }
         }
 
-        public bool IsSSIDExist(string ssid, out int status)
+        public bool IsSSIDRegistered(string ssid, out int status)
         {
             try
             {
