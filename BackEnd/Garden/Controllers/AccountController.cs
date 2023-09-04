@@ -11,9 +11,10 @@ namespace Garden.Controllers
         private readonly IAccountBLL _accountBLL;
         private readonly IAdminBLL _adminBLL;
 
-        public AccountController(IAccountBLL accountBLL)
+        public AccountController(IAccountBLL accountBLL, IAdminBLL adminBLL)
         {
             _accountBLL = accountBLL;
+            _adminBLL = adminBLL;
         }
 
         // 输入账号(id)、密码(pwd)
@@ -26,11 +27,11 @@ namespace Garden.Controllers
         }
 
         // 输入学工号(id)、密码(pwd)、用户名(name)
-        // 返回状态：["用户名已存在","此学工号已被使用","发生错误","注册成功"]
+        // 返回状态：["用户名已存在","此学工号已被注册","此学工号不存在","发生错误","注册成功"(返回account_id)]
         [HttpPost("register")]
-        public ActionResult<string> Register(string id, string pwd, string name)
+        public ActionResult<string> Register(string ssid, string pwd, string name)
         {
-            return _accountBLL.Register(id, pwd, name);
+            return _accountBLL.Register(ssid, pwd, name);
         }
 
         // 输入账号id

@@ -7,7 +7,7 @@ namespace Garden.DAL
 {
     public class AccountDAL
     {
-        private Account ToModel(DataRow row)
+        private static Account ToModel(DataRow row)
         {
             Account account = new();
             account.AccountId = row["account_id"].ToString();
@@ -23,7 +23,7 @@ namespace Garden.DAL
             return account;
         }
 
-        private List<Account> ToModelList(DataTable dt)
+        private static List<Account> ToModelList(DataTable dt)
         {
             List<Account> ul = new();
             for (int i = 0; i < dt.Rows.Count; i++)
@@ -31,6 +31,30 @@ namespace Garden.DAL
                 DataRow dr = dt.Rows[i];
                 Account account = ToModel(dr);
                 ul.Add(account);
+            }
+            return ul;
+        }
+
+        private static UserInfo ToUserInfo(Account account)
+        {
+            UserInfo info = new UserInfo();
+            info.Id = account.AccountId;
+            info.Name = account.AccountName;
+            info.Description = account.Bio;
+            info.Points = account.Points; 
+            info.Email = account.Email;
+            info.RegisterTime = account.JoinTime;
+            info.Tel = account.Phone;
+            return info;
+        }
+        public static List<UserInfo> ToUserInfoModelList(DataTable dt)
+        {
+            List<UserInfo> ul = new();
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+                DataRow dr = dt.Rows[i];
+                Account account = ToModel(dr);
+                ul.Add(ToUserInfo(account));
             }
             return ul;
         }
@@ -70,7 +94,7 @@ namespace Garden.DAL
                 };
                 DataTable dt = OracleHelper.ExecuteTable(sql, oracleParameters);
 
-                if (dt.Rows.Count != 1)
+                if (dt.Rows.Count < 1)
                 {
                     status = 2;
                     return null;
@@ -83,6 +107,51 @@ namespace Garden.DAL
             {
                 Console.WriteLine(ex.Message);
                 status = 1;
+                return null;
+            }
+        }
+
+        public Account GetAccountBySSIdAndPwd(string ssid, string pwd, out int status)
+        {
+            try
+            {
+                string sql = "SELECT * FROM account WHERE student_staff_id=:ssid AND password=:pwd";
+                OracleParameter[] oracleParameters = new OracleParameter[]
+                {
+                    new OracleParameter("ssid", OracleDbType.Char) {Value = ssid},
+                    new OracleParameter("pwd", OracleDbType.Varchar2) {Value = pwd}
+                };
+                DataTable dt = OracleHelper.ExecuteTable(sql, oracleParameters);
+
+                if (dt.Rows.Count < 1)
+                {
+                    status = 2;
+                    return null;
+                }
+                DataRow dr = dt.Rows[0];
+                status = 0;
+                return ToModel(dr);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                status = 1;
+                return null;
+            }
+        }
+
+        public string? GetAccountBySSID(string ssid)
+        {
+            try
+            {
+                DataTable dt = OracleHelper.ExecuteTable("SELECT account_id FROM account WHERE student_staff_id=:ssid",
+                    new OracleParameter("ssid", OracleDbType.Char) { Value = ssid });
+                if(dt.Rows.Count != 1) { return null; }
+                return dt.Rows[0]["account_id"].ToString();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
                 return null;
             }
         }
@@ -104,7 +173,7 @@ namespace Garden.DAL
             }
         }
 
-        public bool IsSSIDExist(string ssid, out int status)
+        public bool IsSSIDRegistered(string ssid, out int status)
         {
             try
             {
@@ -143,6 +212,30 @@ namespace Garden.DAL
                     new OracleParameter("name", OracleDbType.Varchar2) {Value = accountName}
                 };
                 OracleHelper.ExecuteNonQuery(sql, oracleParameters);
+                OracleHelper.ExecuteNonQuery("commit;");
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return false;
+            }
+        }
+
+        public bool UpdateInfo(string id, string bio, string email, string phone)
+        {
+            try
+            {
+                OracleParameter[] oracleParameters = new OracleParameter[]
+                {
+                    new OracleParameter("bio", OracleDbType.Clob) {Value = bio},
+                    new OracleParameter("email", OracleDbType.Varchar2) {Value = email},
+                    new OracleParameter("phone", OracleDbType.Varchar2) {Value = phone},
+                    new OracleParameter("id", OracleDbType.Char) { Value = id },
+                };
+                OracleHelper.ExecuteNonQuery(
+                    "UPDATE account SET bio=:bio AND email=:email AND phone=:phone WHERE account_id=:id",
+                    oracleParameters);
                 OracleHelper.ExecuteNonQuery("commit;");
                 return true;
             }

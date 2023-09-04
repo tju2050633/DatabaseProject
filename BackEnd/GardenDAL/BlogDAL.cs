@@ -23,7 +23,7 @@ namespace Garden.DAL
             return blog;
         }
 
-        private static List<Blog> ToModelList(DataTable dt)
+        public static List<Blog> ToModelList(DataTable dt)
         {
             List<Blog> bl = new();
             for (int i = 0; i < dt.Rows.Count; i++)

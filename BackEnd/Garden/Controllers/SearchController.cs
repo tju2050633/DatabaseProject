@@ -40,8 +40,8 @@ namespace Garden.Controllers
               ]
             }
           ]*/
-        [HttpGet]
-        public IEnumerable<MySearchResult> GetSearchResults(string searchTerm)
+        [HttpGet("search")]
+        public List<MySearchResult> GetSearchResults(string searchTerm)
         {
             return _searchBLL.GetSearchResults(searchTerm);
         }
