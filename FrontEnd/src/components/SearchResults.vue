@@ -43,7 +43,7 @@
               @click="refresh(4)"
               :class="{ active: chooseComponent === 4 }"
               class="navtag"
-              >其他</el-breadcrumb-item
+              >活动</el-breadcrumb-item
             >
             <el-breadcrumb-item :to="{}" class="navtag"></el-breadcrumb-item>
           </el-breadcrumb>
@@ -135,7 +135,7 @@
           </el-row>
         </div>
 
-        <!-- 其他 -->
+        <!-- 活动 -->
         <div
           class="others"
           style="margin-left: 100px"
@@ -145,13 +145,13 @@
           <el-row>
             <el-col :span="14" :offset="2">
               <div>
-                <img class="all-img-head" src="../assets/item-header.png" />
+                <img class="all-img-head" src="../assets/activity-header.png" />
               </div>
-              <div class="row" v-for="i in 2" :key="i">
-                <ItemBlock />
-              </div>
+              <el-card v-for="(card, index) in itemResults" :key="index">
+                <GardenActivityBlock :card="card" />
+              </el-card>
               <div>
-                <button @click="loadMore('home')">查看更多</button>
+                <button @click="loadMore('GardenActivities')">查看更多</button>
               </div>
             </el-col>
           </el-row>
@@ -198,8 +198,10 @@ export default {
     const gardenResults = results?.find(
       (result) => result.type === "garden"
     )?.data;
-    // 访问 "item" 类型的搜索结果数据
-    const itemResults = results?.find((result) => result.type === "item")?.data;
+    // 访问 "item" 类型的搜索结果数据（改为活动类）
+    const itemResults = results?.find(
+      (result) => result.type === "activity"
+    )?.data;
     // 访问 "volunteer" 类型的搜索结果数据
     const volunteerResults = results?.find(
       (result) => result.type === "volunteer"
