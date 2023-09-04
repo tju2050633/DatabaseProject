@@ -13,3 +13,30 @@
         public int? Status { get; set; } // [0:"Approved", 1:"Waiting", 2:"Rejected"]
     }
 }
+
+// 简易版Garden，用于返回个人主页前端
+public class GardenInfo
+{
+    public string Author { get; set; }
+    public string Title { get; set; }
+    public string Cover { get; set; }
+}
+
+// 用于返回前端
+public class GardenComment
+{
+    public string Author { get; set; }
+    public string Title { get; set; }
+    public string Avatar { get; set; }
+    public string? Imageurl { get; set; }
+    public string Comment { get; set; }
+}
+
+// 用于返回前端
+public class GardenLike
+{
+    public string Author { get; set; }
+    public string Avatar { get; set; }
+    public string Title { get; set; }
+    public string? Imageurl { get; set; }
+}

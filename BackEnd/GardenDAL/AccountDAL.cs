@@ -164,9 +164,10 @@ namespace Garden.DAL
                     new OracleParameter("phone", OracleDbType.Varchar2) {Value = phone},
                     new OracleParameter("id", OracleDbType.Char) { Value = id },
                 };
-                DataTable dt = OracleHelper.ExecuteTable(
+                OracleHelper.ExecuteNonQuery(
                     "UPDATE account SET bio=:bio AND email=:email AND phone=:phone WHERE account_id=:id",
                     oracleParameters);
+                OracleHelper.ExecuteNonQuery("commit;");
                 return true;
             }
             catch (Exception ex)
