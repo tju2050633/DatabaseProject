@@ -95,6 +95,21 @@ namespace Garden.DAL
             }
         }
 
+        public List<Blog> GetTopBlogs(int num = 5)
+        {
+            try
+            {
+                string sql = $"SELECT * FROM blog ORDER BY (comment_num+agree_num) DESC FETCH FIRST {num} ROWS ONLY";
+                DataTable dt = OracleHelper.ExecuteTable(sql);
+                return ToModelList(dt);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return null;
+            }
+        }
+
         public bool Insert(Blog blog, out int status)
         {
             try
