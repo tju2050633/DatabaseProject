@@ -11,9 +11,10 @@ namespace Garden.Controllers
         private readonly IAccountBLL _accountBLL;
         private readonly IAdminBLL _adminBLL;
 
-        public AccountController(IAccountBLL accountBLL)
+        public AccountController(IAccountBLL accountBLL, IAdminBLL adminBLL)
         {
             _accountBLL = accountBLL;
+            _adminBLL = adminBLL;
         }
 
         // 输入账号(id)、密码(pwd)

@@ -153,6 +153,29 @@ namespace Garden.DAL
             }
         }
 
+        public bool UpdateInfo(string id, string bio, string email, string phone)
+        {
+            try
+            {
+                OracleParameter[] oracleParameters = new OracleParameter[]
+                {
+                    new OracleParameter("bio", OracleDbType.Clob) {Value = bio},
+                    new OracleParameter("email", OracleDbType.Varchar2) {Value = email},
+                    new OracleParameter("phone", OracleDbType.Varchar2) {Value = phone},
+                    new OracleParameter("id", OracleDbType.Char) { Value = id },
+                };
+                DataTable dt = OracleHelper.ExecuteTable(
+                    "UPDATE account SET bio=:bio AND email=:email AND phone=:phone WHERE account_id=:id",
+                    oracleParameters);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return false;
+            }
+        }
+
         //获取用户个人积分
         public int GetPoints(string user_id, out int status)
         {

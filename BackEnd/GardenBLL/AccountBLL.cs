@@ -53,5 +53,10 @@ namespace Garden.BLL
             int status;
             return accountDAL.GetAccountById(id, out status);
         }
+
+        public bool UpdateInfo(string id, string bio, string email, string phone)
+        {
+            return accountDAL.UpdateInfo(id, bio, email, phone);
+        }
     }
 }
