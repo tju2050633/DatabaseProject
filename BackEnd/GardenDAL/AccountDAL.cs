@@ -7,7 +7,7 @@ namespace Garden.DAL
 {
     public class AccountDAL
     {
-        private Account ToModel(DataRow row)
+        private static Account ToModel(DataRow row)
         {
             Account account = new();
             account.AccountId = row["account_id"].ToString();
@@ -23,7 +23,7 @@ namespace Garden.DAL
             return account;
         }
 
-        private List<Account> ToModelList(DataTable dt)
+        private static List<Account> ToModelList(DataTable dt)
         {
             List<Account> ul = new();
             for (int i = 0; i < dt.Rows.Count; i++)
@@ -31,6 +31,30 @@ namespace Garden.DAL
                 DataRow dr = dt.Rows[i];
                 Account account = ToModel(dr);
                 ul.Add(account);
+            }
+            return ul;
+        }
+
+        private static UserInfo ToUserInfo(Account account)
+        {
+            UserInfo info = new UserInfo();
+            info.Id = account.AccountId;
+            info.Name = account.AccountName;
+            info.Description = account.Bio;
+            info.Points = account.Points; 
+            info.Email = account.Email;
+            info.RegisterTime = account.JoinTime;
+            info.Tel = account.Phone;
+            return info;
+        }
+        public static List<UserInfo> ToUserInfoModelList(DataTable dt)
+        {
+            List<UserInfo> ul = new();
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+                DataRow dr = dt.Rows[i];
+                Account account = ToModel(dr);
+                ul.Add(ToUserInfo(account));
             }
             return ul;
         }

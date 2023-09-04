@@ -3,6 +3,7 @@ using Garden.Models;
 using Oracle.ManagedDataAccess.Client;
 using System.Data;
 
+
 namespace Garden.DAL
 {
     public class SearchDAL
@@ -34,6 +35,7 @@ namespace Garden.DAL
             }
             return bl;
         }
+
         public List<MySearchResult> GetResults(string searchTerm, out int status)
         {
             try
@@ -42,18 +44,18 @@ namespace Garden.DAL
                 //前端的几种结果：博客、花园、志愿、其他，选择一些表来完成筛选
                 status = 0;
                 // 在这里执行搜索逻辑，并获取不同类型的搜索结果;  类似地如下
-                // List<BlogResult> blogResults = SearchBlogs(searchTerm);
-                // List<GardenResult> gardenResults = SearchGardens(searchTerm);
-                // List<ItemResult> itemResults = SearchItems(searchTerm);
-                // List<VolunteerResult> volunteerResults = SearchVolunteers(searchTerm);
+                MySearchResult blogResults = SearchBlogs(searchTerm);
+                MySearchResult gardenResults = SearchGardens(searchTerm);
+                MySearchResult itemResults = SearchItems(searchTerm);
+                MySearchResult volunteerResults = SearchVolunteers(searchTerm);
 
                 // 构建包含不同类型搜索结果的数据结构
                 var searchResults = new List<MySearchResult>
                 {
-                    // new { type = "blog", data = blogResults },
-                    // new { type = "garden", data = gardenResults },
-                    // new { type = "item", data = itemResults },
-                    // new { type = "volunteer", data = volunteerResults }
+                     blogResults,
+                     gardenResults,
+                     itemResults,
+                     volunteerResults,
                 };
 
                 // 返回结果
@@ -66,5 +68,139 @@ namespace Garden.DAL
                 return null;
             }
         }
+
+        MySearchResult ProcessSearch(MySearchResult result, string query1, string query2) 
+        {
+            DataTable dt = OracleHelper.ExecuteTable(query1);
+            int searchcnt = dt.Rows.Count; // 搜索出相关的条目数
+            Console.WriteLine(searchcnt);
+            if(result.Type == "blog")
+            {
+                if (searchcnt >= 10)
+                {
+                    result.Data.AddRange(BlogDAL.ToModelList(dt).Take(10)); // 取10个结果
+                    return result;
+                }
+                else
+                {
+                    result.Data.AddRange(BlogDAL.ToModelList(dt)); // 不足10个，用其他项补齐，最终结果依旧可能小于10个
+                    DataTable dt2 = OracleHelper.ExecuteTable(query2);
+                    result.Data.AddRange(BlogDAL.ToModelList(dt2).Take(10 - searchcnt));
+                }
+            }
+            else if (result.Type == "garden")
+            {
+                if (searchcnt >= 10)
+                {
+                    result.Data.AddRange(GardenDAL.ToModelList(dt).Take(10)); // 取10个结果
+                    return result;
+                }
+                else
+                {
+                    result.Data.AddRange(GardenDAL.ToModelList(dt)); // 不足10个，用其他项补齐，最终结果依旧可能小于10个
+                    DataTable dt2 = OracleHelper.ExecuteTable(query2);
+                    result.Data.AddRange(GardenDAL.ToModelList(dt2).Take(10 - searchcnt));
+                }
+            }
+            else if(result.Type == "item")
+            {
+                if (searchcnt >= 10)
+                {
+                    result.Data.AddRange(ItemsDAL.ToModelList(dt).Take(10)); // 取10个结果
+                    return result;
+                }
+                else
+                {
+                    result.Data.AddRange(ItemsDAL.ToModelList(dt)); // 不足10个，用其他项补齐，最终结果依旧可能小于10个
+                    DataTable dt2 = OracleHelper.ExecuteTable(query2);
+                    result.Data.AddRange(ItemsDAL.ToModelList(dt2).Take(10 - searchcnt));
+                }
+            }
+            else if( result.Type == "volunteer")
+            {
+                if (searchcnt >= 10)
+                {
+                    result.Data.AddRange(AccountDAL.ToUserInfoModelList(dt).Take(10)); // 取10个结果
+                    return result;
+                }
+                else
+                {
+                    result.Data.AddRange(AccountDAL.ToUserInfoModelList(dt)); // 不足10个，用其他项补齐，最终结果依旧可能小于10个
+                    DataTable dt2 = OracleHelper.ExecuteTable(query2);
+                    result.Data.AddRange(AccountDAL.ToUserInfoModelList(dt2).Take(10 - searchcnt));
+                }
+            }
+
+            return result;
+        }
+
+        MySearchResult SearchBlogs(string searchTerm)
+        {
+            MySearchResult result = new MySearchResult
+            {
+                Type = "blog",
+                Data = new List<object>()
+            };
+
+            string query1 = $"SELECT * FROM Blog WHERE blog_id LIKE '%{searchTerm}%' " +
+                $"OR owner_id LIKE '%{searchTerm}%' " +
+                $"OR title LIKE '%{searchTerm}%' " +
+                $"OR content LIKE '%{searchTerm}%'";
+            string query2 = $"SELECT * FROM Blog WHERE NOT blog_id LIKE '%{searchTerm}%' " +
+                $"AND NOT owner_id LIKE '%{searchTerm}%' " +
+                $"AND NOT title LIKE '%{searchTerm}%' " +
+                $"AND NOT content LIKE '%{searchTerm}%' ";
+            return ProcessSearch(result, query1, query2);
+        }
+
+        MySearchResult SearchGardens(string searchTerm)
+        {
+            MySearchResult result = new MySearchResult
+            {
+                Type = "garden",
+                Data = new List<object>()
+            };
+
+            string query1 = $"SELECT * FROM Garden WHERE garden_id LIKE '%{searchTerm}%' " +
+                $"OR owner_id LIKE '%{searchTerm}%' " +
+                $"OR name LIKE '%{searchTerm}%' " +
+                $"OR description LIKE '%{searchTerm}%'";
+            string query2 = $"SELECT * FROM Garden WHERE NOT garden_id LIKE '%{searchTerm}%' " +
+                $"AND NOT owner_id LIKE '%{searchTerm}%' " +
+                $"AND NOT name LIKE '%{searchTerm}%' " +
+                $"AND NOT description LIKE '%{searchTerm}%' ";
+            return ProcessSearch(result, query1, query2);
+        }
+        MySearchResult SearchItems(string searchTerm)
+        {
+            MySearchResult result = new MySearchResult
+            {
+                Type = "item",
+                Data = new List<object>()
+            };
+            string query1 = $"SELECT * FROM Items WHERE item_id LIKE '%{searchTerm}%' " +
+                $"OR item_name LIKE '%{searchTerm}%' ";
+            string query2 = $"SELECT * FROM Items WHERE NOT item_id LIKE '%{searchTerm}%' " +
+                $"AND NOT item_name LIKE '%{searchTerm}%' ";
+            return ProcessSearch(result, query1, query2);
+        }
+        MySearchResult SearchVolunteers(string searchTerm)
+        {
+            MySearchResult result = new MySearchResult
+            {
+                Type = "volunteer",
+                Data = new List<object>()
+            };
+            string query1 = $"SELECT * FROM Account WHERE account_id LIKE '%{searchTerm}%' " +
+                $"OR account_name LIKE '%{searchTerm}%' " +
+                $"OR bio LIKE '%{searchTerm}%' " +
+                $"OR phone LIKE '%{searchTerm}%'";
+            string query2 = $"SELECT * FROM Account WHERE NOT account_id LIKE '%{searchTerm}%' " +
+                $"AND NOT account_name LIKE '%{searchTerm}%' " +
+                $"AND NOT bio LIKE '%{searchTerm}%' " +
+                $"AND NOT phone LIKE '%{searchTerm}%' ";
+            return ProcessSearch(result, query1, query2);
+        }
     }
 }
+

@@ -26,7 +26,7 @@ namespace Garden.DAL
             return garden;
         }
 
-        private static List<GardenEntity> ToModelList(DataTable dt)
+        public static List<GardenEntity> ToModelList(DataTable dt)
         {
             List<GardenEntity> G = new();
             for (int i = 0; i < dt.Rows.Count; i++)

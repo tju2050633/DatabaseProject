@@ -19,17 +19,6 @@ namespace Garden.Controllers
             _gardenBLL = gardenBLL;
         }
 
-        public class UserInfo
-        {
-            public string Name { get; set; }
-            public string? Description { get; set; }
-            public string? Email { get; set; }
-            public DateTime RegisterTime { get; set; }
-            public string? Tel { get; set; }
-            public int Points { get; set; }
-            public string Id { get; set; }
-        }
-
         /*
         路由：/Home/getUserInfo
         用户信息 

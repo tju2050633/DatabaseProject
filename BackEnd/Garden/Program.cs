@@ -19,6 +19,7 @@ builder.Services.AddSingleton<IItemsBLL, ItemsBLL>();
 builder.Services.AddSingleton<IStatisticsBLL, StatisticsBLL>();
 builder.Services.AddSingleton<IActivityBLL, ActivityBLL>();
 builder.Services.AddSingleton<IAdminBLL, AdminBLL>();
+builder.Services.AddSingleton<ISearchBLL, SearchBLL>();
 
 var app = builder.Build();
 
