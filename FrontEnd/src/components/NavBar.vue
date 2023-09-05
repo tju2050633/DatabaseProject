@@ -209,83 +209,33 @@ export default {
 
       //实际要用到的搜索结果，从后端数据库返回
       searchResults: [
-        {
-          type: "blog",
-          data: [
-            /* blog 搜索结果:
-            {},-----这一个表示一个结果
-            {},
-            {} */
-            {
-              author: "作者1",
-              avatar: require("../assets/author-avatar.jpg"),
-              blogName: "博客名称1",
-              partialContent: `(字体暂未确定)这里是文章内容的一小部分...只因你太美 baby只因你太美 baby只因你实在是太美 baby只因你太美 baby迎面走来的你让我如此蠢蠢欲动`,
-              fullContent: `(字体暂未确定)这里是文章内容的一小部分...只因你太美 baby只因你太美 baby只因你实在是太美 baby只因你太美 baby迎面走来的你让我如此蠢蠢欲动
-                    这种感觉我从未有Cause I got a crush on you who you你是我的我是你的谁再多一眼看一眼就会爆炸再近
-                    一点靠近点快被融化想要把你占为己有 baby bae不管走到哪里都会想起的人是你 you you我应该拿你怎样Uh 
-                    所有人都在看着你我的心总是不安Oh 我现在已病入膏肓Eh oh难道真的因你而疯狂吗我本来不是这种人因你变
-                    成奇怪的人第一次呀变成这样的我不管我怎么去否认只因你太美 baby只因你太美 baby只因你实在是太美
-                    baby只因你太美 babyOh eh oh现在确认地告诉我Oh eh oh你到底属于谁Oh eh oh`,
-              showFullContent: false,
-              isOpen: false,
-              comments: [
-                { user: "User1", content: "Comment 1" },
-                { user: "User2", content: "Comment 2" },
-                // Add more comments here
-              ],
-              liked: false, // 是否已点赞
-              totalLikes: 114, // 总点赞次数
-              showInput: false,
-              comment: "",
-            },
-          ],
-        },
-        {
-          type: "garden",
-          data: [
-            /* garden 搜索结果 */
-            {
-              imageUrl: require("../assets/Garden-e.jpg"),
-              username: "Student1",
-              gardenname: "Garden1",
-              hot: "90",
-            },
-          ],
-        },
-        {
-          type: "activity",
-          data: [
-            /* activity 搜索结果 */
-            {
-              author: "楚杰",
-              title: "杰哥的安楼自习室",
-              avatar: require("../assets/author-avatar.jpg"),
-              imageurl: require("../assets/Garden.jpg"),
-              time: "2020年1月1日",
-              address: "安楼后面的小树林",
-              detail: "给你看点好康的",
-            },
-          ],
-        },
-        {
-          type: "volunteer",
-          data: [
-            /* volunteer 搜索结果 */
-            {
-              imageUrl: require("../assets/Garden-e.jpg"),
-              dialogVisible: false, //是否出现弹窗
-              username: "Student1",
-              gardenname: "王浩的后宫1",
-              location: "嘉定校区19号楼",
-              describe: `诚邀您来维护本花园，主要工作如下：
-                    首先，帮我把花园的土给翻了
-                    然后，我的花园一盆花都没有，帮我全买了 
-                    最后帮我浇水
-                    谢谢你`,
-            },
-          ],
-        },
+        // {
+        //   type: "blog",
+        //   data: [
+        //     /* blog 搜索结果:
+        //     {},-----这一个表示一个结果
+        //     {},
+        //     {} */
+        //   ],
+        // },
+        // {
+        //   type: "garden",
+        //   data: [
+        //     /* garden 搜索结果 */
+        //   ],
+        // },
+        // {
+        //   type: "activity",
+        //   data: [
+        //     /* activity 搜索结果 */
+        //   ],
+        // },
+        // {
+        //   type: "volunteer",
+        //   data: [
+        //     /* volunteer 搜索结果 */
+        //   ],
+        // },
       ],
     });
 
@@ -334,6 +284,7 @@ export default {
     //将后端返回的数据格式改为前端使用的cards
     const toCard = (backendData) => {
       backendData.forEach((item) => {
+        // console.log("单个结果：", item);
         const type = item.type;
         const data = item.data;
 
@@ -342,18 +293,22 @@ export default {
         if (type === "blog") {
           // 如果类型为博客(blog)
           const blogData = data.map((blog) => ({
-            author: blog.author,
+            author: blog.blogId,
             avatar: require("../assets/author-avatar.jpg"), // 根据需要设置正确的路径
-            blogName: blog.blogName,
-            partialContent: blog.partialContent,
-            fullContent: blog.fullContent,
-            showFullContent: blog.showFullContent,
-            isOpen: blog.isOpen,
-            comments: blog.comments,
-            liked: blog.liked,
-            totalLikes: blog.totalLikes,
-            showInput: blog.showInput,
-            comment: blog.comment,
+            blogName: blog.title,
+            partialContent: blog.content.substring(0, 100),
+            fullContent: blog.content,
+            showFullContent: false,
+            isOpen: false,
+            comments: [
+              { user: "User5", content: "Comment 5" },
+              { user: "User6", content: "Comment 6" },
+              // Add more comments here
+            ],
+            liked: false,
+            totalLikes: blog.agreeNum,
+            showInput: false,
+            comment: "",
           }));
 
           formattedItem = {
@@ -363,10 +318,10 @@ export default {
         } else if (type === "garden") {
           // 如果类型为花园(garden)
           const gardenData = data.map((garden) => ({
-            imageUrl: require("../assets/Garden-e.jpg"), // 根据需要设置正确的路径
-            username: garden.username,
-            gardenname: garden.gardenname,
-            hot: garden.hot,
+            imageUrl: garden.Pictures, // 根据需要设置正确的路径
+            username: garden.OwnerId,
+            gardenname: garden.Name,
+            hot: garden.Stars,
           }));
 
           formattedItem = {
@@ -377,13 +332,13 @@ export default {
           // 如果类型为活动(activity)
           // 这里可以根据需要设置物品数据的格式
           const activityData = data.map((activity) => ({
-            author: activity.author,
+            author: activity.HolderId,
             title: activity.title,
             avatar: require("../assets/author-avatar.jpg"), // 根据需要设置正确的路径
-            imageurl: require("../assets/Garden.jpg"), // 根据需要设置正确的路径
-            time: activity.time,
-            address: activity.address,
-            detail: activity.detail,
+            imageurl: activity.Picture, // 根据需要设置正确的路径
+            time: activity.Time,
+            address: activity.Location,
+            detail: activity.Description,
           }));
           formattedItem = {
             type: "activity",
@@ -394,10 +349,14 @@ export default {
           const volunteerData = data.map((volunteer) => ({
             imageUrl: require("../assets/Garden-e.jpg"), // 根据需要设置正确的路径
             dialogVisible: volunteer.dialogVisible,
-            username: volunteer.username,
-            gardenname: volunteer.gardenname,
-            location: volunteer.location,
-            describe: volunteer.describe,
+            username: "Student1",
+            gardenname: "王浩的后宫1",
+            location: "嘉定校区19号楼",
+            describe: `诚邀您来维护本花园，主要工作如下：
+                    首先，帮我把花园的土给翻了
+                    然后，我的花园一盆花都没有，帮我全买了 
+                    最后帮我浇水
+                    谢谢你`,
           }));
 
           formattedItem = {
@@ -405,9 +364,10 @@ export default {
             data: volunteerData,
           };
         }
-
+        // console.log("单个结果：", formattedItem);
         state.searchResults.push(formattedItem);
       });
+      // console.log("转换结果：", state.searchResults);
     };
 
     // 监听搜索表单的提交事件，保存新的搜索记录（这里实现正式的搜索算法）
@@ -419,38 +379,39 @@ export default {
           "searchHistory",
           JSON.stringify(state.searchHistory)
         );
-        state.searchTerm = "";
         state.filteredSearchHistory = [...state.searchHistory];
       }
-      console.log("搜索成功");
+      // console.log("搜索成功");
 
       //通过API接口将搜索关键字传到后端，后端访问数据库给出处理并返回结果
       getSearchResults(state.searchTerm).then(
         function (res) {
           console.log("获取成功");
-          //测试获得的内容
-          console.log(res.data);
+          // //测试获得的内容
+          // console.log(res);
           //转换格式
-          toCard(res.data);
+          toCard(res);
+          const isSearchResultsEmpty = state.searchResults.every(
+            (result) => result.data.length === 0
+          );
+          if (isSearchResultsEmpty) {
+            // 搜索结果为空的处理逻辑
+            alert("搜索结果为空！！！");
+          } else {
+            // 搜索结果不为空的处理逻辑
+            router.push({
+              name: "SearchResults",
+              params: { results: JSON.stringify(state.searchResults) },
+            });
+          }
         },
         function (err) {
-          console.log("获取失败", err.data);
+          alert("获取结果失败！");
+          console.log("获取失败!!!", err.data);
+          console.log(state.searchTerm);
         }
       );
-
-      const isSearchResultsEmpty = state.searchResults.every(
-        (result) => result.data.length === 0
-      );
-      if (isSearchResultsEmpty) {
-        // 搜索结果为空的处理逻辑
-        alert("搜索结果为空！！！");
-      } else {
-        // 搜索结果不为空的处理逻辑
-        router.push({
-          name: "SearchResults",
-          params: { results: JSON.stringify(state.searchResults) },
-        });
-      }
+      state.searchTerm = "";
     }
 
     // 页面滚动到顶部
