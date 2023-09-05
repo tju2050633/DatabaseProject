@@ -246,13 +246,13 @@ namespace Garden.DAL
             }
         }
 
-        //获取用户个人积分
+        // get/set points
+
         public int GetPoints(string user_id, out int status)
         {
-
             try
             {
-                string sql = "SELECT points FROM user WHERE user_id=:id";
+                string sql = "SELECT points FROM account WHERE account_id=:id";
                 DataTable dt = OracleHelper.ExecuteTable(sql,
                     new OracleParameter("id", OracleDbType.Char) { Value = user_id });
                 if (dt.Rows.Count != 1)
@@ -272,7 +272,30 @@ namespace Garden.DAL
                 status = 1;
                 return -1;
             }
+        }
 
+        public int SetPoint(string userId, int new_point)
+        {
+            try
+            {
+                string sql = "UPDATE account SET points=:points WHERE account_id=:id";
+                int rows = OracleHelper.ExecuteNonQuery(sql,
+                    new OracleParameter("points", OracleDbType.Int32) { Value = new_point },
+                    new OracleParameter("id", OracleDbType.Char) { Value = userId });
+                if (rows == 1)
+                {
+                    return 0;
+                }
+                else
+                {
+                    return 2;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return 1;
+            }
         }
     }
 }

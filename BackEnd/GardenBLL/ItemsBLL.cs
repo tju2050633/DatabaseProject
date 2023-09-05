@@ -15,11 +15,37 @@ namespace Garden.BLL
             return itemsDAL.GetItems(item_id, out _);
         }
 
-        // 完成交易
-        public void ItemSold(string item_id)
+    // 完成交易
+    public int ItemSold(string itemId, string userId)
+    {
+        // get storage and price
+        int storage = itemsDAL.GetStorage(itemId, out _);
+        int price = itemsDAL.GetPrice(itemId, out _);
+
+        // get user point
+        int point = accountDAL.GetPoints(userId, out _);
+
+        if (point < price)
         {
-            itemsDAL.ItemSold(item_id);
+            // point not enough
+            return 1;
         }
+        else if(storage <= 0)
+        {
+            // storage not enough
+            return 2;
+        }
+        else
+        {
+            // storage -=1, sales +=1
+            itemsDAL.ItemSold(itemId);
+
+            // point -= price
+            accountDAL.SetPoint(userId, point - price);
+
+            return 0;
+        }
+    }
 
         
         public string InsertRedeem(string redeem_id, string redeemer, string item_id)

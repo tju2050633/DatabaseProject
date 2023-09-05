@@ -6,7 +6,7 @@ namespace Garden.BLL.Interfaces
     {
         public Items GetSingleItems(string item_id);
 
-        public void ItemSold(string item_id);
+        public int ItemSold(string item_id, string user_id);
 
         public string InsertRedeem(string redeem_id, string redeemer, string item_id);
 

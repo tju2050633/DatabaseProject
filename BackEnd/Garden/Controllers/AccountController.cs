@@ -65,10 +65,9 @@ namespace Garden.Controllers
 
         // 获取当前账户积分
         [HttpGet("/user/points")]
-        public ActionResult<int> GetMyPoints()
+        public ActionResult<int> GetMyPoints(string userId)
         {
-
-            return 10086;
+            return _accountBLL.GetPoints(userId);
         }
 
     }

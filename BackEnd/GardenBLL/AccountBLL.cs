@@ -49,5 +49,12 @@ namespace Garden.BLL
         {
             return accountDAL.UpdateInfo(id, bio, email, phone);
         }
+
+        public int GetPoints(string id)
+        {
+            int status;
+            return accountDAL.GetPoints(id, out status);
+        }
+
     }
 }

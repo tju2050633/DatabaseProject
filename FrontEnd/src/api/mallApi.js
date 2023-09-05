@@ -7,8 +7,11 @@ const API = axios.create({
     crossDomain: true,
 })
 
-export const fetchMyPoints = async () => {
-    const response = await API.get('/user/points');
+export const fetchMyPoints = async (userId) => {
+    const response = await API.get('/user/points', {
+        params: {
+            userId: userId.toString()
+        }});
     return response.data;
 };
 
@@ -20,7 +23,7 @@ export const fetchItemCounts = async (itemId) => {
     return response.data;
 };
 
-export const performExchange = async (itemId) => {
-    const response = await API.post('/exchange', { itemId: itemId });
+export const performExchange = async (itemId, userId) => {
+    const response = await API.post('/exchange', { itemId: itemId, userId: userId });
     return response.data;
 };

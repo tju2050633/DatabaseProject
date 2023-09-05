@@ -33,20 +33,17 @@ namespace Garden.Controllers
         }
 
         [HttpPost("/exchange")]
-        public IActionResult ExchangeItem(int itemId)
+        public IActionResult ExchangeItem(int itemId, int userId)
         {
 
-            // 数据库库存减1
-            _ItemsBLL.ItemSold(itemId.ToString());
+            int status = _ItemsBLL.ItemSold(itemId.ToString(), userId.ToString());
 
-            // 用户积分减少
-            // 
-
-            bool success = true;
-
-            if (!success)
-                return BadRequest(new { success = false, message = "兑换失败" });
-            return Ok(new { success = true, message = "兑换成功" });
+            if (status == 1)
+                return BadRequest(new { success = false, message = "积分不足" });
+            else if (status == 2)
+                return BadRequest(new { success = false, message = "库存不足" });
+            else
+                return Ok(new { success = true, message = "兑换成功" });
         }
     }
 }

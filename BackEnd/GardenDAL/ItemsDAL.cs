@@ -105,5 +105,31 @@ namespace Garden.DAL
                 return -1;
             }
         }
+
+        public int GetStorage(string item_id, out int status)
+        {
+            try
+            {
+                string sql = "SELECT storage FROM items WHERE item_id=:id";
+                DataTable dt = OracleHelper.ExecuteTable(sql,
+                    new OracleParameter("id", OracleDbType.Char) { Value = item_id });
+                if (dt.Rows.Count != 1)
+                {
+                    status = 2;
+                    return -1;
+                }
+                status = 0;
+                DataRow dr = dt.Rows[0];
+                int value = Convert.ToInt32(dr["storage"]);
+                return value;
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                status = 1;
+                return -1;
+            }
+        }
     }
 }
