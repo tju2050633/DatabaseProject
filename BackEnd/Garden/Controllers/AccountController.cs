@@ -17,7 +17,7 @@ namespace Garden.Controllers
             _adminBLL = adminBLL;
         }
 
-        // 输入账号(id)、密码(pwd)
+        // 输入账号或学工号(id)、密码(pwd)
         // 返回状态：["账号或密码错误","发生错误","登录成功"]
         // 登录成功时向login_info中插入一条数据
         [HttpGet("login")]

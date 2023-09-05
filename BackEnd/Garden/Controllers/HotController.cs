@@ -18,7 +18,7 @@ namespace Garden.Controllers
         /* 返回格式：
         [{
           Type: "garden"/"blog"
-          Data: List<GardenEntity>/List<BlogEntity> (只有一项)
+          Data: List<GardenInfo>/List<BlogInfo> (只有一项)
         },
         {},
         ...]

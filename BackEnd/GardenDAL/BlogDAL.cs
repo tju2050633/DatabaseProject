@@ -128,6 +128,7 @@ namespace Garden.DAL
             }
         }
 
+        // 获取排名（点赞数+评论数）前num位的blog，num默认为5
         public List<Blog> GetTopBlogs(int num = 5)
         {
             try

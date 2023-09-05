@@ -163,6 +163,7 @@ namespace Garden.DAL
             }
         }
 
+        // 获取Star数前num位的garden
         public List<GardenEntity> GetTopGardens(int num = 5)
         {
             try
