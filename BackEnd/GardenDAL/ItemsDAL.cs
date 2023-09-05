@@ -15,7 +15,7 @@ namespace Garden.DAL
             items.ItemId = row["item_id"].ToString();
             items.ItemName = row["item_name"].ToString();
             items.Price = Convert.ToInt32(row["price"]);
-            items.ItemStorage = row["item_storage"].ToString();
+            items.ItemStorage = Convert.ToInt32(row["item_storage"]);
             items.Sales = Convert.ToInt32(row["sales"]);
 
             return items;

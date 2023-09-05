@@ -131,11 +131,11 @@ namespace Garden.DAL
             }
         }
 
-        public List<GardenEntity> GetTopGardens()
+        public List<GardenEntity> GetTopGardens(int num = 5)
         {
             try
             {
-                string sql = "SELECT * FROM garden WHERE status=0 ORDER BY stars DESC FETCH FIRST 5 ROWS ONLY";
+                string sql = $"SELECT * FROM garden WHERE status=0 ORDER BY stars DESC FETCH FIRST {num} ROWS ONLY";
                 DataTable dt = OracleHelper.ExecuteTable(sql);
                 return ToModelList(dt);
             }
