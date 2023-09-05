@@ -4,7 +4,7 @@ using Garden.Models;
 
 namespace Garden.BLL
 {
-    public class BlogBLL: IBlogBLL
+    public class BlogBLL : IBlogBLL
     {
         AccountDAL accountDAL = new();
         BlogDAL blogDAL = new();
@@ -80,6 +80,11 @@ namespace Garden.BLL
             {
                 return "评论发布失败，请重试";
             }
+        }
+
+        public List<Blog> GetMoreBlogs(int startIndex, int num)
+        {
+            return blogDAL.GetMoreBlogs(startIndex, num);
         }
     }
 }
