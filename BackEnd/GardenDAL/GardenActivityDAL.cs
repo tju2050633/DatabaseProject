@@ -7,7 +7,7 @@ namespace Garden.DAL
 {
     public class GardenActivityDAL
     {
-        private GardenActivity ToModel(DataRow row)
+        private static GardenActivity ToModel(DataRow row)
         {
             GardenActivity activity = new()
             {
@@ -22,7 +22,7 @@ namespace Garden.DAL
             return activity;
         }
 
-        private List<GardenActivity> ToModelList(DataTable dt)
+        public static List<GardenActivity> ToModelList(DataTable dt)
         {
             List<GardenActivity> al = new();
             for (int i = 0; i < dt.Rows.Count; i++)

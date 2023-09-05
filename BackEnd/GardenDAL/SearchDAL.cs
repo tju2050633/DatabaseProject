@@ -41,12 +41,12 @@ namespace Garden.DAL
             try
             {
                 //这里定义搜索算法，对每个类型返回10个结果（自定义，合适即可，这里应该还有一个结果相关度的筛查）
-                //前端的几种结果：博客、花园、志愿、其他，选择一些表来完成筛选
+                //前端的几种结果：博客、花园、志愿、活动，选择一些表来完成筛选
                 status = 0;
                 // 在这里执行搜索逻辑，并获取不同类型的搜索结果;  类似地如下
                 MySearchResult blogResults = SearchBlogs(searchTerm);
                 MySearchResult gardenResults = SearchGardens(searchTerm);
-                MySearchResult itemResults = SearchItems(searchTerm);
+                MySearchResult activityResults = SearchActivity(searchTerm);
                 MySearchResult volunteerResults = SearchVolunteers(searchTerm);
 
                 // 构建包含不同类型搜索结果的数据结构
@@ -54,7 +54,7 @@ namespace Garden.DAL
                 {
                      blogResults,
                      gardenResults,
-                     itemResults,
+                     activityResults,
                      volunteerResults,
                 };
 
@@ -69,12 +69,12 @@ namespace Garden.DAL
             }
         }
 
-        MySearchResult ProcessSearch(MySearchResult result, string query1, string query2) 
+        MySearchResult ProcessSearch(MySearchResult result, string query1, string query2)
         {
             DataTable dt = OracleHelper.ExecuteTable(query1);
             int searchcnt = dt.Rows.Count; // 搜索出相关的条目数
             Console.WriteLine(searchcnt);
-            if(result.Type == "blog")
+            if (result.Type == "blog")
             {
                 if (searchcnt >= 10)
                 {
@@ -102,21 +102,21 @@ namespace Garden.DAL
                     result.Data.AddRange(GardenDAL.ToModelList(dt2).Take(10 - searchcnt));
                 }
             }
-            else if(result.Type == "item")
+            else if (result.Type == "activity")
             {
                 if (searchcnt >= 10)
                 {
-                    result.Data.AddRange(ItemsDAL.ToModelList(dt).Take(10)); // 取10个结果
+                    result.Data.AddRange(GardenActivityDAL.ToModelList(dt).Take(10)); // 取10个结果
                     return result;
                 }
                 else
                 {
-                    result.Data.AddRange(ItemsDAL.ToModelList(dt)); // 不足10个，用其他项补齐，最终结果依旧可能小于10个
+                    result.Data.AddRange(GardenActivityDAL.ToModelList(dt)); // 不足10个，用其他项补齐，最终结果依旧可能小于10个
                     DataTable dt2 = OracleHelper.ExecuteTable(query2);
-                    result.Data.AddRange(ItemsDAL.ToModelList(dt2).Take(10 - searchcnt));
+                    result.Data.AddRange(GardenActivityDAL.ToModelList(dt2).Take(10 - searchcnt));
                 }
             }
-            else if( result.Type == "volunteer")
+            else if (result.Type == "volunteer")
             {
                 if (searchcnt >= 10)
                 {
@@ -171,17 +171,21 @@ namespace Garden.DAL
                 $"AND NOT description LIKE '%{searchTerm}%' ";
             return ProcessSearch(result, query1, query2);
         }
-        MySearchResult SearchItems(string searchTerm)
+        MySearchResult SearchActivity(string searchTerm)
         {
             MySearchResult result = new MySearchResult
             {
-                Type = "item",
+                Type = "activity",
                 Data = new List<object>()
             };
-            string query1 = $"SELECT * FROM Items WHERE item_id LIKE '%{searchTerm}%' " +
-                $"OR item_name LIKE '%{searchTerm}%' ";
-            string query2 = $"SELECT * FROM Items WHERE NOT item_id LIKE '%{searchTerm}%' " +
-                $"AND NOT item_name LIKE '%{searchTerm}%' ";
+            string query1 = $"SELECT * FROM Garden_Activity WHERE activity_id LIKE '%{searchTerm}%' " +
+                $"OR garden_id LIKE '%{searchTerm}%' " +
+                $"OR holder_id LIKE '%{searchTerm}%' " +
+                $"OR description LIKE '%{searchTerm}%'";
+            string query2 = $"SELECT * FROM Garden_Activity WHERE NOT activity_id LIKE '%{searchTerm}%' " +
+                $"OR NOT garden_id LIKE '%{searchTerm}%' " +
+                $"OR NOT holder_id LIKE '%{searchTerm}%' " +
+                $"OR NOT description LIKE '%{searchTerm}%'";
             return ProcessSearch(result, query1, query2);
         }
         MySearchResult SearchVolunteers(string searchTerm)

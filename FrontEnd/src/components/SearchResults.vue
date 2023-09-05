@@ -192,6 +192,7 @@ export default {
   },
   setup(props) {
     const results = JSON.parse(props.results);
+    console.log("搜索结果处理：", results);
     // 访问 "blog" 类型的搜索结果数据
     const blogResults = results?.find((result) => result.type === "blog")?.data;
     // 访问 "garden" 类型的搜索结果数据
@@ -199,13 +200,18 @@ export default {
       (result) => result.type === "garden"
     )?.data;
     // 访问 "item" 类型的搜索结果数据（改为活动类）
-    const itemResults = results?.find(
+    const activityResults = results?.find(
       (result) => result.type === "activity"
     )?.data;
     // 访问 "volunteer" 类型的搜索结果数据
     const volunteerResults = results?.find(
       (result) => result.type === "volunteer"
     )?.data;
+
+    console.log("博客类型结果：", blogResults);
+    console.log("花园类型结果：", gardenResults);
+    console.log("活动类型结果：", activityResults);
+    console.log("志愿类型结果：", volunteerResults);
 
     //标签选项
     const chooseComponent = ref(1);
@@ -232,7 +238,7 @@ export default {
     return {
       blogResults,
       gardenResults,
-      itemResults,
+      activityResults,
       volunteerResults,
       chooseComponent,
       scrollToTop,

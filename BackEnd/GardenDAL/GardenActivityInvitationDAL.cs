@@ -58,7 +58,7 @@ namespace Garden.DAL
                     new OracleParameter("id", OracleDbType.Char) { Value = invitee_id },
                     new OracleParameter("activity_id", OracleDbType.Char) { Value = activity_id }
                 };
-                return (int)OracleHelper.ExecuteScalar(sql, sp);
+                return Convert.ToInt32(OracleHelper.ExecuteScalar(sql, sp));
             }
             catch (Exception ex)
             {
