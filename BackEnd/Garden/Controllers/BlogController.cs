@@ -95,5 +95,13 @@ namespace Garden.Controllers
             return _blogBLL.Insert_Comments(blog_comment_id, owner_id, blog_id, content);
         }
 
+        // 查询博客
+        //无输入
+        //每次返回若干条：[博客ID、博主ID、博客标题、正文、博客图片URL、发布时间、评分、评分数]
+        [HttpGet("moreblogs")]
+        public IEnumerable<Blog> GetMoreBlogs(int startIndex, int num)
+        {
+            return _blogBLL.GetMoreBlogs(startIndex, num);
+        }
     }
 }

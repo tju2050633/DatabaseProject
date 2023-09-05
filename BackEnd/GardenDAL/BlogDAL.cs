@@ -195,5 +195,29 @@ namespace Garden.DAL
                 return null;
             }
         }
+
+
+        public List<Blog> GetMoreBlogs(int startIndex, int num)
+        {
+            try
+            {
+                string sql = $"SELECT * FROM (SELECT rownum AS rn, b.* FROM blog b) WHERE rn >= {startIndex} AND rn < {startIndex + num}";
+                DataTable dt = OracleHelper.ExecuteTable(sql);
+                List<Blog> blogs = ToModelList(dt);
+
+                if (blogs.Count == 0)
+                {
+                    // 数据库中获取结束，返回提示信息
+                    Console.WriteLine("已获取所有博客数据！");
+                }
+
+                return blogs;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return null;
+            }
+        }
     }
 }

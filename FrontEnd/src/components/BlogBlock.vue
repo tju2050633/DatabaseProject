@@ -105,6 +105,12 @@
 </style>
 
 <script>
+import {
+  getBlogComments,
+  postBlogComment,
+  handleAgreeNum,
+} from "@/api/blogApi.js";
+
 export default {
   props: ["card"],
 
@@ -124,9 +130,23 @@ export default {
     toggleContent() {
       this.localCard.showFullContent = !this.localCard.showFullContent;
     },
+
+    //选择是否展开评论区
     toggleCollapse() {
       this.localCard.isOpen = !this.localCard.isOpen;
+      //申请评论数据
+      console.log(this.localCard.blogid, "&");
+      getBlogComments(this.localCard.blogid).then(
+        function (res) {
+          console.log("获取评论成功");
+          this.localCard.comments = res;
+        },
+        function (err) {
+          console.log("获取评论失败", err);
+        }
+      );
     },
+
     handleLike() {
       if (!this.localCard.liked) {
         this.localCard.totalLikes++;
@@ -134,17 +154,32 @@ export default {
         this.localCard.totalLikes--;
       }
       this.localCard.liked = !this.localCard.liked;
+      //更新点赞数
+      handleAgreeNum(this.localCard.totalLikes);
     },
     toggleInput() {
       this.localCard.showInput = !this.localCard.showInput;
       this.localCard.comment = "";
     },
+
     submitComment() {
       if (this.localCard.comment.trim() === "") {
         return;
       }
-      window.alert("评论已经提交");
-      this.toggleInput();
+      //申请接口连接
+      postBlogComment(
+        this.localCard.blogid,
+        this.localCard.author,
+        this.localCard.comment
+      ).then(
+        function (res) {
+          window.alert(res);
+          this.toggleInput();
+        },
+        function (err) {
+          console.log(err);
+        }
+      );
     },
   },
 };
