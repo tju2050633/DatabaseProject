@@ -10,27 +10,17 @@ namespace Garden.BLL
 
         public int GetUsersCount()
         {
-            return statisticsDAL.GetUsersCountBefore(DateTime.Now);
+            return statisticsDAL.GetUsersCountBefore(string.Format("{0:yyyy-MM-dd HH:mm:ss}", DateTime.Now));
         }
 
         public int GetUsersCountBeforeDate(string date)
         {
-            DateTime dateValue;
-            if (!DateTime.TryParse(date + " 23:59:59", out dateValue))
-            {
-                return -1;
-            }
-            return statisticsDAL.GetUsersCountBefore(dateValue);
+            return statisticsDAL.GetUsersCountBefore(date + " 23:59:59");
         }
 
         public int GetActiveUsersCountBeforeDate(string date)
         {
-            DateTime dateValue;
-            if (!DateTime.TryParse(date + " 23:59:59", out dateValue))
-            {
-                return -1;
-            }
-            return statisticsDAL.GetActiveUsersCountBefore(dateValue);
+            return statisticsDAL.GetActiveUsersCountBefore(date + " 23:59:59");
         }
 
         public int GetUsersCountByGrade(string grade)
@@ -40,17 +30,12 @@ namespace Garden.BLL
 
         public int GetGardensCount()
         {
-            return statisticsDAL.GetGardensCountBefore(DateTime.Now);
+            return statisticsDAL.GetGardensCountBefore(string.Format("{0:yyyy-MM-dd HH:mm:ss}", DateTime.Now));
         }
 
         public int GetGardensCountBeforeDate(string date)
         {
-            DateTime dateValue;
-            if (!DateTime.TryParse(date + " 23:59:59", out dateValue))
-            {
-                return -1;
-            }
-            return statisticsDAL.GetGardensCountBefore(dateValue);
+            return statisticsDAL.GetGardensCountBefore(date + " 23:59:59");
         }
 
         public int GetGardensCountByPosition(string position)
@@ -60,17 +45,12 @@ namespace Garden.BLL
 
         public int GetBlogsCount()
         {
-            return statisticsDAL.GetBlogsCountBefore(DateTime.Now);
+            return statisticsDAL.GetBlogsCountBefore(string.Format("{0:yyyy-MM-dd HH:mm:ss}", DateTime.Now));
         }
 
         public int GetBlogsCountBeforeDate(string date)
         {
-            DateTime dateValue;
-            if (!DateTime.TryParse(date + " 23:59:59", out dateValue))
-            {
-                return -1;
-            }
-            return statisticsDAL.GetBlogsCountBefore(dateValue);
+            return statisticsDAL.GetBlogsCountBefore(date + " 23:59:59");
         }
     }
 }

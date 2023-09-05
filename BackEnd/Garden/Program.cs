@@ -21,6 +21,10 @@ builder.Services.AddSingleton<IActivityBLL, ActivityBLL>();
 builder.Services.AddSingleton<IAdminBLL, AdminBLL>();
 builder.Services.AddSingleton<ISearchBLL, SearchBLL>();
 builder.Services.AddSingleton<IHotBLL, HotBLL>();
+builder.Services.AddSingleton<ICollegeIdlyBLL, CollegeIdlyBLL>();
+builder.Services.AddSingleton<IFeedbackBLL, FeedbackBLL>();
+builder.Services.AddSingleton<INotifyBLL, NotifyBLL>();
+builder.Services.AddSingleton<ILoginInfoBLL, LoginInfoBLL>();
 
 var app = builder.Build();
 
