@@ -15,8 +15,13 @@ export const fetchMyPoints = async (userId) => {
     return response.data;
 };
 
-export const fetchItemCounts = async (itemId) => {
-    const response = await API.get('/items', {
+export const fetchAllItemID = async () => {
+    const response = await API.get('/items/all_id');
+    return response.data;
+};
+
+export const fetchItemInfo = async (itemId) => {
+    const response = await API.get('/items/info', {
         params: {
             itemId: itemId.toString()
     } });
@@ -24,6 +29,9 @@ export const fetchItemCounts = async (itemId) => {
 };
 
 export const performExchange = async (itemId, userId) => {
-    const response = await API.post('/exchange', { itemId: itemId, userId: userId });
+    const response = await API.post('/exchange', { 
+            itemId: itemId.toString(),
+            userId: userId.toString()
+        });
     return response.data;
 };

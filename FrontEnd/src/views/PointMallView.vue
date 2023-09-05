@@ -24,9 +24,10 @@
                             </div>
                         </div>
 
+                        <!-- 商品列表 -->
                         <el-row>
                             <el-col v-for="item in items" :key="item.id" :xs="24" :sm="12" :md="8" :lg="6"
-                                @click="this.$router.push({ name: 'PointItem', params: { id: item.id } })">
+                                @click="this.$router.push({ name: 'PointItem', params: { itemId: item.itemId } })">
                                 <PointItemBlock :item="item" />
                             </el-col>
                         </el-row>
@@ -91,7 +92,7 @@ body {
   
 <script>
 import PointItemBlock from '../components/PointItemBlock.vue';
-import { fetchItemCounts } from '../api/mallApi.js';
+import { fetchAllItemID, fetchItemInfo } from '../api/mallApi.js';
 
 export default {
     components: {
@@ -99,118 +100,23 @@ export default {
     },
     data() {
         return {
-            items: [
-                {
-                    id: 1,
-                    name: '商品1',
-                    price: 100,
-                    exchangeCount: null,
-                    remainCount: null,
-                    image: require('../assets/item.png'),
-                },
-                {
-                    id: 2,
-                    name: '商品2',
-                    price: 200,
-                    exchangeCount: null,
-                    remainCount: null,
-                    image: require('../assets/item.png'),
-                },
-                {
-                    id: 3,
-                    name: '商品3',
-                    price: 300,
-                    exchangeCount: null,
-                    remainCount: null,
-                    image: require('../assets/item.png'),
-                },
-                {
-                    id: 4,
-                    name: '商品4',
-                    price: 400,
-                    exchangeCount: null,
-                    remainCount: null,
-                    image: require('../assets/item.png'),
-                },
-                {
-                    id: 5,
-                    name: '商品5',
-                    price: 500,
-                    exchangeCount: null,
-                    remainCount: null,
-                    image: require('../assets/item.png'),
-                },
-                {
-                    id: 6,
-                    name: '商品6',
-                    price: 600,
-                    exchangeCount: null,
-                    remainCount: null,
-                    image: require('../assets/item.png'),
-                },
-                {
-                    id: 7,
-                    name: '商品7',
-                    price: 700,
-                    exchangeCount: null,
-                    remainCount: null,
-                    image: require('../assets/item.png'),
-                },
-                {
-                    id: 8,
-                    name: '商品8',
-                    price: 800,
-                    exchangeCount: null,
-                    remainCount: null,
-                    image: require('../assets/item.png'),
-                },
-                {
-                    id: 9,
-                    name: '商品9',
-                    price: 900,
-                    exchangeCount: null,
-                    remainCount: null,
-                    image: require('../assets/item.png'),
-                },
-                {
-                    id: 10,
-                    name: '商品10',
-                    price: 1000,
-                    exchangeCount: null,
-                    remainCount: null,
-                    image: require('../assets/item.png'),
-                }, {
-                    id: 11,
-                    name: '商品11',
-                    price: 1100,
-                    exchangeCount: null,
-                    remainCount: null,
-                    image: require('../assets/item.png'),
-                },
-                {
-                    id: 12,
-                    name: '商品12',
-                    price: 1200,
-                    exchangeCount: null,
-                    remainCount: null,
-                    image: require('../assets/item.png'),
-                },
-            ],
+            items: [ ],
         };
     },
-    methods: {
-        //这里不确定商品是否固定，不固定的话修改下面的代码
-        async fetchItemCounts() {
-            try {
-                for (const item of this.items) {
-                    const { exchangeCount, remainCount } = await fetchItemCounts(item.id);
-                    item.exchangeCount = exchangeCount;
-                    item.remainCount = remainCount;
-                }
-            } catch (error) {
-                console.error('Error fetching item counts:', error);
-            }
-        },
+    async created() {
+
+        // select 8 items randomly for demonstration
+
+        const itemIds = await fetchAllItemID();
+        const n = itemIds.length;
+        for (var _ = 0; _ < 8; _++){
+            var index = Math.floor(Math.random() * n);
+
+            // index转为string，且前面补0至3位数
+            index = itemIds[index].toString().padStart(3, '0');
+            const itemInfo = await fetchItemInfo(index); 
+            this.items.push(itemInfo);
+        }
     },
 };
 </script>

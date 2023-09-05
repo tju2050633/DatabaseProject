@@ -91,9 +91,10 @@ const routes = [
     component: () => import('../views/PointMallView.vue')
   },
   {
-    path: '/PointItem/',
+    path: '/PointItem/:itemId',
     name: 'PointItem',
-    component: () => import('../views/PointItemView.vue')
+    component: () => import('../views/PointItemView.vue'),
+    props: true // 开启props传参
   },
 
   //花园活动

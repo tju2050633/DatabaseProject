@@ -250,7 +250,7 @@ body {
   margin: 2vh;
   padding: 2vh;
 
-  width: 11vw;
+  width: 12vw;
 
   border-width: 0vh;
   border-radius: 3vh;

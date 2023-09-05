@@ -34,7 +34,7 @@ namespace Garden.DAL
             return I;
         }
 
-        //��ȡ��Ʒ��������Ϣ
+        // get single item info
         public Items GetItems(string item_id, out int status)
         {
             try
@@ -60,12 +60,32 @@ namespace Garden.DAL
             }
         }
 
+        // get all item id
+        public List<string> GetAllItemID()
+        {
+            try
+            {
+                string sql = "SELECT item_id FROM items";
+                DataTable dt = OracleHelper.ExecuteTable(sql);
+                List<string> list = new();
+                foreach (DataRow dr in dt.Rows)
+                {
+                    list.Add(dr["item_id"].ToString());
+                }
+                return list;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return null;
+            }
+        }
+
         // storage -=1, sales +=1
         public void ItemSold(string item_id)
         {
             try
             {
-                Console.WriteLine("ItemSold executing...");
                 string sql1 = "UPDATE items SET sales = sales + 1 WHERE item_id=:id";
                 string sql2 = "UPDATE items SET item_storage = item_storage - 1 WHERE item_id=:id";
                 OracleHelper.ExecuteNonQuery(sql1,
@@ -110,7 +130,7 @@ namespace Garden.DAL
         {
             try
             {
-                string sql = "SELECT storage FROM items WHERE item_id=:id";
+                string sql = "SELECT * FROM items WHERE item_id=:id";
                 DataTable dt = OracleHelper.ExecuteTable(sql,
                     new OracleParameter("id", OracleDbType.Char) { Value = item_id });
                 if (dt.Rows.Count != 1)
@@ -120,7 +140,7 @@ namespace Garden.DAL
                 }
                 status = 0;
                 DataRow dr = dt.Rows[0];
-                int value = Convert.ToInt32(dr["storage"]);
+                int value = Convert.ToInt32(dr["item_storage"]);
                 return value;
 
             }

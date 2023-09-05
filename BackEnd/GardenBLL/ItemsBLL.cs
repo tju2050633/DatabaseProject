@@ -15,37 +15,42 @@ namespace Garden.BLL
             return itemsDAL.GetItems(item_id, out _);
         }
 
-    // 完成交易
-    public int ItemSold(string itemId, string userId)
-    {
-        // get storage and price
-        int storage = itemsDAL.GetStorage(itemId, out _);
-        int price = itemsDAL.GetPrice(itemId, out _);
-
-        // get user point
-        int point = accountDAL.GetPoints(userId, out _);
-
-        if (point < price)
+        public List<string> GetAllItemID()
         {
-            // point not enough
-            return 1;
+            return itemsDAL.GetAllItemID();
         }
-        else if(storage <= 0)
-        {
-            // storage not enough
-            return 2;
-        }
-        else
-        {
-            // storage -=1, sales +=1
-            itemsDAL.ItemSold(itemId);
 
-            // point -= price
-            accountDAL.SetPoint(userId, point - price);
+        // 完成交易
+        public int ItemSold(string itemId, string userId)
+        {
+            // get storage and price
+            int storage = itemsDAL.GetStorage(itemId, out _);
+            int price = itemsDAL.GetPrice(itemId, out _);
 
-            return 0;
+            // get user point
+            int point = accountDAL.GetPoints(userId, out _);
+
+            if (point < price)
+            {
+                // point not enough
+                return 1;
+            }
+            else if(storage <= 0)
+            {
+                // storage not enough
+                return 2;
+            }
+            else
+            {
+                // storage -=1, sales +=1
+                itemsDAL.ItemSold(itemId);
+
+                // point -= price
+                accountDAL.SetPoint(userId, point - price);
+
+                return 0;
+            }
         }
-    }
 
         
         public string InsertRedeem(string redeem_id, string redeemer, string item_id)

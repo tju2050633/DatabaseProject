@@ -30,15 +30,12 @@
 </template>
   
 <script>
-import { fetchMyPoints, fetchItemCounts, performExchange } from '../api/mallApi.js';
-// import { mapGetters } from 'vuex';
+import { fetchMyPoints, fetchItemInfo, performExchange } from '../api/mallApi.js';
+import { useStore } from 'vuex'
 
 export default {
     el: "#app",
-    // props: ['itemId'], // 父组件传递的属性
-    // computed: {
-    //     ...mapGetters('ModuleUser', ['getUserId']),
-    // },
+    props: ['itemId'], // 父组件传递的属性
     data() {
         return {
             userId: "",
@@ -58,7 +55,7 @@ export default {
     },
     methods: {
         async confirmExchange(item) {
-            if (confirm(`Confirm to exchange ${item.name}?`)) {
+            if (confirm(`确认兑换商品 ${item.name}?`)) {
                 const exchangeResult = await performExchange(this.itemId, this.userId);
                 if (exchangeResult.success) {
 
@@ -78,14 +75,17 @@ export default {
         
         try {
             // init data
+            
+            this.userId = useStore().state.user.id;
+            console.log("useStore().state", useStore().state)
+            console.log("this.userId", this.userId);
 
-            this.itemId = "001";
             this.userId = "1";
+
             this.myPoints = await fetchMyPoints(this.userId); 
 
-            console.log("myPoints: ", this.myPoints);
-
-            const itemInfo = await fetchItemCounts(this.itemId); 
+            const itemInfo = await fetchItemInfo(this.itemId); 
+            console.log("itemInfo", itemInfo)
 
             this.item.name = itemInfo.itemName;
             this.item.price = itemInfo.price;

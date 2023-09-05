@@ -262,7 +262,7 @@ namespace Garden.DAL
                 }
                 status = 0;
                 DataRow dr = dt.Rows[0];
-                int value = Convert.ToInt32(dr["price"]);
+                int value = Convert.ToInt32(dr["points"]);
                 return value;
 
             }

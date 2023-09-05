@@ -2,11 +2,11 @@
     <el-card class="item-card">
         <img :src="item.image" class="item-image" alt="Product Image" @load="resizeCard" />
         <div class="item-info">
-            <div class="item-name">{{ item.name }}</div>
+            <div class="item-name">{{ item.itemName }}</div>
             <div class="item-price">{{ item.price }} 积分</div>
             <div class="item-exchange-count">
-                已兑换：{{ item.exchangeCount }}&nbsp;&nbsp;
-                剩余：{{ item.remainCount }}
+                已兑换：{{ item.sales }}&nbsp;&nbsp;
+                剩余：{{ item.storage }}
             </div>
         </div>
     </el-card>
@@ -48,7 +48,7 @@ export default {
 
 .item-image {
     width: 90%;
-    height: auto;
+    height: 200px;
     border-radius: 1vh;
 }
 
