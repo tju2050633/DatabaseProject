@@ -253,5 +253,23 @@ namespace Garden.DAL
                 return null;
             }
         }
+
+        // 增加blog_id对应的点赞数
+        public bool AddAgree(string blog_id, int add = 1)
+        {
+            try
+            {
+                string sql = $"UPDATE blog SET agree_num = agree_num + {add} WHERE blog_id=:id";
+                OracleHelper.ExecuteNonQuery(sql, new OracleParameter("id", OracleDbType.Char) { Value = blog_id });
+                OracleHelper.ExecuteNonQuery("commit;");
+                return true;
+            }
+            catch(Exception ex)
+            {
+                if (ex.Message.Contains("ORA-02185")) return true;
+                Console.WriteLine(ex.Message);
+                return false;
+            }
+        }
     }
 }

@@ -21,5 +21,7 @@ namespace Garden.BLL.Interfaces
         public string Insert_Comments(string blog_comment_id, string owner_id, string blog_id, string content);
 
         public List<Blog> GetMoreBlogs(int startIndex, int num = 10);
+
+        public bool AddAgree(string blog_id, int num = 1);
     }
 }
