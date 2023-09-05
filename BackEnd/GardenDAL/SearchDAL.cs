@@ -8,34 +8,6 @@ namespace Garden.DAL
 {
     public class SearchDAL
     {
-        private static Blog ToModel(DataRow row)
-        {
-            Blog blog = new()
-            {
-                BlogId = row["blog_id"].ToString(),
-                OwnerId = row["owner_id"].ToString(),
-                Title = row["title"].ToString(),
-                Content = row["content"].ToString(),
-                ImageUrl = row["image_url"].ToString(),
-                ReleaseTime = Convert.ToDateTime(row["release_time"]),
-                AgreeNum = Convert.ToInt32(row["agree_num"]),
-                CommentNum = Convert.ToInt32(row["comment_num"])
-            };
-            return blog;
-        }
-
-        private static List<Blog> ToModelList(DataTable dt)
-        {
-            List<Blog> bl = new();
-            for (int i = 0; i < dt.Rows.Count; i++)
-            {
-                DataRow dr = dt.Rows[i];
-                Blog blog = ToModel(dr);
-                bl.Add(blog);
-            }
-            return bl;
-        }
-
         public List<MySearchResult> GetResults(string searchTerm, out int status)
         {
             try
