@@ -12,11 +12,12 @@ namespace Garden.DAL
         {
             Items items = new();
 
-            items.ItemId = row["item_id"].ToString();
-            items.ItemName = row["item_name"].ToString();
-            items.Price = Convert.ToInt32(row["price"]);
-            items.ItemStorage = row["item_storage"].ToString();
-            items.Sales = Convert.ToInt32(row["sales"]);
+            items.itemId = row["item_id"].ToString();
+            items.itemName = row["item_name"].ToString();
+            items.price = Convert.ToInt32(row["price"]);
+            items.sales = Convert.ToInt32(row["sales"]);
+            items.storage = Convert.ToInt32(row["item_storage"]);
+            items.image = row["image"].ToString();
 
             return items;
         }
@@ -33,10 +34,9 @@ namespace Garden.DAL
             return I;
         }
 
-        //»ñÈ¡ÉÌÆ·µÄËùÓÐÐÅÏ¢
+        //ï¿½ï¿½È¡ï¿½ï¿½Æ·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢
         public Items GetItems(string item_id, out int status)
         {
-
             try
             {
                 string sql = "SELECT * FROM items WHERE item_id=:id";
@@ -59,10 +59,29 @@ namespace Garden.DAL
                 return null;
             }
         }
-        //»ñÈ¡ÉÌÆ·µÄËùÐè»ý·Ö
+
+        // storage -=1, sales +=1
+        public void ItemSold(string item_id)
+        {
+            try
+            {
+                Console.WriteLine("ItemSold executing...");
+                string sql1 = "UPDATE items SET sales = sales + 1 WHERE item_id=:id";
+                string sql2 = "UPDATE items SET item_storage = item_storage - 1 WHERE item_id=:id";
+                OracleHelper.ExecuteNonQuery(sql1,
+                    new OracleParameter("id", OracleDbType.Char) { Value = item_id });
+                OracleHelper.ExecuteNonQuery(sql2,
+                    new OracleParameter("id", OracleDbType.Char) { Value = item_id });
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+        }
+
+        //ï¿½ï¿½È¡ï¿½ï¿½Æ·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         public int GetPrice(string item_id, out int status)
         {
-
             try
             {
                 string sql = "SELECT price FROM items WHERE item_id=:id";

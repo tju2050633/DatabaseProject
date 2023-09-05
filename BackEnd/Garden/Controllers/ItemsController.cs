@@ -1,3 +1,4 @@
+using System;
 using Garden.BLL.Interfaces;
 using Garden.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -15,23 +16,37 @@ namespace Garden.Controllers
             _ItemsBLL = ItemsBLL;
         }
 
-        // ÊäÈëÉÌÆ·id(item_id)
-        // ·µ»Ø×´Ì¬£º[ÉÌÆ·id¡¢ÉÌÆ·Ãû¡¢ËùĞè»ı·Ö¡¢¿â´æ¡¢ÒÑÊÛÊıÁ¿]
-        [HttpGet("singleitems")]
-        public ActionResult<Items> GetSingleItems(string item_id)
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ·id(item_id)
+        // ï¿½ï¿½ï¿½ï¿½×´Ì¬ï¿½ï¿½[ï¿½ï¿½Æ·idï¿½ï¿½ï¿½ï¿½Æ·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¡ï¿½ï¿½ï¿½æ¡¢ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½]
+        [HttpGet("/items")]
+        public ActionResult<Items> GetSingleItems(string itemId)
         {
-            return _ItemsBLL.GetSingleItems(item_id);
+            return _ItemsBLL.GetSingleItems(itemId);
         }
 
-        // ÊäÈëÉÌÆ·¶Ò»»¼ÇÂ¼(redeem _id)¡¢¶Ò»»Õßid(redeemer)¡¢ÉÌÆ·id(item_id)
-        // ·µ»Ø×´Ì¬£º["¶Ò»»³É¹¦""¶Ò»»Ê§°Ü"]
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ·ï¿½Ò»ï¿½ï¿½ï¿½Â¼(redeem _id)ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½id(redeemer)ï¿½ï¿½ï¿½ï¿½Æ·id(item_id)
+        // ï¿½ï¿½ï¿½ï¿½×´Ì¬ï¿½ï¿½["ï¿½Ò»ï¿½ï¿½É¹ï¿½""ï¿½Ò»ï¿½Ê§ï¿½ï¿½"]
         [HttpPost]
         public ActionResult<string> InsertRedeem(string redeem_id, string redeemer, string item_id)
         {
             return _ItemsBLL.InsertRedeem(redeem_id, redeemer, item_id);
         }
 
+        [HttpPost("/exchange")]
+        public IActionResult ExchangeItem(int itemId)
+        {
 
+            // æ•°æ®åº“åº“å­˜å‡1
+            _ItemsBLL.ItemSold(itemId.ToString());
 
+            // ç”¨æˆ·ç§¯åˆ†å‡å°‘
+            // 
+
+            bool success = true;
+
+            if (!success)
+                return BadRequest(new { success = false, message = "å…‘æ¢å¤±è´¥" });
+            return Ok(new { success = true, message = "å…‘æ¢æˆåŠŸ" });
+        }
     }
 }

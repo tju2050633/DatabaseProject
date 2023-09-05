@@ -63,5 +63,13 @@ namespace Garden.Controllers
             return _adminBLL.AdminLogin(id, pwd);   
         }
 
+        // 获取当前账户积分
+        [HttpGet("/user/points")]
+        public ActionResult<int> GetMyPoints()
+        {
+
+            return 10086;
+        }
+
     }
 }

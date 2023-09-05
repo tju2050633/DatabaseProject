@@ -2,11 +2,12 @@ namespace Garden.Models
 {
     public class Items
     {
-        public string ItemId { get; set; }
-        public string ItemName { get; set; }
-        public int Price { get; set; }
-        public string ItemStorage { get; set; }
-        public int Sales { get; set; }
+        public string itemId { get; set; }
+        public string itemName { get; set; }
+        public int price { get; set; }
+        public int sales { get; set; }
+        public int storage { get; set; }
+        public string image { get; set;}
 
     }
 }

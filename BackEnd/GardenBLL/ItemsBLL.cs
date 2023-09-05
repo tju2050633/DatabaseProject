@@ -15,6 +15,12 @@ namespace Garden.BLL
             return itemsDAL.GetItems(item_id, out _);
         }
 
+        // å®Œæˆäº¤æ˜“
+        public void ItemSold(string item_id)
+        {
+            itemsDAL.ItemSold(item_id);
+        }
+
         
         public string InsertRedeem(string redeem_id, string redeemer, string item_id)
         {
@@ -30,18 +36,18 @@ namespace Garden.BLL
             int user_value = accountDAL.GetPoints(redeemer, out _);
             if (item_value > user_value)
             {
-                return "»ý·Ö²»×ã£¬ÎÞ·¨¶Ò»»¡£";
+                return "ï¿½ï¿½ï¿½Ö²ï¿½ï¿½ã£¬ï¿½Þ·ï¿½ï¿½Ò»ï¿½ï¿½ï¿½";
             }
             else
             {
                 bool Ins = redeemsDAL.Insert_Redeems(redeems_info);
                 if (Ins)
                 {
-                    return "¶Ò»»³É¹¦¡£";
+                    return "ï¿½Ò»ï¿½ï¿½É¹ï¿½ï¿½ï¿½";
                 }
                 else
                 {
-                    return "¶Ò»»Ê§°Ü£¬ÇëÖØÊÔ¡£";
+                    return "ï¿½Ò»ï¿½Ê§ï¿½Ü£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô¡ï¿½";
                 }
             }
         }
