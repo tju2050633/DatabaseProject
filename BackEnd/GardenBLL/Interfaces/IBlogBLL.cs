@@ -22,6 +22,6 @@ namespace Garden.BLL.Interfaces
 
         public List<Blog> GetMoreBlogs(int startIndex, int num = 10);
 
-        public bool AddAgree(string blog_id, int num = 1);
+        public int AddAgree(string blog_id, int num = 1);
     }
 }

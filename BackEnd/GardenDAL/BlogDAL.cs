@@ -254,22 +254,31 @@ namespace Garden.DAL
             }
         }
 
-        // 增加blog_id对应的点赞数
-        public bool AddAgree(string blog_id, int add = 1)
+        // 增加blog_id对应的点赞数，返回最新的点赞数，-1表示出错
+        public int AddAgree(string blog_id, int add = 1)
         {
             try
             {
                 string sql = $"UPDATE blog SET agree_num = agree_num + {add} WHERE blog_id=:id";
                 OracleHelper.ExecuteNonQuery(sql, new OracleParameter("id", OracleDbType.Char) { Value = blog_id });
                 OracleHelper.ExecuteNonQuery("commit;");
-                return true;
+                return GetAgreeNumById(blog_id);
             }
             catch(Exception ex)
             {
-                if (ex.Message.Contains("ORA-02185")) return true;
+                if (ex.Message.Contains("ORA-02185")) return GetAgreeNumById(blog_id);
                 Console.WriteLine(ex.Message);
-                return false;
+                return -1;
             }
+        }
+
+        // 根据博客ID查找出点赞数，返回-1表示出错
+        public int GetAgreeNumById(string blog_id)
+        {
+            var dt = OracleHelper.ExecuteTable("SELECT agree_num FROM blog WHERE blog_id=:id",
+                new OracleParameter("id", OracleDbType.Char) { Value = blog_id });
+            if (dt.Rows.Count == 0) return -1;
+            return Convert.ToInt32(dt.Rows[0]["agree_num"]);
         }
     }
 }
