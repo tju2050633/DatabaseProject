@@ -35,6 +35,39 @@ namespace Garden.DAL
             return bl;
         }
 
+        // 转化为BlogInfo形式，需要查Account表得到用户名
+        public static BlogInfo ToBlogInfo(Blog b) 
+        {
+            Account ac = AccountDAL.GetAccountById(b.OwnerId, out _);
+            BlogInfo bi = new()
+            {
+                BlogId = b.BlogId,
+                OwnerId = b.OwnerId,
+                Title = b.Title,
+                Content = b.Content,
+                ImageUrl = b.ImageUrl,
+                ReleaseTime = b.ReleaseTime,
+                AgreeNum = b.AgreeNum,
+                CommentNum = b.CommentNum,
+                Author = ac.AccountName
+            };
+            return bi;
+        }
+        public static List<BlogInfo> ToBlogInfoList(List<Blog> bl)
+        {
+            List<BlogInfo> B = new();
+            foreach (Blog b in bl)
+            {
+                BlogInfo bi = ToBlogInfo(b);
+                B.Add(bi);
+            }
+            return B;
+        }
+        public static List<BlogInfo> DtToBlogInfoList(DataTable dt)
+        {
+            return ToBlogInfoList(ToModelList(dt));
+        }
+
         public Blog GetBlogById(string id, out int status)
         {
             try

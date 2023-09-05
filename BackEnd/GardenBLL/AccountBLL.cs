@@ -42,7 +42,7 @@ namespace Garden.BLL
         public Account GetAllInfo(string id)
         {
             int status;
-            return accountDAL.GetAccountById(id, out status);
+            return AccountDAL.GetAccountById(id, out status);
         }
 
         public bool UpdateInfo(string id, string bio, string email, string phone)

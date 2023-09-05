@@ -30,7 +30,7 @@ namespace Garden.Controllers
           ]
         },
         {
-          "type": "item",
+          "type": "activity",
           "data": [
           ]
         },
