@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Garden.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class CollegeIdlyController : ControllerBase
     {
