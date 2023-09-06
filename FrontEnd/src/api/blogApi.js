@@ -4,7 +4,7 @@ axios.defaults.headers.common['Content-Type'] = 'application/json';
 
 const API = axios.create({
     baseURL: 'http://localhost:5194/Blog/',
-    timeout: 3000,
+    timeout: 5000,
     async: true,
     crossDomain: true,
 })

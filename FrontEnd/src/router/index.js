@@ -137,7 +137,21 @@ const routes = [
   {
     path: '/:catchAll(.*)',
     redirect: '/404/'
-  }
+  },
+
+  //发布花园页
+  {
+    path: '/GardenPost',
+    name: 'GardenPost',
+    component: () => import('../views/GardenPost.vue'),
+  },
+
+  //发布博客页
+    {
+    path: '/BlogPost',
+    name: 'BlogPost',
+    component: () => import('../views/BlogPost.vue'),
+  },
 ]
 
 const router = createRouter({
