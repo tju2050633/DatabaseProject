@@ -27,10 +27,10 @@ namespace Garden.Controllers
             return _volunteerBLL.GetUserApplies(id);
         }
 
-        [HttpGet("recruit")]
-        public ActionResult<VolunteerRecruit> GetSingleRecruit(string id)
+        [HttpGet("moreRecruits")]
+        public IEnumerable<VolunteerRecruit> GetMoreRecruits(int startIndex, int num)
         {
-            return _volunteerBLL.GetSingleRecruit(id);
+            return _volunteerBLL.GetMoreRecruits(startIndex, num);
         }
 
         // 查询
@@ -106,6 +106,13 @@ namespace Garden.Controllers
         public ActionResult<string> DeleteRecruit(string id)
         {
             return _volunteerBLL.DeleteRecruit(id);
+        }
+
+        //添加获取积分排名的接口
+        [HttpGet("TopPointsList")]
+        public IEnumerable<Account> GetTopPoints()
+        {
+            return _volunteerBLL.GetTopPoints();
         }
     }
 }

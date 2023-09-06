@@ -4,7 +4,7 @@ using Garden.Models;
 
 namespace Garden.BLL
 {
-    public class VolunteerBLL: IVolunteerBLL
+    public class VolunteerBLL : IVolunteerBLL
     {
         VolunteerApplyDAL volunteerApplyDAL = new();
         VolunteerRecruitDAL volunteerRecruitDAL = new();
@@ -18,9 +18,9 @@ namespace Garden.BLL
             return volunteerApplyDAL.GetApplyByAccountId(id, out _);
         }
 
-        public VolunteerRecruit GetSingleRecruit(string id)
+        public List<VolunteerRecruit> GetMoreRecruits(int startIndex, int num)
         {
-            return volunteerRecruitDAL.GetRecruitById(id, out _);
+            return volunteerRecruitDAL.GetMoreRecruits(startIndex, num);
         }
 
         public VolunteerRecruit GetRecruitRandomly()
@@ -112,6 +112,13 @@ namespace Garden.BLL
             {
                 return "删除失败。";
             }
+        }
+
+
+        //新增的获取top名单
+        public List<Account> GetTopPoints()
+        {
+            return volunteerApplyDAL.GetTopPoints();
         }
     }
 }

@@ -10,7 +10,7 @@ namespace Garden.DAL
         private VolunteerRecruit ToModel(DataRow row)
         {
             VolunteerRecruit recruit = new();
-            recruit.RecruitmentId = row["recruitement_id"].ToString();
+            recruit.RecruitmentId = row["recruitment_id"].ToString();
             recruit.GardenId = row["garden_id"].ToString();
             recruit.RecruiterId = row["recruiter_id"].ToString();
             recruit.RecruitTime = Convert.ToDateTime(row["recruit_time"]);
@@ -30,33 +30,31 @@ namespace Garden.DAL
             return rl;
         }
 
-        public VolunteerRecruit GetRecruitById(string recruitement_id, out int status)
+        public List<VolunteerRecruit> GetMoreRecruits(int startIndex, int num)
         {
             try
             {
-                string sql = "SELECT * FROM volunteer_recruit WHERE recruitement_id=:id";
-                DataTable dt = OracleHelper.ExecuteTable(sql,
-                                       new OracleParameter("id", OracleDbType.Char) { Value = recruitement_id });
-                if (dt.Rows.Count != 1)
+                string sql = $"SELECT * FROM (SELECT rownum AS rn, b.* FROM volunteer_recruit b) WHERE rn >= {startIndex} AND rn < {startIndex + num}";
+                DataTable dt = OracleHelper.ExecuteTable(sql);
+                List<VolunteerRecruit> recruits = ToModelList(dt);
+                if (recruits.Count == 0)
                 {
-                    status = 2;
-                    return null;
+                    // 数据库中获取结束，返回提示信息
+                    Console.WriteLine("已获取所有志愿招募信息！");
                 }
-                status = 0;
-                DataRow dr = dt.Rows[0];
-                return ToModel(dr);
+
+                return recruits;
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
-                status = 1;
                 return null;
             }
         }
 
         public VolunteerRecruit GetRecruitRandomly()
         {
-              try
+            try
             {
                 string sql = "SELECT * FROM volunteer_recruit ORDER BY DBMS_RANDOM.VALUE";
                 DataTable dt = OracleHelper.ExecuteTable(sql);
