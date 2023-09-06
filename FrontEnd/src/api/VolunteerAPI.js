@@ -29,3 +29,9 @@ export const getMoreRecruits = async (startNum, num) => {
     const response = await API.get(`/Volunteer/moreRecruits`, { params: { startNum, num } });
     return response.data;
 };
+
+//创建获取积分排名信息的请求
+export const getTopPointsList = async () => {
+    const response = await API.get(`/Volunteer/TopPointsList`);
+    return response.data;
+};

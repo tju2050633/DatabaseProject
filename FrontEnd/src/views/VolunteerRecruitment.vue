@@ -189,6 +189,7 @@ import {
   getVolunteerContent,
   submitForm,
   getMoreRecruits,
+  getTopPointsList,
 } from "../api/VolunteerAPI";
 export default {
   el: "#mainpart",
@@ -199,56 +200,56 @@ export default {
       maxDisplayCount: 3, // 默认显示的数量
 
       imageList: [
-        {
-          description: "TOP1 ",
-          username: "王浩",
-          myPoints: "256",
-        },
-        {
-          description: "TOP2 ",
-          username: "王浩二",
-          myPoints: "246",
-        },
-        {
-          description: "TOP3 ",
-          username: "王浩三",
-          myPoints: "240",
-        },
-        {
-          description: "TOP4 ",
-          username: "王浩四",
-          myPoints: "235",
-        },
-        {
-          description: "TOP5 ",
-          username: "王浩五",
-          myPoints: "230",
-        },
-        {
-          description: "TOP6 ",
-          username: "王浩六",
-          myPoints: "226",
-        },
-        {
-          description: "TOP7 ",
-          username: "王浩七",
-          myPoints: "210",
-        },
-        {
-          description: "TOP8 ",
-          username: "王浩八",
-          myPoints: "200",
-        },
-        {
-          description: "TOP9 ",
-          username: "王浩九",
-          myPoints: "156",
-        },
-        {
-          description: "TOP10 ",
-          username: "王浩十",
-          myPoints: "56",
-        },
+        // {
+        //   description: "TOP1 ",
+        //   username: "王浩",
+        //   myPoints: "256",
+        // },
+        // {
+        //   description: "TOP2 ",
+        //   username: "王浩二",
+        //   myPoints: "246",
+        // },
+        // {
+        //   description: "TOP3 ",
+        //   username: "王浩三",
+        //   myPoints: "240",
+        // },
+        // {
+        //   description: "TOP4 ",
+        //   username: "王浩四",
+        //   myPoints: "235",
+        // },
+        // {
+        //   description: "TOP5 ",
+        //   username: "王浩五",
+        //   myPoints: "230",
+        // },
+        // {
+        //   description: "TOP6 ",
+        //   username: "王浩六",
+        //   myPoints: "226",
+        // },
+        // {
+        //   description: "TOP7 ",
+        //   username: "王浩七",
+        //   myPoints: "210",
+        // },
+        // {
+        //   description: "TOP8 ",
+        //   username: "王浩八",
+        //   myPoints: "200",
+        // },
+        // {
+        //   description: "TOP9 ",
+        //   username: "王浩九",
+        //   myPoints: "156",
+        // },
+        // {
+        //   description: "TOP10 ",
+        //   username: "王浩十",
+        //   myPoints: "56",
+        // },
       ],
       volunteerContent: [
         // {
@@ -425,6 +426,16 @@ export default {
       return card;
     },
 
+    //积分排名名单的card转换
+    async toUserCard(user, topnum) {
+      var card = {
+        description: "TOP" + topnum,
+        username: user.accountName,
+        myPoints: user.points,
+      };
+      return card;
+    },
+
     //提交报名申请
     async postApply() {
       this.volunteerDialog.dialogVisible = false;
@@ -445,10 +456,37 @@ export default {
         }
       );
     },
+
+    //获取积分排名前十的函数
+    async GetTopPointsList() {
+      console.log("开始积分排名读取");
+      var that = this;
+      getTopPointsList().then(
+        function (res) {
+          //处理data形式数据的更改异步问题
+          const promises = res.map(async (item, index) => {
+            // 使用index + 1作为排名
+            const card = await that.toUserCard(item, index + 1);
+            return card;
+          });
+
+          Promise.all(promises).then((cards) => {
+            that.imageList.push(...cards);
+            console.log("转换后：", that.imageList);
+          });
+
+          console.log("获取排名成功", res);
+        },
+        function (err) {
+          console.log("获取排名失败", err);
+        }
+      );
+    },
   },
   created() {
     this.updateDisplayedImages(); // 初始化时根据showMore状态设置图片数量
     this.loadMoreRecruits();
+    this.GetTopPointsList();
   },
 };
 </script>

@@ -113,5 +113,12 @@ namespace Garden.BLL
                 return "删除失败。";
             }
         }
+
+
+        //新增的获取top名单
+        public List<Account> GetTopPoints()
+        {
+            return volunteerApplyDAL.GetTopPoints();
+        }
     }
 }

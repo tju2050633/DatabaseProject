@@ -107,5 +107,12 @@ namespace Garden.Controllers
         {
             return _volunteerBLL.DeleteRecruit(id);
         }
+
+        //添加获取积分排名的接口
+        [HttpGet("TopPointsList")]
+        public IEnumerable<Account> GetTopPoints()
+        {
+            return _volunteerBLL.GetTopPoints();
+        }
     }
 }

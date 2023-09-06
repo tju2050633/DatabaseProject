@@ -155,5 +155,35 @@ namespace Garden.DAL
                 return false;
             }
         }
+
+
+        //新增的获取积分排名的函数
+        //返回前十即可
+        public List<Account> GetTopPoints()
+        {
+            try
+            {
+                string sql = "SELECT account_id, account_name, points FROM account ORDER BY points DESC FETCH FIRST 10 ROWS ONLY";
+                DataTable dataTable = OracleHelper.ExecuteTable(sql);
+
+                List<Account> topAccounts = new List<Account>();
+                foreach (DataRow row in dataTable.Rows)
+                {
+                    Account account = new Account();
+                    account.AccountId = row["account_id"].ToString();
+                    account.AccountName = row["account_name"].ToString();
+                    account.Points = Convert.ToInt32(row["points"]);
+
+                    topAccounts.Add(account);
+                }
+
+                return topAccounts;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return null;
+            }
+        }
     }
 }
