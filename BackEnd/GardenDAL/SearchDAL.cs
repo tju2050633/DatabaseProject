@@ -50,28 +50,28 @@ namespace Garden.DAL
             {
                 if (searchcnt >= 10)
                 {
-                    result.Data.AddRange(BlogDAL.ToModelList(dt).Take(10)); // 取10个结果
+                    result.Data.AddRange(BlogDAL.DtToBlogInfoList(dt).Take(10)); // 取10个结果
                     return result;
                 }
                 else
                 {
-                    result.Data.AddRange(BlogDAL.ToModelList(dt)); // 不足10个，用其他项补齐，最终结果依旧可能小于10个
+                    result.Data.AddRange(BlogDAL.DtToBlogInfoList(dt)); // 不足10个，用其他项补齐，最终结果依旧可能小于10个
                     DataTable dt2 = OracleHelper.ExecuteTable(query2);
-                    result.Data.AddRange(BlogDAL.ToModelList(dt2).Take(10 - searchcnt));
+                    result.Data.AddRange(BlogDAL.DtToBlogInfoList(dt2).Take(10 - searchcnt));
                 }
             }
             else if (result.Type == "garden")
             {
                 if (searchcnt >= 10)
                 {
-                    result.Data.AddRange(GardenDAL.ToModelList(dt).Take(10)); // 取10个结果
+                    result.Data.AddRange(GardenDAL.DtToGardenInfoList(dt).Take(10)); // 取10个结果
                     return result;
                 }
                 else
                 {
-                    result.Data.AddRange(GardenDAL.ToModelList(dt)); // 不足10个，用其他项补齐，最终结果依旧可能小于10个
+                    result.Data.AddRange(GardenDAL.DtToGardenInfoList(dt)); // 不足10个，用其他项补齐，最终结果依旧可能小于10个
                     DataTable dt2 = OracleHelper.ExecuteTable(query2);
-                    result.Data.AddRange(GardenDAL.ToModelList(dt2).Take(10 - searchcnt));
+                    result.Data.AddRange(GardenDAL.DtToGardenInfoList(dt2).Take(10 - searchcnt));
                 }
             }
             else if (result.Type == "activity")

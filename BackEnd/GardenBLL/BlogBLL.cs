@@ -86,5 +86,10 @@ namespace Garden.BLL
         {
             return blogDAL.GetMoreBlogs(startIndex, num);
         }
+
+        public int AddAgree(string blog_id, int num = 1)
+        {
+            return blogDAL.AddAgree(blog_id, num);
+        }
     }
 }
