@@ -96,9 +96,9 @@ namespace Garden.Controllers
 
         // 未完工，假数据
         [HttpGet("GardenLike")]
-        public ActionResult<GardenLike[]> GetGardenLike(string userId)
+        public ActionResult<GardenLikeInfo[]> GetGardenLike(string userId)
         {
-            GardenLike[] gardenLikes = new GardenLike[10];
+            GardenLikeInfo[] gardenLikes = new GardenLikeInfo[10];
 
             // 假数据
             gardenLikes[0].Author = "1919";
@@ -130,9 +130,9 @@ namespace Garden.Controllers
 
         // 未完工，假数据
         [HttpGet("BlogLike")]
-        public ActionResult<BlogLike[]> GetBlogLike(string userId)
+        public ActionResult<BlogLikeInfo[]> GetBlogLike(string userId)
         {
-            BlogLike[] blogLikes = new BlogLike[10];
+            BlogLikeInfo[] blogLikes = new BlogLikeInfo[10];
 
             // 假数据
             blogLikes[0].Author = "1919";

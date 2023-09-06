@@ -39,7 +39,7 @@
     }
 
     // 用于返回前端
-    public class BlogLike
+    public class BlogLikeInfo
     {
         public string Author { get; set; }
         public string BlogName { get; set; }

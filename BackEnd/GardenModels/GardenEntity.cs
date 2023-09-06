@@ -34,7 +34,7 @@
     }
 
     // 用于返回前端
-    public class GardenLike
+    public class GardenLikeInfo
     {
         public string Author { get; set; }
         public string Avatar { get; set; }
