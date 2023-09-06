@@ -15,10 +15,10 @@ namespace Garden.Controllers
             _gardenBLL = gardenBLL;
         }
 
-        [HttpGet]
-        public ActionResult<GardenEntity> GetGarden(string id)
+        [HttpGet("/garden/info")]
+        public ActionResult<GardenEntity> GetGarden(string garden_id)
         {
-            return _gardenBLL.GetGarden(id);
+            return _gardenBLL.GetGarden(garden_id);
         }
 
         // 查询
@@ -58,6 +58,19 @@ namespace Garden.Controllers
         public IEnumerable<GardenComments> GetGardenComments(string id)
         {
             return _gardenBLL.GetGardenComments(id);
+        }
+
+        [HttpPost("/garden/comments")]
+        public IActionResult AddGardenComment([FromBody] GardenComments comment)
+        {
+            if (_gardenBLL.AddGardenComment(comment.GardenId, comment.Content))
+            {
+                return Ok(new { success = true, message = "评论成功" });
+            }
+            else
+            {
+                return Ok(new { success = false, message = "评论失败" });
+            }
         }
 
         [HttpPost]

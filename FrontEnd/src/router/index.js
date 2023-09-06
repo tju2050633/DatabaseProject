@@ -53,9 +53,10 @@ const routes = [
     component: () => import('../views/GardenDisplayView.vue'),
   },
   {
-    path: '/garden/',
+    path: '/garden/:garden_id',
     name: 'garden',
     component: () => import('../views/GardenView.vue'),
+    props: true // 开启props传参
   },
 
   // 个人主页
@@ -77,6 +78,7 @@ const routes = [
     name: 'BlogView',
     component: () => import('../views/BlogView.vue'),
   },
+  // 地图
   {
     path: '/TJMap/:lng/:lat',
     name: 'TJMap',

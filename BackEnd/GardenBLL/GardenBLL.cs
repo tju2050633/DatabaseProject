@@ -54,6 +54,11 @@ namespace Garden.BLL
             return gardenCommentsDAL.GetCommentsByGardenId(id);
         }
 
+        public bool AddGardenComment(string gardenId, string comment)
+        {
+            return true;
+        }
+
         public string Insert(GardenEntity garden)
         {
             if (gardenDAL.Insert(garden))

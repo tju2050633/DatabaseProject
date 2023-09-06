@@ -27,14 +27,12 @@
 
             <!-- 图片展示区域 -->
             <el-main>
-
               <!-- hot -->
               <div v-if="activeTab === 'hot'">
-                <!--这里实际项目中应该为数据库读取并展示-->
                 <el-card
                   v-for="(image, index) in hotGarden"
                   :key="index"
-                  @click="this.$router.push('/garden/')"
+                  @click="this.$router.push({name: 'garden', params: { garden_id: image.garden_id }})"
                   class="garden-card"
                 >
                   <GardenBlock :image="image" />
@@ -46,19 +44,19 @@
                 <el-card
                   v-for="(image, index) in newGarden"
                   :key="index"
-                  @click="this.$router.push('/garden/')"
+                  @click="this.$router.push({name: 'garden', params: { garden_id: image.garden_id }})"
                   class="garden-card"
                 >
                   <GardenBlock :image="image" />
                 </el-card>
               </div>
 
-              <!-- 我的 -->
+              <!-- mine -->
               <div v-else-if="activeTab === 'mine'">
                 <el-card
                   v-for="(image, index) in myGarden"
                   :key="index"
-                  @click="this.$router.push('/garden/')"
+                  @click="this.$router.push({name: 'garden', params: { garden_id: image.garden_id }})"
                   class="garden-card"
                 >
                   <GardenBlock :image="image" />
@@ -85,7 +83,7 @@
                 >
                   <el-card
                     class="garden-rank"
-                    @click="this.$router.push('/garden/')"
+                    @click="this.$router.push({name: 'garden', params: { garden_id: item.garden_id }})"
                   >
                     <!-- 图片展示区域 -->
                     <img :src="item.imageUrl" alt="花园" style="width: 100%" />
@@ -115,7 +113,7 @@
 <style scoped>
 @import url("../css/gardenDisplay.css");
 </style>
-
+ 
 <script>
 import { getHotGarden, getNewGarden, getMyGarden, getGardenList } from '@/api/gardenDisplayAPI';
 import { getUserNameById } from '@/api/accountApi';
@@ -128,54 +126,16 @@ export default {
       showMore: false, // 控制是否显示更多图片
       displayedImageList: [], // 实际显示的图片列表
       maxDisplayCount: 4, // 默认显示的图片数量
-      imageList: [
-        {
-          imageUrl: require("../assets/example.png"),
-          description: "TOP1 Garden",
-        },
-        {
-          imageUrl: require("../assets/example.png"),
-          description: "TOP2 Garden",
-        },
-        {
-          imageUrl: require("../assets/example.png"),
-          description: "TOP3 Garden",
-        },
-        {
-          imageUrl: require("../assets/example.png"),
-          description: "TOP4 Garden",
-        },
-        {
-          imageUrl: require("../assets/example.png"),
-          description: "TOP5 Garden",
-        },
-        {
-          imageUrl: require("../assets/example.png"),
-          description: "TOP6 Garden",
-        },
-        {
-          imageUrl: require("../assets/example.png"),
-          description: "TOP7 Garden",
-        },
-        {
-          imageUrl: require("../assets/example.png"),
-          description: "TOP8 Garden",
-        },
-        {
-          imageUrl: require("../assets/example.png"),
-          description: "TOP9 Garden",
-        },
-        {
-          imageUrl: require("../assets/example.png"),
-          description: "TOP10 Garden",
-        },
-      ],
+      imageList: [ ],
       hotGarden: [ ],
       newGarden: [ ],
       myGarden: [ ],
     };
   },
   methods: {
+
+    // init garden
+
     async initGardenData() {
       this.initHotGarden();
       this.initNewGarden();
@@ -185,7 +145,9 @@ export default {
       for (let i = 0; i < 3; i++) {
         const hotGardenData = await getHotGarden();
         const username = await getUserNameById(hotGardenData.ownerId);
+        console.log("hot garden id", hotGardenData.gardenId);
         const hotGarden = {
+          garden_id: hotGardenData.gardenId,
           imageUrl: hotGardenData.pictures,
           username: username,
           gardenname: hotGardenData.name,
@@ -199,6 +161,7 @@ export default {
         const newGardenData = await getNewGarden();
         const username = await getUserNameById(newGardenData.ownerId);
         const newGarden = {
+          garden_id: newGardenData.gardenId,
           imageUrl: newGardenData.pictures,
           username: username,
           gardenname: newGardenData.name,
@@ -212,6 +175,7 @@ export default {
         const myGardenData = await getMyGarden();
         const username = await getUserNameById(myGardenData.ownerId);
         const myGarden = {
+          garden_id: myGardenData.gardenId,
           imageUrl: myGardenData.pictures,
           username: username,
           gardenname: myGardenData.name,
@@ -221,7 +185,20 @@ export default {
       }
     },
 
+    // init images (right side bar)
 
+    async initDisplayedImages() {
+      const gardenList = await getGardenList();
+      for (let i = 0; i < gardenList.length; i++)
+      {
+        this.imageList.push({
+          garden_id: gardenList[i].gardenId,
+          imageUrl: gardenList[i].pictures,
+          description: "TOP" + (i + 1) + " " + gardenList[i].name,
+        })
+      }
+      this.displayedImageList = this.imageList.slice(0, this.maxDisplayCount);
+    },
 
     handleMenuSelect(index) {
       this.activeTab = index;
@@ -242,12 +219,12 @@ export default {
       console.log('开始获取用户信息！')
       if(this.userId!=''){ //这样可以展示假数据
         this.imageList=getGardenList(this.userId);
-
       }
     },
   },
   async created() {
     this.initGardenData();
+    this.initDisplayedImages();
     this.updateDisplayedImages(); // 初始化时根据showMore状态设置图片数量
   },
   mounted(){
@@ -264,18 +241,24 @@ export default {
     activeTab(oldValue,newValue){
       console.log(`activeTab 变化！ ${oldValue} -> ${newValue}`);
 
-      if(this.userId!=''){
-      if(newValue=="hot"){ //互动模块
-        this.hotImages=getHotGarden(this.userId)
-        console.log('开始获取用户信息！')
-        //无本地需要配置的参数
-      }else if (newValue=="new"){ //博客模块
-        this.newImages=getNewGarden(this.userId)
-        console.log('开始获取用户信息！')
-        //无本地需要配置的参数
+      if (this.userId != '')
+      {
+        if (newValue == "hot")
+        {
+          //互动模块
+          this.hotImages=getHotGarden(this.userId)
+          console.log('开始获取用户信息！')
+          //无本地需要配置的参数
+        }
+        else if (newValue == "new") {
+          //博客模块
+          this.newImages=getNewGarden(this.userId)
+          console.log('开始获取用户信息！')
+          //无本地需要配置的参数
+        }
       }
+
     }
-  }
   }
 
 };

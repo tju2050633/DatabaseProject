@@ -26,12 +26,8 @@ const API = axios.create({
 //         },
 //       ],
 export const getGardenList = async () => {
-    try {
-        const response = await API.get(`/randon/`);
-        return response.data;
-    } catch (error) {
-        console.error('Error occured! :', error);
-    }
+    const response = await API.get('/garden/top');
+    return response.data;
 };
 
 // get garden methods
