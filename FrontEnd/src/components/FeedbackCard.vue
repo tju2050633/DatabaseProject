@@ -39,7 +39,7 @@
                 <!-- 3种分类 -->
                 <div class="col">
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" name="exampleRadios" id="登录与注册" value="登录与注册">
+                        <input class="form-check-input" type="radio" name="exampleRadios" id="登录与注册" value="登录与注册" checked>
                         <label class="form-check-label" for="登录与注册">&emsp;登录与注册</label>
                     </div>
                     <div class="form-check">
@@ -117,7 +117,7 @@
                 上传图片
             </h5>
             <!-- 图片上传区域 -->
-            <input class="form-control" type="file" id="formFileMultiple" multiple>
+            <input class="form-control" type="file" id="formFileMultiple" multiple accept="image/*">
 
             <div class="form-text"> 非必填项</div>
 
@@ -140,7 +140,8 @@
             </div>
 
             <!-- 提交按钮 -->
-            <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#Modal">提交</button>
+            <button type="button" class="btn btn-success" @click="getUserInput" data-bs-toggle="modal"
+                data-bs-target="#Modal">提交</button>
 
             <!-- 模态框 -->
             <div class="modal fade" id="Modal" tabindex="-1" aria-labelledby="ModalLabel" aria-hidden="true">
@@ -183,6 +184,52 @@
 <script>
 export default {
     name: "FeedbackCard",
+
+    setup() {
+        const getUserInput = () => {
+            // 获取用户选择的radio的值
+            var radios = document.querySelectorAll('input[type="radio"]');
+            var selectedRadio = '';
+            radios.forEach(function (radio) {
+                if (radio.checked) {
+                    selectedRadio = radio.value;
+                }
+            });
+
+            // 获取标题的值
+            var topic = document.getElementById('topic').value;
+
+            // 获取内容的值
+            var content = document.getElementById('content').value;
+
+            // 获取文件的值
+            var files = document.getElementById('formFileMultiple').files;
+
+            // 获取邮箱地址的值
+            var email = document.getElementById('email').value;
+
+            // 输出用户输入的值
+            console.log("类型: " + selectedRadio);
+            console.log("标题: " + topic);
+            console.log("内容: " + content);
+            console.log("文件: ");
+            for (var i = 0; i < files.length; i++) {
+                console.log(files[i].name);
+            }
+            console.log("邮箱地址: " + email);
+
+            // 清空输入框的值
+            document.getElementById('topic').value = '';
+            document.getElementById('content').value = '';
+            document.getElementById('formFileMultiple').value = '';
+            document.getElementById('email').value = '';
+            document.getElementById('登录与注册').checked = true;
+        };
+
+        return {
+            getUserInput,
+        };
+    }
 }
 </script>
 
@@ -234,7 +281,7 @@ p {
 input[type="radio"]:checked+label {
     color: rgb(12, 60, 38);
     font-weight: bold;
-    transform: scale(1.2);
+    transform: scale(1.05);
     transition: 500ms;
 }
 
