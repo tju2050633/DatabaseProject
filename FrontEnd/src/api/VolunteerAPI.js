@@ -1,8 +1,8 @@
 import axios from 'axios';
 
 const API = axios.create({
-    baseURL: 'http://localhost:5194/api/',
-    timeout: 3000,
+    baseURL: 'http://localhost:5194/',
+    timeout: 5000,
     async: true,
     crossDomain: true,
 })
@@ -17,7 +17,15 @@ export const getVolunteerList = async (account_id) => {
     return response.data;
 };
 
-export const submitForm = async (apply_id) => {
-    const response = await API.post(`/Volunteer_Apply/${apply_id}`);
+//修改后的报名申请
+export const submitForm = async (apply_id, description) => {
+    const response = await API.post(`/Volunteer/apply`+'?id='+apply_id+'&description=' + description);
+    return response.data;
+};
+
+
+//创建申请招募信息的API
+export const getMoreRecruits = async (startNum, num) => {
+    const response = await API.get(`/Volunteer/moreRecruits`, { params: { startNum, num } });
     return response.data;
 };

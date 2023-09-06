@@ -10,7 +10,6 @@
 
         <el-col :span="14">
           <div id="app">
-
             <!-- LOGO -->
             <el-card class="blog-card">
               <el-row>
@@ -31,7 +30,6 @@
             <div>
               <button @click="loadMoreBlogs">加载更多</button>
             </div>
-
           </div>
         </el-col>
       </el-row>
@@ -121,7 +119,7 @@ export default {
     //下面用于测试已有的接口
     //将后端返回的数据格式改为前端使用的cards
     const toCard = (blog) => {
-      console.log(blog.content);
+      // console.log(blog.content);
       var card = {
         author: blog.ownerId,
         blogid: blog.blogId,

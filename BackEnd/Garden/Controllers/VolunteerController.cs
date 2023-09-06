@@ -27,10 +27,10 @@ namespace Garden.Controllers
             return _volunteerBLL.GetUserApplies(id);
         }
 
-        [HttpGet("recruit")]
-        public ActionResult<VolunteerRecruit> GetSingleRecruit(string id)
+        [HttpGet("moreRecruits")]
+        public IEnumerable<VolunteerRecruit> GetMoreRecruits(int startIndex, int num)
         {
-            return _volunteerBLL.GetSingleRecruit(id);
+            return _volunteerBLL.GetMoreRecruits(startIndex, num);
         }
 
         // 查询
