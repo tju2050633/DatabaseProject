@@ -60,11 +60,10 @@ namespace Garden.BLL
             return blogcommentsDAL.GetCommentsById(blog_id, out _);
         }
 
-        public string Insert_Comments(string blog_comment_id, string owner_id, string blog_id, string content)
+        public string Insert_Comments(string owner_id, string blog_id, string content)
         {
             BlogComments blogcomments_info = new()
             {
-                BlogCommentId = blog_comment_id,
                 OwnerId = owner_id,
                 BlogId = blog_id,
                 ReleaseTime = DateTime.Now,
@@ -85,6 +84,11 @@ namespace Garden.BLL
         public List<Blog> GetMoreBlogs(int startIndex, int num)
         {
             return blogDAL.GetMoreBlogs(startIndex, num);
+        }
+
+        public string PutAgreeNum(int agreeNum, string blog_id)
+        {
+            return blogDAL.PutAgreeNum(agreeNum, blog_id);
         }
 
         public int AddAgree(string blog_id, int num = 1)
