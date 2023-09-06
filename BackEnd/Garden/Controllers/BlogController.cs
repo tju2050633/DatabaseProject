@@ -86,13 +86,13 @@ namespace Garden.Controllers
         }
 
         // 插入评论
-        // 输入评论ID(blog_comment_id)、评论者ID（owner_id）、所在博客ID（blog_id）、评论内容（content）
+        // 输入评论者ID（owner_id）、所在博客ID（blog_id）、评论内容（content）
         // 返回状态：["评论发布成功"、"评论发布失败"]
         [HttpPost("Comments")]
-        public ActionResult<string> Insert_Comments(string blog_comment_id, string owner_id, string blog_id, string content)
+        public ActionResult<string> Insert_Comments(string owner_id, string blog_id, string content)
         {
 
-            return _blogBLL.Insert_Comments(blog_comment_id, owner_id, blog_id, content);
+            return _blogBLL.Insert_Comments(owner_id, blog_id, content);
         }
 
         // 查询博客
@@ -102,6 +102,15 @@ namespace Garden.Controllers
         public IEnumerable<Blog> GetMoreBlogs(int startIndex, int num)
         {
             return _blogBLL.GetMoreBlogs(startIndex, num);
+        }
+
+        //更新点赞数
+        //点赞数
+        //返回点赞是否成功
+        [HttpPut("agreeNum")]
+        public ActionResult<string> PutAgreeNum(int agreeNum, string blog_id)
+        {
+            return _blogBLL.PutAgreeNum(agreeNum, blog_id);
         }
 
         // 点赞使对应blog的agree_num加一，返回最新的点赞数，-1表示出错

@@ -3,7 +3,7 @@
 <template>
   <div>
     <div style="text-align: center">
-      <img :src="image.imageUrl" alt="花园图片" class="garden-img" />
+      <img :src="image.imageUrl" alt="花园图片" class="garden-img" style="height: 250px; margin: 3vh;" />
     </div>
     <div style="display: flex; justify-content: space-between">
       <span style="flex: 1; text-align: left" class="garden-info"

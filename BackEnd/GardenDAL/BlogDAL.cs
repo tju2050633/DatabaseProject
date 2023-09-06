@@ -36,7 +36,7 @@ namespace Garden.DAL
         }
 
         // 转化为BlogInfo形式，需要查Account表得到用户名
-        public static BlogInfo ToBlogInfo(Blog b) 
+        public static BlogInfo ToBlogInfo(Blog b)
         {
             Account ac = AccountDAL.GetAccountById(b.OwnerId, out _);
             BlogInfo bi = new()
@@ -254,6 +254,32 @@ namespace Garden.DAL
             }
         }
 
+        public string PutAgreeNum(int agreeNum, string blog_id)
+        {
+            try
+            {
+                string sql = $"UPDATE blog SET agree_num = {agreeNum} WHERE blog_id = {blog_id}";
+                int rowsAffected = OracleHelper.ExecuteNonQuery(sql);
+
+                if (rowsAffected > 0)
+                {
+                    // 点赞数更新成功
+                    return "点赞成功！";
+                }
+                else
+                {
+                    // 没有更新任何行，可能是找不到对应的博客
+                    Console.WriteLine("博客不存在或更新失败！");
+                    return "提交失败";
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return "未连接到数据库";
+            }
+        }
+
         // 增加blog_id对应的点赞数，返回最新的点赞数，-1表示出错
         public int AddAgree(string blog_id, int add = 1)
         {
@@ -264,7 +290,7 @@ namespace Garden.DAL
                 OracleHelper.ExecuteNonQuery("commit;");
                 return GetAgreeNumById(blog_id);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 if (ex.Message.Contains("ORA-02185")) return GetAgreeNumById(blog_id);
                 Console.WriteLine(ex.Message);
