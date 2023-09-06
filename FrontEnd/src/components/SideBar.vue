@@ -102,8 +102,8 @@
         <el-menu-item index="4-1" @click="this.$router.push('/BlogView/')"
           >精选博客</el-menu-item
         >
-        <el-menu-item index="4-2" @click="this.$router.push('/BlogView/')"
-          >我的发表</el-menu-item
+        <el-menu-item index="4-2" @click="this.$router.push('/BlogPost/')"
+          >发表博客</el-menu-item
         >
       </el-sub-menu>
     </el-menu>
