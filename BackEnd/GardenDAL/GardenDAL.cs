@@ -38,6 +38,38 @@ namespace Garden.DAL
             return G;
         }
 
+        // 转化为简略的GardenInfo形式，需要查Account表得到用户名
+        public static GardenInfo ToGardenInfo(GardenEntity ge) 
+        {
+            Account ac = AccountDAL.GetAccountById(ge.OwnerId, out _);
+
+            GardenInfo gi = new()
+            {
+                GardenId = ge.GardenId,
+                Title = ge.Name,
+                Stars = ge.Stars,
+                Cover = ge.Pictures,
+                Author = ac.AccountName
+            };
+            return gi;
+        }
+
+        public static List<GardenInfo> ToGardenInfoList(List<GardenEntity> gel)
+        {
+            List <GardenInfo> G = new();
+            foreach (GardenEntity ge in gel)
+            {
+                GardenInfo gi = ToGardenInfo(ge);
+                G.Add(gi);
+            }
+            return G;
+        }
+
+        public static List<GardenInfo> DtToGardenInfoList(DataTable dt)
+        {
+            return ToGardenInfoList(ToModelList(dt));
+        }
+
         public GardenEntity GetGardenById(string garden_id, out int status)
         {
             try
@@ -131,6 +163,7 @@ namespace Garden.DAL
             }
         }
 
+        // 获取Star数前num位的garden
         public List<GardenEntity> GetTopGardens(int num = 5)
         {
             try
