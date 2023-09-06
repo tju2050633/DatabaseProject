@@ -5,7 +5,7 @@ import request from '@/utils/request'
 //      origin_num:[ 242, 545, 657, 737, 858, 976, 1435, 2116, 2932, 3620, 4666, 5843 ],
 export function getOriginNum(params) {
     return request({
-        url: '/DV/bd/getOriginNum',
+        url: '/Statistics/blogcount',
         method: 'get',
         params,
     })
@@ -17,7 +17,7 @@ export function getOriginNum(params) {
 //      hot_num:[100, 235, 357, 437, 558, 676, 935, 1116, 1232, 1220, 1266, 1343]
 export function getHotNum(params) {
     return request({
-        url: '/DV/bd/getHotNum',
+        url: '/Statistics/hotblogcount',
         method: 'get',
         params,
     })

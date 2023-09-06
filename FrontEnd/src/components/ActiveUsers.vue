@@ -1,4 +1,14 @@
 <template>
+  <div class="datetime-picker">
+    <el-date-picker
+      v-model="range"
+      type="daterange"
+      range-separator="至"
+      start-placeholder="开始日期"
+      end-placeholder="结束日期">
+    </el-date-picker>
+    <el-button type="primary" @click="createChart">开始画图</el-button>
+  </div>
     <div id="activeUser" ref="test0" style="height:500px;width:100%">hello！</div>
 </template>
 
@@ -9,13 +19,67 @@ export default{
   name:'ActiveUsers',
   data(){
     return{
-      timeperiod:['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-      active_user_num: [10, 23, 33, 45, 163, 222, 203, 234, 220, 215, 120, 362],
-      total_user_num:[22, 45, 67, 237, 258, 376, 435, 516, 532, 620, 666, 843]
+      timeperiod:[],
+      // active_user_num: [10, 23, 33, 45, 163, 222, 203, 234, 220, 215, 120, 362],
+      // total_user_num:[22, 45, 67, 237, 258, 376, 435, 516, 532, 620, 666, 843],
+      total:[],
+      active:[],
+      range:'',
+      dates:[],
     }
   },
   methods:{
+    formatDate(date) {
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, '0'); // 补零
+      const day = String(date.getDate()).padStart(2, '0'); // 补零
+      return `${year}-${month}-${day}`;
+    },
+    getData(){
+//数据读取
+let begindate=this.range[0]
+      let enddate=this.range[1]
+      console.log(begindate)
+      console.log(enddate)
+
+      let cnt=new Date(begindate)
+      while (cnt<= enddate) {
+        this.dates.push(this.formatDate(cnt));
+        cnt.setDate(cnt.getDate() + 1);
+      }
+      
+      begindate=this.formatDate(begindate)
+      enddate=this.formatDate(enddate)
+      this.timeperiod=this.dates
+      
+      let total=[]
+      let active=[]
+      for(let item of this.timeperiod){
+        getTotalUser({
+          date:item
+        }).then(res=>{
+        console.log(res)
+        //将totaluser写入到本地
+        total.push(res.data)
+      },err=>{
+        console.log(err)
+      })
+      getActiveUser({
+      }).then(res=>{
+        console.log(res)
+        //将activeuser数组保存到本地 假定传回的就叫active user
+        active.push(res.data)
+      },
+      err=>{
+        console.log(err)
+      });
+
+      }
+      this.total=total
+      this.active=active
+    },
     createChart(){
+      this.getData()
       var chartDom = document.getElementById('activeUser');
       var myChart = echarts.init(chartDom);
       var option;
@@ -88,45 +152,22 @@ option = {
     {
       name: '总用户数量',
       type: 'bar',
-      data:this.total_user_num
+      data:this.total
     },
     {
       name: '活跃用户数量',
       type: 'line',
       yAxisIndex: 1,
-      data:this.active_user_num
+      data:this.active
     }
   ]
 };
 
 option && myChart.setOption(option);
     },
-  
-    getData(){
-      getActiveUser({
-      }).then(res=>{
-        console.log(res)
-        //将activeuser数组保存到本地 假定传回的就叫active user
-        this.active_user_num=res.data.active_user_num
-      },
-      err=>{
-        console.log(err)
-      });
 
-      getTotalUser({
-      }).then(res=>{
-        console.log(res)
-        //将totaluser写入到本地
-        this.total_user_num=res.data.total_user_num
-      },
-      err=>{
-        console.log(err)
-      })
-    }
   },
   mounted(){
-    this.getData()
-    this.createChart()
   }
 }
 </script>
