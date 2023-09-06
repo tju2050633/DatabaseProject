@@ -1,16 +1,14 @@
 import request from '@/utils/request'
-
 //获取总花园数
 //params中无参数 返回1-12月份的总花园数 具体格式如下：
 //      total_garden_num:[242, 545, 657, 737, 858, 976, 1435, 2116, 2932, 3620, 4666, 5843],
 export function getTotalGarden(params) {
     return request({
-        url: '/DV/gardenD/getTotalGarden',
+        url: '/Statistics/gardencount',
         method: 'get',
         params,
     })
 }
-
 
 //获取活跃花园数
 //params中无参数 返回1-12月份的活跃花园数 具体格式如下：
@@ -33,11 +31,12 @@ export function getActiveGarden(params) {
 //   ],
 export function getCampusGardenNum(params) {
     return request({
-        url: '/DV/gardenD/getCampusGardenNum',
+        url: '/Statistics/gardencount',
         method: 'get',
         params,
     })
 }
+
 
 
 

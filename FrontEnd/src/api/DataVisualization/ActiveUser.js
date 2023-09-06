@@ -5,7 +5,7 @@ import request from '@/utils/request'
 //      total_user_num:[22, 45, 67, 237, 258, 376, 435, 516, 532, 620, 666, 843]
 export function getTotalUser(params) {
     return request({
-        url: '/DV/ac/getTotalUser',
+        url: '/Statistics/usercount',
         method: 'get',
         params,
     })
@@ -17,7 +17,7 @@ export function getTotalUser(params) {
  //     active_user_num: [10, 23, 33, 45, 163, 222, 203, 234, 220, 215, 120, 362],
 export function getActiveUser(params) {
     return request({
-        url: '/DV/ac/getActiveUser',
+        url: '/Statistics/activeusercount',
         method: 'get',
         params,
     })
