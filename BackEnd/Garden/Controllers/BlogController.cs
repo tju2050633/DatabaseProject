@@ -112,5 +112,12 @@ namespace Garden.Controllers
         {
             return _blogBLL.PutAgreeNum(agreeNum, blog_id);
         }
+
+        // 点赞使对应blog的agree_num加一，返回最新的点赞数，-1表示出错
+        [HttpPut("agree")]
+        public ActionResult<int> Agree(string blog_id)
+        {
+            return _blogBLL.AddAgree(blog_id);
+        }
     }
 }

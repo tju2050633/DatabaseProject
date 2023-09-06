@@ -67,8 +67,12 @@ namespace Garden.Controllers
             // 假数据
             gardenInfos[0].Author = "田所浩二";
             gardenInfos[0].Title = "114514";
+            gardenInfos[0].Stars = 1;
+            gardenInfos[0].GardenId = "1";
             gardenInfos[1].Author = "田所浩二";
             gardenInfos[1].Title = "11451419";
+            gardenInfos[1].Stars = 1145;
+            gardenInfos[1].GardenId = "2";
 
             return gardenInfos;
         }

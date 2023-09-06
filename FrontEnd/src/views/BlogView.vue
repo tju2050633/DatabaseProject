@@ -10,11 +10,15 @@
 
         <el-col :span="14">
           <div id="app">
+
+            <!-- LOGO -->
             <el-card class="blog-card">
               <el-row>
                 <img class="head-img" src="../assets/blog-logo.png" />
               </el-row>
             </el-card>
+
+            <!-- 博客模块 -->
             <el-card
               v-for="(card, index) in cards"
               :key="index"
@@ -22,9 +26,12 @@
             >
               <BlogBlock :card="card" />
             </el-card>
+
+            <!-- 加载更多 -->
             <div>
               <button @click="loadMoreBlogs">加载更多</button>
             </div>
+
           </div>
         </el-col>
       </el-row>

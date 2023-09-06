@@ -59,7 +59,7 @@ namespace Garden.DAL
             return ul;
         }
 
-        public Account GetAccountById(string id, out int status)
+        public static Account GetAccountById(string id, out int status)
         {
             try
             {

@@ -17,7 +17,7 @@ namespace Garden.BLL
             List<MySearchResult> results = new();
             if (num <= 0) num = MAXHOT;
 
-            var gardenResult = gardenDAL.GetTopGardens(num / 2);
+            var gardenResult = GardenDAL.ToGardenInfoList(gardenDAL.GetTopGardens(num / 2));
             //List<MySearchResult> gr = new();
             foreach (var item in gardenResult)
             {
@@ -31,7 +31,7 @@ namespace Garden.BLL
                 results.Add(r);
             }
 
-            var blogResult = blogDAL.GetTopBlogs(num / 2 + num % 2);
+            var blogResult = BlogDAL.ToBlogInfoList(blogDAL.GetTopBlogs(num / 2 + num % 2));
             //List<MySearchResult> br = new();
             foreach (var item in blogResult)
             {
