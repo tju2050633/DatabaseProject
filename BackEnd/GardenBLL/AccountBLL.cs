@@ -56,5 +56,10 @@ namespace Garden.BLL
             return accountDAL.GetPoints(id, out status);
         }
 
+        public string GetUserName(string id)
+        {
+            int status;
+            return accountDAL.GetUserName(id, out status);
+        }
     }
 }

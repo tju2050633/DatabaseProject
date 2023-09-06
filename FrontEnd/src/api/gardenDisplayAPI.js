@@ -1,7 +1,16 @@
+/*
+ * @Author: Jialin Lu
+ * @GitHub: https://github.com/tju2050633
+ * @Date: 2023-08-26 21:40:51
+ * @FilePath: /SharingGardenProject/FrontEnd/src/api/gardenDisplayAPI.js
+ * @Description: 
+ * 
+ * Copyright (c) 2023 by 1640889387@qq.com, All Rights Reserved. 
+ */
 import axios from 'axios';
 
 const API = axios.create({
-    baseURL: 'http://localhost:5194/api/',
+    baseURL: 'http://localhost:5194',
     timeout: 3000,
     async: true,
     crossDomain: true,
@@ -16,50 +25,28 @@ const API = axios.create({
 //           description: "TOP1 Garden",
 //         },
 //       ],
-export const getGardenList = async (userId) => {
+export const getGardenList = async () => {
     try {
-        const response = await API.get(`/GardenList/`, { params: { userId } });
+        const response = await API.get(`/randon/`);
         return response.data;
     } catch (error) {
         console.error('Error occured! :', error);
     }
 };
 
-// getHotGarden 提供userid 返回一个数组，具体形式如下：
-//       //热门花园
-//       HotGarden: [
-//         {
-//           imageUrl: require("../assets/Garden-e.jpg"),
-//           username: "Student1",
-//           gardenname: "Garden1",
-//           hot: "90",
-//         },
-//       ],
-export const getHotGarden = async (userId) => {
-    try {
-        const response = await API.get(`/HotGarden/`, { params: { userId } });
-        return response.data;
-    } catch (error) {
-        console.error('Error occured! :', error);
-    }
+// get garden methods
+
+export const getHotGarden = async () => {
+    const response = await API.get('/garden/random');
+    return response.data;
 };
 
+export const getNewGarden = async () => {
+    const response = await API.get('/garden/random');
+    return response.data;
+};
 
-// getNewGarden 提供userid 返回一个数组，具体形式如下：
-//       //最新花园
-//       NewGarden: [
-//         {
-//           imageUrl: require("../assets/Garden.jpg"),
-//           username: "Student6",
-//           gardenname: "Garden6",
-//           hot: "10",
-//         },
-//       ],
-export const getNewGarden = async (userId) => {
-    try {
-        const response = await API.get(`/NewGarden/`, { params: { userId } });
-        return response.data;
-    } catch (error) {
-        console.error('Error occured! :', error);
-    }
+export const getMyGarden = async () => {
+    const response = await API.get('/garden/random');
+    return response.data;
 };

@@ -297,5 +297,32 @@ namespace Garden.DAL
                 return 1;
             }
         }
+
+        // user name
+        public string GetUserName(string user_id, out int status)
+        {
+            try
+            {
+                string sql = "SELECT account_name FROM account WHERE account_id=:id";
+                DataTable dt = OracleHelper.ExecuteTable(sql,
+                    new OracleParameter("id", OracleDbType.Char) { Value = user_id });
+                if (dt.Rows.Count != 1)
+                {
+                    status = 2;
+                    return "";
+                }
+                status = 0;
+                DataRow dr = dt.Rows[0];
+                string value = dr["account_name"].ToString();
+                return value;
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                status = 1;
+                return "";
+            }
+        }
     }
 }

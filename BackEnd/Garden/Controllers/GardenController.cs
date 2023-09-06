@@ -24,37 +24,37 @@ namespace Garden.Controllers
         // 查询
         // 无输入
         // 返回：一个随机的花园，[花园ID、花园主人ID、花园名、花园图片URL、创建时间、描述、位置、星数、状态]
-        [HttpGet("random")]
+        [HttpGet("/garden/random")]
         public ActionResult<GardenEntity> GetGardenRandomly()
         {
             return _gardenBLL.GetGardenRandomly();
         }
 
-        [HttpGet("user")]
+        [HttpGet("/garden/user")]
         public IEnumerable<GardenEntity> GetUserGardens(string id)
         {
             return _gardenBLL.GetUserGardens(id);
         }
 
-        [HttpGet("popular")]
+        [HttpGet("/garden/popular")]
         public IEnumerable<GardenEntity> GetPopularGardens(int page)
         {
             return _gardenBLL.GetPopularGardens(page);
         }
 
-        [HttpGet("recent")]
+        [HttpGet("/garden/recent")]
         public IEnumerable<GardenEntity> GetRecentGardens(int page)
         {
             return _gardenBLL.GetRecentGardens(page);
         }
 
-        [HttpGet("top")]
+        [HttpGet("/garden/top")]
         public IEnumerable<GardenEntity> GetTopGardens()
         {
             return _gardenBLL.GetTopGardens();
         }
 
-        [HttpGet("comments")]
+        [HttpGet("/garden/comments")]
         public IEnumerable<GardenComments> GetGardenComments(string id)
         {
             return _gardenBLL.GetGardenComments(id);

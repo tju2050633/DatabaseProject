@@ -70,5 +70,12 @@ namespace Garden.Controllers
             return _accountBLL.GetPoints(userId);
         }
 
+        // 获取用户ID
+        [HttpGet("/user/name")]
+        public ActionResult<string> GetUserNameById(string userId)
+        {
+            return _accountBLL.GetUserName(userId);
+        }
+
     }
 }

@@ -10,6 +10,7 @@
         <!-- 主体 -->
         <el-col :span="13">
           <el-container>
+
             <!-- 标签栏 -->
             <el-header>
               <el-menu
@@ -26,11 +27,12 @@
 
             <!-- 图片展示区域 -->
             <el-main>
+
               <!-- hot -->
               <div v-if="activeTab === 'hot'">
                 <!--这里实际项目中应该为数据库读取并展示-->
                 <el-card
-                  v-for="(image, index) in hotImages"
+                  v-for="(image, index) in hotGarden"
                   :key="index"
                   @click="this.$router.push('/garden/')"
                   class="garden-card"
@@ -42,7 +44,7 @@
               <!-- new -->
               <div v-else-if="activeTab === 'new'">
                 <el-card
-                  v-for="(image, index) in newImages"
+                  v-for="(image, index) in newGarden"
                   :key="index"
                   @click="this.$router.push('/garden/')"
                   class="garden-card"
@@ -52,8 +54,19 @@
               </div>
 
               <!-- 我的 -->
-              <div v-else-if="activeTab === 'mine'">我的图片展示</div>
+              <div v-else-if="activeTab === 'mine'">
+                <el-card
+                  v-for="(image, index) in myGarden"
+                  :key="index"
+                  @click="this.$router.push('/garden/')"
+                  class="garden-card"
+                >
+                  <GardenBlock :image="image" />
+                </el-card>
+              </div>
+
             </el-main>
+
           </el-container>
         </el-col>
 
@@ -93,6 +106,7 @@
             </el-main>
           </el-container>
         </el-col>
+
       </el-row>
     </div>
   </body>
@@ -103,7 +117,8 @@
 </style>
 
 <script>
-import { getHotGarden,getNewGarden,getGardenList } from '@/api/gardenDisplayAPI';
+import { getHotGarden, getNewGarden, getMyGarden, getGardenList } from '@/api/gardenDisplayAPI';
+import { getUserNameById } from '@/api/accountApi';
 import { mapGetters } from 'vuex';
 export default {
   el: "#mainpart",
@@ -155,73 +170,59 @@ export default {
           description: "TOP10 Garden",
         },
       ],
-      hotImages: [
-        {
-          imageUrl: require("../assets/Garden-e.jpg"),
-          username: "Student1",
-          gardenname: "Garden1",
-          hot: "90",
-        },
-        {
-          imageUrl: require("../assets/Garden-e.jpg"),
-          username: "Student2",
-          gardenname: "Garden2",
-          hot: "80",
-        },
-        {
-          imageUrl: require("../assets/Garden-e.jpg"),
-          username: "Student3",
-          gardenname: "Garden3",
-          hot: "70",
-        },
-        {
-          imageUrl: require("../assets/Garden-e.jpg"),
-          username: "Student4",
-          gardenname: "Garden4",
-          hot: "60",
-        },
-        {
-          imageUrl: require("../assets/Garden-e.jpg"),
-          username: "Student5",
-          gardenname: "Garden5",
-          hot: "50",
-        },
-      ],
-      newImages: [
-        {
-          imageUrl: require("../assets/Garden.jpg"),
-          username: "Student6",
-          gardenname: "Garden6",
-          hot: "10",
-        },
-        {
-          imageUrl: require("../assets/Garden.jpg"),
-          username: "Student7",
-          gardenname: "Garden7",
-          hot: "12",
-        },
-        {
-          imageUrl: require("../assets/Garden.jpg"),
-          username: "Student8",
-          gardenname: "Garden8",
-          hot: "14",
-        },
-        {
-          imageUrl: require("../assets/Garden.jpg"),
-          username: "Student9",
-          gardenname: "Garden9",
-          hot: "16",
-        },
-        {
-          imageUrl: require("../assets/Garden.jpg"),
-          username: "Student10",
-          gardenname: "Garden10",
-          hot: "18",
-        },
-      ],
+      hotGarden: [ ],
+      newGarden: [ ],
+      myGarden: [ ],
     };
   },
   methods: {
+    async initGardenData() {
+      this.initHotGarden();
+      this.initNewGarden();
+      this.initMyGarden();
+    },
+    async initHotGarden() {
+      for (let i = 0; i < 3; i++) {
+        const hotGardenData = await getHotGarden();
+        const username = await getUserNameById(hotGardenData.ownerId);
+        const hotGarden = {
+          imageUrl: hotGardenData.pictures,
+          username: username,
+          gardenname: hotGardenData.name,
+          hot: hotGardenData.stars,
+        };
+        this.hotGarden.push(hotGarden);
+      }
+    },
+    async initNewGarden() {
+      for (let i = 0; i < 3; i++) {
+        const newGardenData = await getNewGarden();
+        const username = await getUserNameById(newGardenData.ownerId);
+        const newGarden = {
+          imageUrl: newGardenData.pictures,
+          username: username,
+          gardenname: newGardenData.name,
+          hot: newGardenData.stars,
+        };
+        this.newGarden.push(newGarden);
+      }
+    },
+    async initMyGarden() {
+      for (let i = 0; i < 1; i++) {
+        const myGardenData = await getMyGarden();
+        const username = await getUserNameById(myGardenData.ownerId);
+        const myGarden = {
+          imageUrl: myGardenData.pictures,
+          username: username,
+          gardenname: myGardenData.name,
+          hot: myGardenData.stars,
+        };
+        this.myGarden.push(myGarden);
+      }
+    },
+
+
+
     handleMenuSelect(index) {
       this.activeTab = index;
     },
@@ -245,7 +246,8 @@ export default {
       }
     },
   },
-  created() {
+  async created() {
+    this.initGardenData();
     this.updateDisplayedImages(); // 初始化时根据showMore状态设置图片数量
   },
   mounted(){
