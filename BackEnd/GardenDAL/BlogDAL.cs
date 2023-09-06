@@ -1,6 +1,7 @@
 ﻿using Garden.DAL.Core;
 using Garden.Models;
 using Oracle.ManagedDataAccess.Client;
+using System.Collections.Generic;
 using System.Data;
 
 namespace Garden.DAL
@@ -49,7 +50,8 @@ namespace Garden.DAL
                 ReleaseTime = b.ReleaseTime,
                 AgreeNum = b.AgreeNum,
                 CommentNum = b.CommentNum,
-                Author = ac.AccountName
+                Author = ac.AccountName,
+                Avatar = ac.Portrait
             };
             return bi;
         }
@@ -67,6 +69,32 @@ namespace Garden.DAL
         {
             return ToBlogInfoList(ToModelList(dt));
         }
+
+        // 通过用户ID返回前端需要的历史点赞博客的记录
+        public static List<BlogLikeInfo> GetBlogLikeInfo(string user_id)
+        {
+            List<BlogLikeInfo> blogLikeInfoList = new();
+            var blogLikeList = BlogLikeDAL.GetAllLikes(user_id); // 获取该用户所有点赞记录
+            BlogDAL blogDAL = new();
+            foreach (BlogLike blogLike in blogLikeList)
+            {
+                BlogInfo blogInfo = ToBlogInfo(blogDAL.GetBlogById(blogLike.BlogId, out _));
+                BlogLikeInfo B = new()
+                {
+                    Author = blogInfo.Author,
+                    Avatar = blogInfo.Avatar,
+                    BlogName = blogInfo.Title,
+                    FullContent = blogInfo.Content,
+                    TotalLikes = blogInfo.AgreeNum,
+                    TotalComment = blogInfo.CommentNum,
+                    LikeTime = blogLike.LikeTime,
+                };
+                blogLikeInfoList.Add(B);
+            }
+
+            return blogLikeInfoList;
+        }
+
 
         public Blog GetBlogById(string id, out int status)
         {
