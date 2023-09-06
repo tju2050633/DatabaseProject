@@ -33,7 +33,7 @@ namespace Garden.DAL
             return B;
         }
 
-        //¸ù¾Ý²©¿ÍIDË÷ÒýÆÀÂÛ
+        //ï¿½ï¿½ï¿½Ý²ï¿½ï¿½ï¿½IDï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         public List<BlogComments> GetCommentsById(string blog_id, out int status)
         {
 
@@ -42,7 +42,7 @@ namespace Garden.DAL
                 string sql = "SELECT * FROM blog_comments WHERE blog_id=:id";
                 DataTable dt = OracleHelper.ExecuteTable(sql,
                     new OracleParameter("id", OracleDbType.Char) { Value = blog_id });
-              
+
                 status = 0;
                 return ToModelList(dt);
 
@@ -55,15 +55,14 @@ namespace Garden.DAL
             }
         }
 
-        //²åÈëÆÀÂÛ
+        //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         public bool Insert_Comment(BlogComments blogcomments)
         {
             try
             {
-                string sql = "INSERT INTO blog_comments(blog_comment_id, owner_id, blog_id, release_time, content) VALUES(blog_comments_seq.NEXTVAL, :blog_comment_id, :owner_id, :blog_id, :release_time,: content)";
+                string sql = "INSERT INTO blog_comments(owner_id, blog_id, release_time, content) VALUES(:owner_id, :blog_id, :release_time,: content)";
                 OracleParameter[] oracleParameters = new OracleParameter[]
                 {
-                    new OracleParameter("blog_comment_id", OracleDbType.Char) { Value = blogcomments.BlogCommentId },
                     new OracleParameter("owner_id", OracleDbType.Char) { Value = blogcomments.OwnerId },
                     new OracleParameter("blog_id", OracleDbType.Char) { Value = blogcomments.BlogId },
                     new OracleParameter("release_time", OracleDbType.Date) { Value = blogcomments.ReleaseTime},

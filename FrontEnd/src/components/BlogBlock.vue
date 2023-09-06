@@ -131,15 +131,28 @@ export default {
       this.localCard.showFullContent = !this.localCard.showFullContent;
     },
 
+    toComments(res) {
+      var comments = [];
+      res.forEach((element) => {
+        var comment = {
+          user: element.ownerId,
+          content: element.content,
+        };
+        comments.push(comment);
+      });
+      return comments;
+    },
+
     //选择是否展开评论区
     toggleCollapse() {
       this.localCard.isOpen = !this.localCard.isOpen;
       //申请评论数据
-      console.log(this.localCard.blogid, "&");
-      getBlogComments(this.localCard.blogid).then(
+      console.log(parseInt(this.localCard.blogid), "&");
+      var that = this;
+      getBlogComments(parseInt(that.localCard.blogid)).then(
         function (res) {
           console.log("获取评论成功");
-          this.localCard.comments = res;
+          that.localCard.comments = that.toComments(res);
         },
         function (err) {
           console.log("获取评论失败", err);
@@ -155,7 +168,19 @@ export default {
       }
       this.localCard.liked = !this.localCard.liked;
       //更新点赞数
-      handleAgreeNum(this.localCard.totalLikes);
+      console.log("更新：", this.localCard.totalLikes, this.localCard.blogid);
+      handleAgreeNum(
+        this.localCard.totalLikes,
+        parseInt(this.localCard.blogid)
+      ).then(
+        function (res) {
+          alert(res);
+        },
+        function (err) {
+          alert(err);
+          console.log(err);
+        }
+      );
     },
     toggleInput() {
       this.localCard.showInput = !this.localCard.showInput;
@@ -166,17 +191,20 @@ export default {
       if (this.localCard.comment.trim() === "") {
         return;
       }
+      console.log("发布评论测试");
+      var that = this;
       //申请接口连接
       postBlogComment(
-        this.localCard.blogid,
         this.localCard.author,
+        this.localCard.blogid,
         this.localCard.comment
       ).then(
         function (res) {
-          window.alert(res);
-          this.toggleInput();
+          alert(res);
+          that.toggleInput();
         },
         function (err) {
+          alert(err);
           console.log(err);
         }
       );

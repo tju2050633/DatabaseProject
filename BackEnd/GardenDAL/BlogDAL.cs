@@ -219,5 +219,31 @@ namespace Garden.DAL
                 return null;
             }
         }
+
+        public string PutAgreeNum(int agreeNum, string blog_id)
+        {
+            try
+            {
+                string sql = $"UPDATE blog SET agree_num = {agreeNum} WHERE blog_id = {blog_id}";
+                int rowsAffected = OracleHelper.ExecuteNonQuery(sql);
+
+                if (rowsAffected > 0)
+                {
+                    // 点赞数更新成功
+                    return "点赞成功！";
+                }
+                else
+                {
+                    // 没有更新任何行，可能是找不到对应的博客
+                    Console.WriteLine("博客不存在或更新失败！");
+                    return "提交失败";
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return "未连接到数据库";
+            }
+        }
     }
 }
