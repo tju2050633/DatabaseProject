@@ -25,6 +25,15 @@ export const getGardenInfo = async (garden_id) => {
     return response.data;
 };
 
+export const getComments = async (garden_id) => {
+    const response = await API.get('/garden/comments', {
+        params: {
+            garden_id: garden_id.toString()
+        }
+    });
+    return response.data;
+};
+
 export const postComment = async (garden_id, comment) => {
     const response = await API.post('/garden/comment', { 
         gardenId: garden_id.toString(),

@@ -30,7 +30,7 @@
 </template>
   
 <script>
-import { fetchMyPoints, fetchItemInfo, performExchange } from '../api/mallApi.js';
+import { fetchMyPoints, fetchItemInfo, performExchange, getItemImages } from '../api/mallApi.js';
 import { useStore } from 'vuex'
 
 export default {
@@ -85,15 +85,15 @@ export default {
             this.myPoints = await fetchMyPoints(this.userId); 
 
             const itemInfo = await fetchItemInfo(this.itemId); 
-            console.log("itemInfo", itemInfo)
 
             this.item.name = itemInfo.itemName;
             this.item.price = itemInfo.price;
             this.item.sales = itemInfo.sales;
             this.item.storage = itemInfo.storage;
-            this.item.carouselItems[0].imageUrl = itemInfo.image;
-            this.item.carouselItems[1].imageUrl = itemInfo.image;
-            this.item.carouselItems[2].imageUrl = itemInfo.image;
+            const image_list = await getItemImages(this.itemId);
+            this.item.carouselItems[0].imageUrl = image_list[0];
+            this.item.carouselItems[1].imageUrl = image_list[1];
+            this.item.carouselItems[2].imageUrl = image_list[2];
 
         } catch (error) {
             console.error('Error fetching item detail:', error);

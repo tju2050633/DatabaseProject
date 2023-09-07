@@ -44,7 +44,8 @@
               </div>
 
               <div class="col nav-col">
-                <el-card class="navigator-item" @click="this.$router.push('/garden/')">
+                <!-- <el-card class="navigator-item" @click="this.$router.push({name: 'garden', params: { garden_id: this.garden_id }})"> -->
+                <el-card class="navigator-item" @click="navigateToMyGarden">
 
                   <div class="navigator-card">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" fill="currentColor" class="bi bi-cursor"
@@ -158,7 +159,8 @@
 
             <!-- 两列布局 -->
             <div class="row row-cols-2">
-              <div class="col" v-for="(image, index) in hotImages" :key="index" @click="this.$router.push('/garden/')">
+              <div class="col" v-for="(image, index) in hotImages" :key="index" 
+                @click="this.$router.push({name: 'garden', params: { garden_id: image.gardenId }})">
 
                 <!-- 花园卡片 -->
                 <div class="card item-card">
@@ -310,11 +312,67 @@ body {
 </style>
 
 <script>
-import { reactive, ref, onMounted } from "vue";
-import API from "@/api/basicApi.js";
+import { reactive} from "vue";
+import { getGardenList } from "../api/gardenDisplayAPI.js";
+import { getUserNameById } from '@/api/accountApi';
+import { mapGetters } from 'vuex'
 
 export default {
   name: "HomePageView",
+  computed: {
+    ...mapGetters(['getUserId'])
+  },
+
+  async created() {
+    console.log("user_id", this.getUserId); // undefined
+    this.user_id = "001";
+    this.garden_id = "001";
+
+    this.initHotGardens();
+  },
+
+  methods: {
+    navigateToMyGarden() {
+      if (this.user_id == null)
+        alert("请先登录！");
+      else if (this.garden_id == null)
+        alert("您还没有花园！");
+      else
+        this.$router.push({ name: "garden", params: { garden_id: this.garden_id } });
+    },
+
+    async initHotGardens() {
+      const hotGardens = await getGardenList();
+
+      for (let i = 0; i < 4; i++)
+      {
+        const username = await getUserNameById(hotGardens[i].ownerId);
+        this.hotImages.push({
+          gardenId: hotGardens[i].gardenId,
+          imageUrl: hotGardens[i].pictures,
+          username: username,
+          gardenname: hotGardens[i].name,
+          hot: hotGardens[i].stars
+        })
+      }
+    },
+
+    async loadMoreGardens() {
+      const hotGardens = await getGardenList();
+      let n = this.hotImages.length;
+      for (let j = n; j < n + 4 && j < hotGardens.length; j++) {
+        const username = await getUserNameById(hotGardens[j].ownerId);
+        this.hotImages.push({
+          gardenId: hotGardens[j].gardenId,
+          imageUrl: hotGardens[j].pictures,
+          username: username,
+          gardenname: hotGardens[j].name,
+          hot: hotGardens[j].stars
+        })
+      }
+    }
+  },
+  
   setup() {
     const mainPageDem = reactive([
       { description: "", src: require("../assets/mainpage1.jpeg"), target:"display" },
@@ -322,139 +380,11 @@ export default {
       { description: "", src: require("../assets/mainpage3.jpeg"), target: "PointMall" },
     ]);
 
-    const hotImages = reactive([
-      {
-        imageUrl: require("../assets/Garden-e.jpg"),
-        username: "Student1",
-        gardenname: "Garden1",
-        hot: "90",
-      },
-      {
-        imageUrl: require("../assets/Garden-e.jpg"),
-        username: "Student2",
-        gardenname: "Garden2",
-        hot: "80",
-      },
-      {
-        imageUrl: require("../assets/Garden-e.jpg"),
-        username: "Student3",
-        gardenname: "Garden3",
-        hot: "70",
-      },
-      {
-        imageUrl: require("../assets/Garden-e.jpg"),
-        username: "Student4",
-        gardenname: "Garden4",
-        hot: "60",
-      },
-    ]);
-
-    //定义花园读取要用的变量
-    const state = reactive({
-      currentPage: 1, //当前的花园页面，用于花园分页与无限刷新
-      gardens: [], //花园列表
-      pageSize: 10, //花园分页大小
-    });
-
-    //错误信息
-    let errMessage = ref("");
-
-    // 执行一些初始化逻辑
-    onMounted(() => {
-      // this.loadBlogs();测试已有接口不掉用该函数
-      loadGardenUsingId();
-    });
-
-    //跳转到花园页面时获取初始的花园数据
-    const loadGardens = () => {
-      console.log("开始花园读取");
-      API({
-        url: "/Garden/",
-        method: "get",
-        params: {
-          page: state.currentPage,
-          pagesize: state.pageSize,
-        },
-      }).then(
-        function (res) {
-          console.log("获取成功");
-          state.gardens = res.data;
-        },
-        function (err) {
-          console.log("获取失败");
-          errMessage.value = err.data;
-        }
-      );
-    };
-
-    //加载更多的花园数据
-    const loadMoreGardens = () => {
-      console.log("开始花园读取");
-      API({
-        url: "/Garden/",
-        method: "get",
-        params: {
-          page: state.currentPage,
-          pagesize: state.pageSize,
-        },
-      }).then(
-        function (res) {
-          console.log("获取更多成功");
-          state.currentPage++;
-          state.gardens.push(res.data);
-        },
-        function (err) {
-          console.log("获取更多失败");
-          errMessage.value = err.data;
-        }
-      );
-    };
-
-    //下面用于测试已有的接口
-    //将后端返回的数据格式改为前端使用的cards
-    const toCard = (garden) => {
-      console.log(garden.content);
-      var card = {
-        imageUrl: require("../assets/Garden-e.jpg"), //后端数据库没有
-        username: garden.username,
-        gardenname: garden.gardenname,
-        hot: garden.hot,
-      };
-      return card;
-    };
-
-    const loadGardenUsingId = () => {
-      console.log("开始花园读取测试");
-      API({
-        url: "/Garden/",
-        method: "get",
-        params: {
-          id: 2, //测试数据写死
-        },
-      }).then(
-        function (res) {
-          console.log("测试成功");
-          //测试获得的内容
-          console.log(res.data);
-          state.gardens.push(res.data);
-          hotImages.push(toCard(res.data));
-        },
-        function (err) {
-          console.log("测试失败");
-          errMessage.value = err.data;
-        }
-      );
-    };
+    const hotImages = reactive([ ]);
 
     return {
       mainPageDem,
       hotImages,
-      state,
-      errMessage,
-      loadGardens,
-      loadMoreGardens,
-      toCard,
-      loadGardenUsingId,
     };
   },
 };

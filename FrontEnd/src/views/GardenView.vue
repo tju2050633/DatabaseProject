@@ -9,6 +9,9 @@
         <SideBar />
 
         <el-col :span="15">
+
+          <!-- head -->
+
           <el-card class="garden-bfinstru">
             <el-row style="font-size: x-large">
               <el-col :span="1" :offset="4">
@@ -38,34 +41,63 @@
             </el-row>
           </el-card>
 
+          <!-- body -->
+
           <el-card class="garden-detail">
+
+            <!-- 轮播图 -->
             <el-carousel indicator-position="outside">
               <el-carousel-item v-for="(item, index) in imageList" :key="index">
                 <img :src="item.imageUrl" alt="花园" style="width: 100%" />
               </el-carousel-item>
             </el-carousel>
+
+            <!-- 描述 -->
             <h1 class="gardeninfohead">
               描述
               <el-icon style="margin-top: 10px">
                 <house />
               </el-icon>
             </h1>
+
             <div class="info-detail">
               <br />
               &nbsp;&nbsp;&nbsp;&nbsp;
               {{gardenInfo.describe}}
               <br />
             </div>
+
+            <!-- 地点 -->
             <h1 class="gardeninfohead">
               地点
               <el-icon style="margin-top: 10px">
                 <position />
               </el-icon>
             </h1>
+
             <div class="info-detail">
               <br />{{gardenInfo.location}}<br /><br /><br />
             </div>
 
+            <!-- 评论 -->
+            <h1 class="gardeninfohead">
+              评论
+              <el-icon style="margin-top: 10px">
+                <comment />
+              </el-icon>
+            </h1>
+
+            <div class="comment-list">
+              <div v-for="(comment, index) in commentList" :key="index" class="comment-item">
+                <div class="comment-header">
+                  <span class="comment-owner">{{ comment.owner }}</span>
+                  <span class="comment-time">{{ comment.time }}</span>
+                </div>
+                <div class="comment-content">{{ comment.content }}</div>
+              </div>
+            </div>
+
+            <!-- 提交评论 -->
             <div class="comment-box">
               <textarea
                 v-model="comment"
@@ -75,7 +107,9 @@
                 提交评论
               </button>
             </div>
+
           </el-card>
+
         </el-col>
       </el-row>
     </div>
@@ -89,7 +123,7 @@
   
   
 <script>
-import { getGardenInfo, postComment } from '@/api/gardenAPI';
+import { getGardenInfo, getComments, postComment } from '@/api/gardenAPI';
 import { getUserNameById } from '@/api/accountApi';
 import { mapGetters } from 'vuex';
 export default {
@@ -108,7 +142,19 @@ export default {
         location:"",
       },
       comment: "", // 存储用户输入的评论内容
-      imageList: [ ],
+      imageList: [],
+      commentList: [
+        {
+          owner: "Alice",
+          time: "2021-06-01",
+          content: "abcde"
+        },
+        {
+          owner: "Bob",
+          time: "2023-04-08",
+          content: "ABCDE"
+        },
+      ],
     };
   },
 
@@ -116,6 +162,7 @@ export default {
 
   async created() {
     this.initGardenInfo();
+    this.initComments();
   },
 
   computed:{
@@ -141,6 +188,23 @@ export default {
       this.gardenInfo.location = gardenInfo.position;
       this.comment = "";
       this.imageList.push({ imageUrl: gardenInfo.pictures });
+    },
+
+    // init comments
+
+    async initComments() {
+      const comments = getComments(this.garden_id);
+      console.log("initComments : ", comments);
+
+      for(let i = 0; i < comments.length; i++)
+      {
+        const username = await getUserNameById(comments[i].ownerId);
+        this.commentList.push({
+          owner: username,
+          time: comments[i].time,
+          content: comments[i].content
+        });
+      }
     },
 
     // submit comment
