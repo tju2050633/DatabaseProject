@@ -222,6 +222,7 @@ export default {
     },
   },
   async created() {
+    console.log(this.userId);
     this.initGardenData();
     this.initDisplayedImages();
     this.updateDisplayedImages(); // 初始化时根据showMore状态设置图片数量

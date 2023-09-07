@@ -10,6 +10,7 @@ namespace Garden.BLL.Interfaces
         public bool UpdateInfo(string id, string bio, string email, string phone);
 
         public int GetPoints(string id);
-        public string GetUserName(string id);
+        public string GetUserNameById(string id);
+        public string GetUserAvatarById(string id);
     }
 }

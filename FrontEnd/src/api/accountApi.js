@@ -25,3 +25,12 @@ export const getUserNameById = async (userId) => {
     });
     return response.data;
 };
+
+export const getUserAvatarById = async (userId) => {
+    const response = await API.get("/user/avatar", {
+        params: {
+            userId: userId,
+        }
+    });
+    return response.data;
+};

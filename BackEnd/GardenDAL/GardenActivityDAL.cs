@@ -38,8 +38,9 @@ namespace Garden.DAL
         {
             try
             {
-                string sql = "SELECT * FROM garden_activity WHERE time > SYSDATE";
+                string sql = "SELECT * FROM garden_activity";
                 DataTable dt = OracleHelper.ExecuteTable(sql);
+                Console.WriteLine("DAL GetAvailableActivities: " + dt.Rows.Count);
                 return ToModelList(dt);
             }
             catch (Exception ex)

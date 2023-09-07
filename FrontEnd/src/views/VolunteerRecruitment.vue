@@ -122,6 +122,10 @@
             <div>
               <button @click="loadMoreRecruits">加载更多</button>
             </div>
+            <!--志愿者招募发布页-->
+            <div>
+              <button @click="this.$router.push('/VolunteerPost')">我要发布</button>
+            </div>
           </el-container>
         </el-col>
 
@@ -151,7 +155,12 @@
               <el-col v-for="(item, index) in displayedImageList" :key="index">
                 <div
                   class="card volunteer-list"
-                  @click="this.$router.push('/personalInfo/')"
+                  @click="
+                    this.$router.push({
+                      name: 'personalInfo',
+                      params: { id: 144 },
+                    })
+                  "
                 >
                   <span>
                     <h4 class="volunteer-list-text">
@@ -484,9 +493,9 @@ export default {
     },
   },
   created() {
-    this.updateDisplayedImages(); // 初始化时根据showMore状态设置图片数量
     this.loadMoreRecruits();
     this.GetTopPointsList();
+    this.updateDisplayedImages(); // 初始化时根据showMore状态设置图片数量
   },
 };
 </script>

@@ -19,8 +19,8 @@ namespace Garden.Controllers
         // 查询
         // 无输入
         // 返回：所有即将举办的活动，[活动ID、花园ID、举办者ID、活动图片URL、活动简介、活动开始时间、活动地点]
-        [HttpGet("activities")]
-        public IEnumerable<GardenActivity> GetActivities()
+        [HttpGet("/activities/get")]
+        public List<GardenActivity> GetActivities()
         {
             return _activityBLL.GetActivities();
         }

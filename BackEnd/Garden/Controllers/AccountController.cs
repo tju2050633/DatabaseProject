@@ -49,7 +49,7 @@ namespace Garden.Controllers
             "points": 0
         }*/
         [HttpGet("info/{id}")]
-        public ActionResult<Account> GetAllInfo(string id) 
+        public ActionResult<Account> GetAllInfo(string id)
         {
             return _accountBLL.GetAllInfo(id);
         }
@@ -58,23 +58,30 @@ namespace Garden.Controllers
         // 返回状态：["账号或密码错误","发生错误","登录成功"]
         // 供管理员登录
         [HttpGet("admin")]
-        public ActionResult<string> AdminLogin(string id, string pwd) 
+        public ActionResult<string> AdminLogin(string id, string pwd)
         {
-            return _adminBLL.AdminLogin(id, pwd);   
+            return _adminBLL.AdminLogin(id, pwd);
         }
 
         // 获取当前账户积分
         [HttpGet("/user/points")]
-        public ActionResult<int> GetMyPoints(string userId)
+        public ActionResult<int> GetPointsById(string userId)
         {
             return _accountBLL.GetPoints(userId);
         }
 
-        // 获取用户ID
+        // 获取用户名字
         [HttpGet("/user/name")]
         public ActionResult<string> GetUserNameById(string userId)
         {
-            return _accountBLL.GetUserName(userId);
+            return _accountBLL.GetUserNameById(userId);
+        }
+
+        // 获取用户头像
+        [HttpGet("/user/avatar")]
+        public ActionResult<string> GetUserAvatarById(string userId)
+        {
+            return _accountBLL.GetUserAvatarById(userId);
         }
 
     }

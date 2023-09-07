@@ -83,5 +83,25 @@ namespace Garden.DAL
             }
         }
 
+        //获取个人的博客评论记录
+        //输入账户id
+        //返回博客评论记录
+        public List<BlogComments> GetBlogsComments(string account_id)
+        {
+            try
+            {
+                string sql = "SELECT * FROM blog_comments WHERE owner_id=:id";
+                DataTable dt = OracleHelper.ExecuteTable(sql,
+                    new OracleParameter("id", OracleDbType.Char) { Value = account_id });
+
+                return ToModelList(dt);
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return null;
+            }
+        }
     }
 }
