@@ -42,6 +42,7 @@
 </style>
 
 <script>
+import { getUserNameById, getUserAvatarById } from '@/api/accountApi';
 import { reactive, ref, onMounted } from "vue";
 import { getMoreBlogs } from "@/api/blogApi.js";
 
@@ -105,9 +106,12 @@ export default {
           state.blogs = res;
           console.log(state.blogs);
 
-          state.blogs.forEach((blog) => {
-            cards.push(toCard(blog));
-          });
+          for (let i = 0; i < state.blogs.length; i++) {
+            const card = Promise.resolve(toCard(state.blogs[i]));
+            card.then((value) => {
+              cards.push(value);
+            });
+          }
         },
         function (err) {
           console.log("获取更多失败");
@@ -118,12 +122,13 @@ export default {
 
     //下面用于测试已有的接口
     //将后端返回的数据格式改为前端使用的cards
-    const toCard = (blog) => {
-      // console.log(blog.content);
+    const toCard = async (blog) => {
+      const author = await getUserNameById(blog.ownerId);
+      const avatar = await getUserAvatarById(blog.ownerId);
       var card = {
-        author: blog.ownerId,
+        author: author,
         blogid: blog.blogId,
-        avatar: require("../assets/author-avatar.jpg"), //后端数据库没有!!!!
+        avatar: avatar,
         blogName: blog.title,
         partialContent: blog.content.substring(0, 100),
         fullContent: blog.content,
@@ -135,6 +140,7 @@ export default {
         showInput: false,
         comment: "",
       };
+      
       return card;
     };
 

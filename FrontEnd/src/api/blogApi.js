@@ -1,3 +1,12 @@
+/*
+ * @Author: Jialin Lu
+ * @GitHub: https://github.com/tju2050633
+ * @Date: 2023-09-06 19:42:12
+ * @FilePath: /SharingGardenProject/FrontEnd/src/api/blogApi.js
+ * @Description: 
+ * 
+ * Copyright (c) 2023 by 1640889387@qq.com, All Rights Reserved. 
+ */
 import axios from 'axios';
 
 axios.defaults.headers.common['Content-Type'] = 'application/json';
@@ -33,3 +42,9 @@ export const handleAgreeNum = async (agreeNum, blog_id) => {
     const response = await API.put(`/agreeNum`+ '?agreeNum=' + agreeNum+'&blog_id='+blog_id);
     return response.data;
 };
+
+//提交博客
+export const postBlog = async (owner_id, title,content,imgs) => {
+    const response = await API.post(`/Comments`+'?owner_id='+owner_id+'&title='+title+'&content='+content+'&imagePath='+imgs);
+    return response.data;
+}

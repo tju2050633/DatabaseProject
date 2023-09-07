@@ -33,6 +33,13 @@ namespace Garden.BLL
             return gardenDAL.GetGardenRandomly();
         }
 
+        public List<GardenEntity> GetHotGardens(int cur_num, int len)
+        {
+            List<GardenEntity> list = gardenDAL.GetTopGardens();
+            list = list.Skip(cur_num).Take(len).ToList();
+            return list;
+        }
+
         public List<GardenEntity> GetUserGardens(string id)
         {
             return gardenDAL.GetGardensByOwnerId(id);

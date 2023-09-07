@@ -15,6 +15,13 @@ namespace Garden.BLL
             return blogDAL.GetBlogById(id, out _);
         }
 
+        public List<Blog> GetHotBlogs(int cur_num, int len)
+        {
+            List<Blog> list = blogDAL.GetTopBlogs();
+            list = list.Skip(cur_num).Take(len).ToList();
+            return list;
+        }
+
         public Blog GetBlogRandomly()
         {
             return blogDAL.GetBlogRandomly();
