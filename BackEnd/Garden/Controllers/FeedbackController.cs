@@ -1,17 +1,6 @@
-/*
- * @Author: Jialin Lu
- * @GitHub: https://github.com/tju2050633
- * @Date: 2023-09-05 15:55:16
- * @FilePath: /SharingGardenProject/BackEnd/Garden/Controllers/FeedbackController.cs
- * @Description: 
- * 
- * Copyright (c) 2023 by 1640889387@qq.com, All Rights Reserved. 
- */
 using Garden.BLL.Interfaces;
 using Garden.Models;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 
 namespace Garden.Controllers
 {
@@ -26,19 +15,22 @@ namespace Garden.Controllers
             _feedbackBLL = feedbackBLL;
         }
 
-        [HttpGet("/feedback/get")]
+        // 查询
+        // 无输入
+        // 返回状态：[意见反馈ID、用户ID、描述、时间]
+        [HttpGet("SingleFeedback")]
         public IEnumerable<Feedback> GetSingleFeedback()
         {
             return _feedbackBLL.GetSingleFeedback();
         }
 
-        [HttpPost("/feedback/post")]
-        public IActionResult PostFeedback([FromForm] string feedbackJson)
+        // 插入意见反馈
+        // 输入意见反馈ID(feedback_id)、反馈者id(user_id)、描述(description)
+        // 返回状态：["反馈成功""反馈失败"]
+        [HttpPost]
+        public ActionResult<string> InsertFeedback(string feedback_id, string user_id, string description)
         {
-            Console.WriteLine("feedbackJson : " + feedbackJson);
-            _feedbackBLL.InsertFeedback(JsonConvert.DeserializeObject<FeedbackModel>(feedbackJson));
-
-            return Ok();
+            return _feedbackBLL.InsertFeedback(feedback_id, user_id, description);
         }
     }
 }

@@ -140,7 +140,7 @@
             </div>
 
             <!-- 提交按钮 -->
-            <button type="button" class="btn btn-success" @click="commit" data-bs-toggle="modal"
+            <button type="button" class="btn btn-success" @click="getUserInput" data-bs-toggle="modal"
                 data-bs-target="#Modal">提交</button>
 
             <!-- 模态框 -->
@@ -182,13 +182,11 @@
 </template>
 
 <script>
-import { postFeedback } from '../api/Feedback.js';
-
 export default {
     name: "FeedbackCard",
 
     setup() {
-        const commit = () => {
+        const getUserInput = () => {
             // 获取用户选择的radio的值
             var radios = document.querySelectorAll('input[type="radio"]');
             var selectedRadio = '';
@@ -210,19 +208,26 @@ export default {
             // 获取邮箱地址的值
             var email = document.getElementById('email').value;
 
+            // 输出用户输入的值
+            console.log("类型: " + selectedRadio);
+            console.log("标题: " + topic);
+            console.log("内容: " + content);
+            console.log("文件: ");
+            for (var i = 0; i < files.length; i++) {
+                console.log(files[i].name);
+            }
+            console.log("邮箱地址: " + email);
+
             // 清空输入框的值
             document.getElementById('topic').value = '';
             document.getElementById('content').value = '';
             document.getElementById('formFileMultiple').value = '';
             document.getElementById('email').value = '';
             document.getElementById('登录与注册').checked = true;
-
-            // 提交
-            postFeedback("1", selectedRadio, topic, content, files, email);
         };
 
         return {
-            commit,
+            getUserInput,
         };
     }
 }

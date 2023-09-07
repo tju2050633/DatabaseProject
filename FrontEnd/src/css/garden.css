@@ -98,40 +98,6 @@ textarea {
     background-color: beige !important;
 }
 
-/* 评论列表 */
-
-.comment-list {
-  margin-top: 20px;
-}
-
-.comment-item {
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  padding: 10px;
-  margin-bottom: 10px;
-}
-
-.comment-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 10px;
-}
-
-.comment-owner {
-  font-weight: bold;
-}
-
-.comment-time {
-  color: #666;
-}
-
-.comment-content {
-  white-space: pre-wrap;
-}
-
-/* 提交评论 */
-
 .commentButton{
     background-color: beige;
     color: #163510;

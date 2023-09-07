@@ -114,11 +114,10 @@ namespace Garden.Controllers
         }
 
         // 点赞使对应blog的agree_num加一，返回最新的点赞数，-1表示出错
-        // 同时保存点赞记录，所以需要user_id
         [HttpPut("agree")]
-        public ActionResult<int> Agree(string user_id, string blog_id)
+        public ActionResult<int> Agree(string blog_id)
         {
-            return _blogBLL.AddAgree(user_id, blog_id);
+            return _blogBLL.AddAgree(blog_id);
         }
     }
 }

@@ -91,9 +91,9 @@ namespace Garden.BLL
             return blogDAL.PutAgreeNum(agreeNum, blog_id);
         }
 
-        public int AddAgree(string user_id, string blog_id, int num = 1)
+        public int AddAgree(string blog_id, int num = 1)
         {
-            return blogDAL.AddAgree(user_id, blog_id, num);
+            return blogDAL.AddAgree(blog_id, num);
         }
     }
 }

@@ -92,7 +92,7 @@ body {
   
 <script>
 import PointItemBlock from '../components/PointItemBlock.vue';
-import { fetchAllItemID, fetchItemInfo, getItemCoverImage } from '../api/mallApi.js';
+import { fetchAllItemID, fetchItemInfo } from '../api/mallApi.js';
 
 export default {
     components: {
@@ -115,7 +115,6 @@ export default {
             // index转为string，且前面补0至3位数
             index = itemIds[index].toString().padStart(3, '0');
             const itemInfo = await fetchItemInfo(index); 
-            itemInfo.image = await getItemCoverImage(itemInfo.itemId);
             this.items.push(itemInfo);
         }
     },

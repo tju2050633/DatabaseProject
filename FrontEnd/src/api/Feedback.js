@@ -1,24 +1,11 @@
-import axios from 'axios';
+import request from '@/utils/request'
 
-const API = axios.create({
-    baseURL: 'http://localhost:5194',
-    timeout: 3000,
-    async: true,
-    crossDomain: true,
-})
-
-export function postFeedback(user_id, selectedRadio, topic, content, files, email) {
-    let feedback = {
-        accountId: user_id,
-        selectedRadio: selectedRadio, 
-        topic: topic,
-        content: content,
-        email: email
-    }
-
-    const formData = new FormData(); 
-    formData.append('feedbackJson', JSON.stringify(feedback));
-  
-    const response = API.post('/feedback/post', formData);
-    return response.data;
+export function postFeedback(data1,data2,data3,data4,data5) {
+    let param=new
+    URLSearchParams({issueId:data1,title:data2,content:data3,picture:data4,address:data5})
+    return request({
+        url: '/order/feedback',
+        method: 'post',
+        data: param
+    })
 }

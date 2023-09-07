@@ -87,7 +87,7 @@
         <el-menu-item index="3-1" @click="this.$router.push('/display/')"
           >精选花园</el-menu-item
         >
-        <el-menu-item index="3-2" @click="navigateToMyGarden"
+        <el-menu-item index="3-2" @click="this.$router.push('/garden/')"
           >我的花园</el-menu-item
         >
       </el-sub-menu>
@@ -139,22 +139,9 @@
 <script>
 export default {
   name: "SideBar",
-  async created() {
-    this.user_id = "001";
-    this.garden_id = "001";
-  },
-
   methods: {
     refreshPage() {
       location.reload();
-      },
-    navigateToMyGarden() {
-      if (this.user_id == null)
-        alert("请先登录！");
-      else if (this.garden_id == null)
-        alert("您还没有花园！");
-      else
-        this.$router.push({ name: "garden", params: { garden_id: this.garden_id } });
     },
   },
 };
