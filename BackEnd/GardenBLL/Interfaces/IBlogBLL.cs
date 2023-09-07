@@ -6,6 +6,7 @@ namespace Garden.BLL.Interfaces
         public interface IBlogBLL
         {
                 public Blog GetSingleBlog(string id);
+                public List<Blog> GetHotBlogs(int cur_num, int len);
 
                 public Blog GetBlogRandomly();
 

@@ -9,6 +9,8 @@ namespace Garden.BLL.Interfaces
 
         public GardenEntity GetGardenRandomly();
 
+        public List<GardenEntity> GetHotGardens(int cur_num, int len);
+
         public List<GardenEntity> GetUserGardens(string id);
 
         public List<GardenEntity> GetPopularGardens(int page);

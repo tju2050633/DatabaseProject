@@ -37,6 +37,12 @@ namespace Garden.Controllers
             return _gardenBLL.GetGardenRandomly();
         }
 
+        [HttpGet("/garden/hot")]
+        public List<GardenEntity> GetHotGardens(int cur_num, int len)
+        {
+            return _gardenBLL.GetHotGardens(cur_num, len);
+        }
+
         [HttpGet("/garden/user")]
         public IEnumerable<GardenEntity> GetUserGardens(string id)
         {

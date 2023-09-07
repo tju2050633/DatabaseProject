@@ -118,13 +118,14 @@
               </el-dialog>
             </div>
 
-            <!-- 加载更多 -->
+            <!-- 加载更多、我要发布按钮 -->
             <div>
-              <button @click="loadMoreRecruits">加载更多</button>
-            </div>
-            <!--志愿者招募发布页-->
-            <div>
-              <button @click="this.$router.push('/VolunteerPost')">我要发布</button>
+              <button @click="loadMoreRecruits" class="btn btn-outline-success show-more-btn">
+                加载更多
+              </button>
+              <button @click="this.$router.push('/VolunteerPost')" class="btn btn-outline-success show-more-btn">
+                我要发布
+              </button>
             </div>
           </el-container>
         </el-col>
@@ -208,100 +209,13 @@ export default {
       displayedImageList: [], // 实际显示的列表
       maxDisplayCount: 3, // 默认显示的数量
 
-      imageList: [
-        // {
-        //   description: "TOP1 ",
-        //   username: "王浩",
-        //   myPoints: "256",
-        // },
-        // {
-        //   description: "TOP2 ",
-        //   username: "王浩二",
-        //   myPoints: "246",
-        // },
-        // {
-        //   description: "TOP3 ",
-        //   username: "王浩三",
-        //   myPoints: "240",
-        // },
-        // {
-        //   description: "TOP4 ",
-        //   username: "王浩四",
-        //   myPoints: "235",
-        // },
-        // {
-        //   description: "TOP5 ",
-        //   username: "王浩五",
-        //   myPoints: "230",
-        // },
-        // {
-        //   description: "TOP6 ",
-        //   username: "王浩六",
-        //   myPoints: "226",
-        // },
-        // {
-        //   description: "TOP7 ",
-        //   username: "王浩七",
-        //   myPoints: "210",
-        // },
-        // {
-        //   description: "TOP8 ",
-        //   username: "王浩八",
-        //   myPoints: "200",
-        // },
-        // {
-        //   description: "TOP9 ",
-        //   username: "王浩九",
-        //   myPoints: "156",
-        // },
-        // {
-        //   description: "TOP10 ",
-        //   username: "王浩十",
-        //   myPoints: "56",
-        // },
-      ],
+      imageList: [ ],
       volunteerContent: [
         // {
         //   imageUrl: require("../assets/Garden-e.jpg"),
         //   dialogVisible: false, //是否出现弹窗
         //   username: "Student1",
         //   gardenname: "王浩的后宫1",
-        //   location: "嘉定校区19号楼",
-        //   describe: `诚邀您来维护本花园，主要工作如下：
-        //             首先，帮我把花园的土给翻了
-        //             然后，我的花园一盆花都没有，帮我全买了
-        //             最后帮我浇水
-        //             谢谢你`,
-        // },
-        // {
-        //   imageUrl: require("../assets/Garden-e.jpg"),
-        //   dialogVisible: false,
-        //   username: "Student2",
-        //   gardenname: "Garden2",
-        //   location: "嘉定校区19号楼",
-        //   describe: `诚邀您来维护本花园，主要工作如下：
-        //             首先，帮我把花园的土给翻了
-        //             然后，我的花园一盆花都没有，帮我全买了
-        //             最后帮我浇水
-        //             谢谢你`,
-        // },
-        // {
-        //   imageUrl: require("../assets/Garden-e.jpg"),
-        //   dialogVisible: false,
-        //   username: "Student3",
-        //   gardenname: "Garden3",
-        //   location: "嘉定校区19号楼",
-        //   describe: `诚邀您来维护本花园，主要工作如下：
-        //             首先，帮我把花园的土给翻了
-        //             然后，我的花园一盆花都没有，帮我全买了
-        //             最后帮我浇水
-        //             谢谢你`,
-        // },
-        // {
-        //   imageUrl: require("../assets/Garden-e.jpg"),
-        //   dialogVisible: false,
-        //   username: "Student4",
-        //   gardenname: "Garden4",
         //   location: "嘉定校区19号楼",
         //   describe: `诚邀您来维护本花园，主要工作如下：
         //             首先，帮我把花园的土给翻了
@@ -368,13 +282,9 @@ export default {
       }
     },
     async getVolunteerList() {
-      try {
-        const { username, Points } = await getVolunteerList();
-        this.getVolunteerList.username = username;
-        this.getVolunteerList.myPoints = Points;
-      } catch (error) {
-        console.error("Error", error);
-      }
+      const { username, Points } = await getVolunteerList();
+      this.getVolunteerList.username = username;
+      this.getVolunteerList.myPoints = Points;
     },
     // async submitForm() {
     //   try {
@@ -495,6 +405,7 @@ export default {
   created() {
     this.loadMoreRecruits();
     this.GetTopPointsList();
+    this.showMore = true;
     this.updateDisplayedImages(); // 初始化时根据showMore状态设置图片数量
   },
 };
@@ -549,6 +460,11 @@ body {
   margin-bottom: 5vh;
   margin-left: 3vh;
   margin-right: 3vh;
+}
+
+.show-more-btn {
+  margin: 2vh auto 10vh 0vh;
+  margin-left: 3vh;
 }
 
 .btn:hover {
