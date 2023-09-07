@@ -153,6 +153,14 @@ const routes = [
     name: 'BlogPost',
     component: () => import('../views/BlogPost.vue'),
   },
+
+    //发布志愿者招募页
+  {
+    path: '/VolunteerPost',
+    name: 'VolunteerPost',
+    component: () => import('../views/VolunteerPost.vue'),
+  },
+
 ]
 
 const router = createRouter({
