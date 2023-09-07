@@ -34,10 +34,17 @@ export const getComments = async (garden_id) => {
     return response.data;
 };
 
-export const postComment = async (garden_id, comment) => {
-    const response = await API.post('/garden/comment', { 
-        gardenId: garden_id.toString(),
-        comment: comment.toString()
-    });
-    return response.data;
+export const postComment = async (user_id, garden_id, content) => {
+
+    let commentInfo = {
+        userId: user_id,
+        gardenId: garden_id,
+        content: content
+    }
+
+    const formData = new FormData();
+    formData.append('commentJson', JSON.stringify(commentInfo));
+
+    const response = API.post('/garden/comment', formData);
+    return response;
 };

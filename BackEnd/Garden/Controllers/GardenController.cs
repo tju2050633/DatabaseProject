@@ -1,6 +1,7 @@
 ﻿using Garden.BLL.Interfaces;
 using Garden.Models;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
 namespace Garden.Controllers
 {
@@ -55,15 +56,17 @@ namespace Garden.Controllers
         }
 
         [HttpGet("/garden/comments")]
-        public IEnumerable<GardenComments> GetGardenComments(string garden_id)
+        public List<GardenComments> GetCommentsByGardenId(string garden_id)
         {
-            return _gardenBLL.GetGardenComments(garden_id);
+            return _gardenBLL.GetCommentsByGardenId(garden_id);
         }
 
-        [HttpPost("/garden/comments")]
-        public IActionResult AddGardenComment([FromBody] GardenComments comment)
+        [HttpPost("/garden/comment")]
+        public IActionResult AddGardenComment([FromForm] string commentJson)
         {
-            if (_gardenBLL.AddGardenComment(comment.GardenId, comment.Content))
+            GardenCommentData comment = JsonConvert.DeserializeObject<GardenCommentData>(commentJson);
+
+            if (_gardenBLL.AddGardenComment(comment.UserId, comment.GardenId, comment.Content))
             {
                 return Ok(new { success = true, message = "评论成功" });
             }

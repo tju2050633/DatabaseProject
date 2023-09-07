@@ -126,6 +126,7 @@
 import { getGardenInfo, getComments, postComment } from '@/api/gardenAPI';
 import { getUserNameById } from '@/api/accountApi';
 import { mapGetters } from 'vuex';
+import { reactive } from 'vue';
 export default {
 
   ///// data
@@ -143,24 +144,14 @@ export default {
       },
       comment: "", // 存储用户输入的评论内容
       imageList: [],
-      commentList: [
-        {
-          owner: "Alice",
-          time: "2021-06-01",
-          content: "abcde"
-        },
-        {
-          owner: "Bob",
-          time: "2023-04-08",
-          content: "ABCDE"
-        },
-      ],
+      commentList: reactive([ ]),
     };
   },
 
   ///// init
 
   async created() {
+    this.user_id = "1";
     this.initGardenInfo();
     this.initComments();
   },
@@ -176,7 +167,7 @@ export default {
 
   methods: {
 
-    // init garden info
+    // 初始化花园信息
 
     async initGardenInfo() {
       const gardenInfo = await getGardenInfo(this.garden_id);
@@ -190,36 +181,41 @@ export default {
       this.imageList.push({ imageUrl: gardenInfo.pictures });
     },
 
-    // init comments
+    // 初始化评论
 
     async initComments() {
-      const comments = getComments(this.garden_id);
-      console.log("initComments : ", comments);
+      const comments = await getComments(this.garden_id);
+      console.log("comments : ", comments);
 
+      this.commentList.splice(0, this.commentList.length);
       for(let i = 0; i < comments.length; i++)
       {
         const username = await getUserNameById(comments[i].ownerId);
+        const releaseTime = new Date(comments[i].releaseTime).toLocaleString('zh-CN');
         this.commentList.push({
           owner: username,
-          time: comments[i].time,
+          time: releaseTime,
           content: comments[i].content
         });
       }
+      // 排序列表
+      this.commentList.sort((a, b) => {
+        return new Date(b.time) - new Date(a.time);
+      });
     },
 
-    // submit comment
+    // 提交评论
 
-    submitComment() {
-      let result = postComment(this.comment);
-      if (result.success)
-      {
-          alert(result.message)
-      }
-      else
-      {
-          alert(result.message)
-      }
-      // 清空输入框
+    async submitComment() {
+      postComment(this.user_id, this.garden_id, this.comment);
+      const username = await getUserNameById(this.user_id);
+      const releaseTime = new Date().toLocaleString('zh-CN');
+      this.commentList.push({
+        owner: username,
+        time: releaseTime,
+        content: this.comment
+      });
+      alert("评论成功")
       this.comment = "";
     },
 

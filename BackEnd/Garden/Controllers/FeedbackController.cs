@@ -11,7 +11,6 @@ using Garden.BLL.Interfaces;
 using Garden.Models;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 
 namespace Garden.Controllers
 {

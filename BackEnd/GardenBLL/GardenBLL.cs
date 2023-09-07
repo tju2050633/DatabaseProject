@@ -49,13 +49,32 @@ namespace Garden.BLL
             return gardenDAL.GetTopGardens();
         }
 
-        public List<GardenComments> GetGardenComments(string id)
+        public List<GardenComments> GetCommentsByGardenId(string garden_id)
         {
-            return gardenCommentsDAL.GetCommentsByGardenId(id);
+            return gardenCommentsDAL.GetCommentsByGardenId(garden_id);
         }
 
-        public bool AddGardenComment(string gardenId, string comment)
+        public bool AddGardenComment(string userId, string gardenId, string comment)
         {
+            int maxId = 0;
+            foreach (GardenComments gc in gardenCommentsDAL.GetAllComments())
+            {
+                if (int.Parse(gc.CommentId) > maxId)
+                {
+                    maxId = int.Parse(gc.CommentId);
+                }
+            }
+            maxId += 1;
+            string id = maxId.ToString();
+
+            gardenCommentsDAL.Insert(new GardenComments
+            {
+                CommentId = id,
+                GardenId = gardenId,
+                Content = comment,
+                OwnerId = userId,
+                ReleaseTime = DateTime.Now
+            });
             return true;
         }
 

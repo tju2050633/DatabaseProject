@@ -16,8 +16,8 @@ namespace Garden.BLL.Interfaces
 
         public List<GardenEntity> GetTopGardens();
 
-        public List<GardenComments> GetGardenComments(string id);
-        public bool AddGardenComment(string gardenId, string comment);
+        public List<GardenComments> GetCommentsByGardenId(string garden_id);
+        public bool AddGardenComment(string userId, string gardenId, string comment);
 
         public string Insert(GardenEntity garden);
     }
