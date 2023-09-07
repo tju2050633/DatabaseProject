@@ -17,9 +17,15 @@ namespace Garden.Controllers
         }
 
         [HttpGet("/garden/info")]
-        public ActionResult<GardenEntity> GetGarden(string garden_id)
+        public ActionResult<GardenEntity> GetGardenInfo(string garden_id)
         {
-            return _gardenBLL.GetGarden(garden_id);
+            return _gardenBLL.GetGardenInfo(garden_id);
+        }
+
+        [HttpGet("/garden/name")]
+        public ActionResult<string> GetGardenNameById(string garden_id)
+        {
+            return _gardenBLL.GetGardenNameById(garden_id);
         }
 
         // 查询

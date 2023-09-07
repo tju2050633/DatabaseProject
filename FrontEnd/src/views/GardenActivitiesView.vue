@@ -66,56 +66,43 @@
 </template>
 
 <script>
+import { getGardenActivities } from '@/api/gardenActivity';
+import { getUserNameById, getUserAvatarById } from '@/api/accountApi';
+import { getGardenNameById } from '@/api/gardenAPI';
+
 export default {
+  created() {
+    this.initActivities();
+  },
+  methods: {
+
+    // 初始化花园活动
+    async initActivities() {
+      const activities = await getGardenActivities();
+      console.log("activities", activities);
+
+      for (let i = 0; i < activities.length; i++) {
+        const author = await getUserNameById(activities[i].holderId);
+        const avatar = await getUserAvatarById(activities[i].holderId);
+        const title = await getGardenNameById(activities[i].gardenId);
+        let act = {
+          author: author,
+          title: title,
+          avatar: avatar,
+          imageurl: activities[i].picture,
+          time: activities[i].time,
+          address: activities[i].location,
+          detail: activities[i].description,
+          garden_id: activities[i].gardenId,
+          holder_id: activities[i].holderId,
+        };
+        this.GardenAct.push(act);
+      }
+    },
+  },
   data() {
     return {
-      GardenAct: [
-        {
-          author: "楚杰",
-          title: "杰哥的安楼自习室",
-          avatar: require("../assets/author-avatar.jpg"),
-          imageurl: require("../assets/Garden.jpg"),
-          time: "2020年1月1日",
-          address: "安楼后面的小树林",
-          detail: "给你看点好康的",
-        },
-        {
-          author: "楚杰",
-          title: "杰哥的安楼自习室",
-          avatar: require("../assets/author-avatar.jpg"),
-          imageurl: require("../assets/Garden.jpg"),
-          time: "2020年1月1日",
-          address: "安楼后面的小树林",
-          detail: "给你看点好康的",
-        },
-        {
-          author: "楚杰",
-          title: "杰哥的安楼自习室",
-          avatar: require("../assets/author-avatar.jpg"),
-          imageurl: require("../assets/Garden.jpg"),
-          time: "2020年1月1日",
-          address: "安楼后面的小树林",
-          detail: "给你看点好康的",
-        },
-        {
-          author: "楚杰",
-          title: "杰哥的安楼自习室",
-          avatar: require("../assets/author-avatar.jpg"),
-          imageurl: require("../assets/Garden.jpg"),
-          time: "2020年1月1日",
-          address: "安楼后面的小树林",
-          detail: "给你看点好康的",
-        },
-        {
-          author: "楚杰",
-          title: "杰哥的安楼自习室",
-          avatar: require("../assets/author-avatar.jpg"),
-          imageurl: require("../assets/Garden.jpg"),
-          time: "2020年1月1日",
-          address: "安楼后面的小树林",
-          detail: "给你看点好康的",
-        },
-      ],
+      GardenAct: [ ],
     };
   },
 };

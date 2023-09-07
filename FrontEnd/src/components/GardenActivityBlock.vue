@@ -7,18 +7,18 @@
         <img
           class="author-avatar-img"
           :src="item.avatar"
-          @click="this.$router.push('/personalInfo/')"
+          @click="this.$router.push({name: 'personalInfo', params: { id: item.holder_id }})"
           alt="作者头像"
         />
         <!-- 用户名 -->
         {{ item.author }}
       </h4>
 
-      <div class="colored-line"></div>
       <!-- 分隔线 -->
+      <div class="colored-line"></div>
 
       <!-- 活动标题 -->
-      <div class="activity-heading" @click="this.$router.push('/personal/')">
+      <div class="activity-heading" @click="this.$router.push({name: 'garden', params: { garden_id: item.garden_id }})">
         <!-- 图标 -->
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -40,26 +40,13 @@
       </div>
 
       <!-- 活动图片 -->
-      <!-- 网格布局 -->
       <div class="container text-center">
-        <div class="row row-cols-2">
-          <div class="col images-left-col">
-            <img
-              :src="item.imageurl"
-              class="img-fluid"
-              alt="花园"
-              @click="this.$router.push('/personal/')"
-            />
-          </div>
-          <div class="col images-right-col">
-            <img
-              :src="item.imageurl"
-              class="img-fluid"
-              alt="花园"
-              @click="this.$router.push('/personal/')"
-            />
-          </div>
-        </div>
+        <img
+          :src="item.imageurl"
+          class="img-fluid"
+          alt="花园"
+          @click="this.$router.push({name: 'garden', params: { garden_id: item.garden_id }})"
+        />
       </div>
 
       <!-- 具体信息 -->
@@ -121,15 +108,17 @@
         &ensp;细节：{{ item.detail }}
       </p>
 
-      <div class="colored-line"></div>
       <!-- 分隔线 -->
+      <div class="colored-line"></div>
 
       <!-- 按钮 -->
       <div class="button-container">
-        <button class="btn btn-success" @click="this.$router.push('/garden/')">
+        <button class="btn btn-success" @click="this.$router.push({name: 'garden', params: { garden_id: item.garden_id }})">
           查看详情
         </button>
-        <button class="btn btn-success">报名参加</button>
+        <button class="btn btn-success">
+          报名参加
+        </button>
       </div>
     </div>
   </div>

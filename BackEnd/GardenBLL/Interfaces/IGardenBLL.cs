@@ -4,7 +4,8 @@ namespace Garden.BLL.Interfaces
 {
     public interface IGardenBLL
     {
-        public GardenEntity GetGarden(string id);
+        public GardenEntity GetGardenInfo(string id);
+        public string GetGardenNameById(string id);
 
         public GardenEntity GetGardenRandomly();
 

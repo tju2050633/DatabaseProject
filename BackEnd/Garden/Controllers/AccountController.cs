@@ -65,16 +65,23 @@ namespace Garden.Controllers
 
         // 获取当前账户积分
         [HttpGet("/user/points")]
-        public ActionResult<int> GetMyPoints(string userId)
+        public ActionResult<int> GetPointsById(string userId)
         {
             return _accountBLL.GetPoints(userId);
         }
 
-        // 获取用户ID
+        // 获取用户名字
         [HttpGet("/user/name")]
         public ActionResult<string> GetUserNameById(string userId)
         {
-            return _accountBLL.GetUserName(userId);
+            return _accountBLL.GetUserNameById(userId);
+        }
+
+        // 获取用户头像
+        [HttpGet("/user/avatar")]
+        public ActionResult<string> GetUserAvatarById(string userId)
+        {
+            return _accountBLL.GetUserAvatarById(userId);
         }
 
     }

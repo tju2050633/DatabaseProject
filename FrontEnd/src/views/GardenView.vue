@@ -172,6 +172,7 @@ export default {
     async initGardenInfo() {
       const gardenInfo = await getGardenInfo(this.garden_id);
       const username = await getUserNameById(gardenInfo.ownerId);
+      
       this.gardenInfo.username = username;
       this.gardenInfo.gardenname = gardenInfo.name;
       this.gardenInfo.hot = gardenInfo.stars;

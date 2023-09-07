@@ -18,9 +18,14 @@ namespace Garden.BLL
             return list.OrderBy(x => random.Next()).ToList();
         }
 
-        public GardenEntity GetGarden(string id)
+        public GardenEntity GetGardenInfo(string id)
         {
             return gardenDAL.GetGardenById(id, out _);
+        }
+
+        public string GetGardenNameById(string id)
+        {
+            return gardenDAL.GetGardenById(id, out _).Name;
         }
 
         public GardenEntity GetGardenRandomly()
