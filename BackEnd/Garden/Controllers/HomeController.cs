@@ -110,23 +110,22 @@ namespace Garden.Controllers
             return gardenLikes;
         }
 
-        // 未完工，假数据
+        // /Home/BlogComment
+        // 返回用户全部评论记录
+        //List<BlogCommentInfo>:{
+        //    Author:
+        //    BlogName:
+        //    Avatar:
+        //    FullContent:
+        //    Comment:
+        //    TotalLikes:
+        //    TotalComment:
+        //    CommentTime:
+        //    }
         [HttpGet("BlogComment")]
-        public ActionResult<BlogComment[]> GetBlogComment(string userId)
+        public ActionResult<List<BlogCommentInfo>> GetBlogComment(string userId)
         {
-            BlogComment[] blogComments = new BlogComment[10];
-
-            // 假数据
-            blogComments[0].Author = "1919";
-            blogComments[0].Comment = "1919";
-            blogComments[0].TotalComment = 114;
-            blogComments[0].TotalLikes = 514;
-            blogComments[1].Author = "222";
-            blogComments[1].Comment = "333";
-            blogComments[1].TotalComment = 44;
-            blogComments[1].TotalLikes = 555;
-
-            return blogComments;
+            return _blogBLL.GetBlogCommentInfos(userId);
         }
 
         // /Home/BlogLike

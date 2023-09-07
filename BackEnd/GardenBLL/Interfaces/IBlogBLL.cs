@@ -33,6 +33,11 @@ namespace Garden.BLL.Interfaces
                 //返回博客记录
                 public List<BlogLikeInfo> GetBlogsComments(string account_id);
 
+                //获取个人的博客评论记录
+                //输入账户id
+                //返回博客评论记录(BlogCommentInfo形式)
+                public List<BlogCommentInfo> GetBlogCommentInfos(string account_id)
+
                 //获取个人的博客点赞记录
                 //输入账户id
                 //返回博客点赞记录(BlogLikeInfo形式)

@@ -95,7 +95,32 @@ namespace Garden.DAL
             return blogLikeInfoList;
         }
 
+        // 通过用户ID返回前端需要的历史评价博客的记录
+        public static List<BlogCommentInfo> GetBlogCommentInfo(string user_id)
+        {
+            List<BlogCommentInfo> blogCommentInfoList = new();
+            var blogCommentList = BlogCommentsDAL.GetBlogsComments(user_id); // 获取该用户的全部点赞记录
+            BlogDAL blogDAL = new();
+            foreach (BlogComments b in blogCommentList)
+            {
+                Blog blog = blogDAL.GetBlogById(b.OwnerId, out _);
+                Account ac = AccountDAL.GetAccountById(b.OwnerId, out _);
+                BlogCommentInfo B = new()
+                {
+                    TotalLikes = blog.AgreeNum,
+                    TotalComment= blog.CommentNum,
+                    CommentTime = b.ReleaseTime,
+                    Comment = b.Content,
+                    FullContent = blog.Content,
+                    BlogName = blog.Title,
+                    Author = ac.AccountName,
+                    Avatar = ac.Portrait
+                };
+                blogCommentInfoList.Add(B);
+            }
 
+            return blogCommentInfoList;
+        }
         public Blog GetBlogById(string id, out int status)
         {
             try

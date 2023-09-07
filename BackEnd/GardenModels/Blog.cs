@@ -28,15 +28,16 @@
     }
 
     // 用于返回前端
-    public class BlogComment
+    public class BlogCommentInfo
     {
-        public string Author { get; set; }
+        public string Author { get; set; }       // 原博客作者
         public string BlogName { get; set; }
-        public string Avatar { get; set; }
-        public string FullContent { get; set; }
-        public string Comment { get; set; }
+        public string? Avatar { get; set; }
+        public string? FullContent { get; set; } // 原博客全文
+        public string Comment { get; set; }      // 评论内容
         public int TotalLikes { get; set; }
         public int TotalComment { get; set; }
+        public DateTime CommentTime { get; set; }
     }
 
     // 用于返回前端
