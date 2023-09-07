@@ -35,6 +35,11 @@ namespace Garden.BLL.Interfaces
 
                 //获取个人的博客点赞记录
                 //输入账户id
+                //返回博客点赞记录(BlogLikeInfo形式)
+                public List<BlogLikeInfo> GetBlogLikeInfos(string account_id);
+
+                //获取个人的博客点赞记录
+                //输入账户id
                 //返回博客点赞记录
                 public List<BlogLike> GetAllLikes(string account_id);
 

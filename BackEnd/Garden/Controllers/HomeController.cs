@@ -143,7 +143,7 @@ namespace Garden.Controllers
         [HttpGet("BlogLike")]
         public ActionResult<List<BlogLikeInfo>> GetBlogLike(string userId)
         {
-            return BlogDAL.GetBlogLikeInfo(userId);
+            return _blogBLL.GetBlogLikeInfos(userId);
         }
 
 
