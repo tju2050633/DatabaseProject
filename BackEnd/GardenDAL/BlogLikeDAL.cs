@@ -29,15 +29,25 @@ namespace Garden.DAL
         }
 
         // 查询出该用户ID下所有点赞博客记录
-        public static List<BlogLike> GetAllLikes(string user_id)
+        public static List<BlogLike> GetAllLikes(string account_id)
         {
-            var dt = OracleHelper.ExecuteTable("SELECT * FROM blog_like WHERE account_id=:id",
-                new OracleParameter("id", OracleDbType.Char) { Value = user_id });
-            return ToModelList(dt);
-        }
+            try
+            {
+                string sql = "SELECT * FROM blog_like WHERE account_id=:id";
+                DataTable dt = OracleHelper.ExecuteTable(sql,
+                    new OracleParameter("id", OracleDbType.Char) { Value = account_id });
 
+                return ToModelList(dt);
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return null;
+            }
+        }
         // 创建点赞记录
-        public static bool Insert(string account_id, string blog_id, DateTime time)
+        public static bool Insert(string account_id, string blog_id)
         {
             try
             {
@@ -46,13 +56,13 @@ namespace Garden.DAL
                 {
                     new OracleParameter("aid", OracleDbType.Char) {Value = account_id},
                     new OracleParameter("bid", OracleDbType.Char) {Value = blog_id},
-                    new OracleParameter("time", OracleDbType.Date) {Value = time}
+                    new OracleParameter("time", OracleDbType.Date) {Value = DateTime.Now}
                 };
                 OracleHelper.ExecuteNonQuery(sql, oracleParameters);
                 OracleHelper.ExecuteNonQuery("commit;");
                 return true;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 if (ex.Message.Contains("ORA-02185")) return true;
                 Console.WriteLine(ex.Message);

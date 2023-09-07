@@ -95,5 +95,36 @@ namespace Garden.BLL
         {
             return blogDAL.AddAgree(user_id, blog_id, num);
         }
+
+        //获取个人的博客评论记录
+        //输入账户id
+        //返回博客记录
+        public List<BlogLikeInfo> GetBlogsComments(string account_id)
+        {
+            return BlogDAL.GetBlogLikeInfo(account_id);
+        }
+
+        //获取个人的博客点赞记录
+        //输入账户id
+        //返回博客点赞记录
+        public List<BlogLike> GetAllLikes(string account_id)
+        {
+            return BlogLikeDAL.GetAllLikes(account_id);
+        }
+
+        //更新点赞记录
+        //输入用户id，博客id，加减1
+        //返回点赞是否成功
+        public string PostBlogLike(string account_id, string blog_id)
+        {
+            if (BlogLikeDAL.Insert(account_id, blog_id))
+            {
+                return "点赞记录成功";
+            }
+            else
+            {
+                return "点赞记录失败";
+            }
+        }
     }
 }

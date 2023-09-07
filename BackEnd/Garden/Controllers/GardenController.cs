@@ -7,7 +7,7 @@ namespace Garden.Controllers
     [Route("[controller]")]
     [ApiController]
     public class GardenController : ControllerBase
-	{
+    {
         private readonly IGardenBLL _gardenBLL;
 
         public GardenController(IGardenBLL gardenBLL)
@@ -88,6 +88,24 @@ namespace Garden.Controllers
                 Status = 1,
             };
             return _gardenBLL.Insert(garden);
+        }
+
+        //获取互动信息：用户评论
+        //输入用户id
+        //返回评论信息
+        [HttpGet("/garden/userComments")]
+        public IEnumerable<GardenComments> GetUserGardenComments(string account_id)
+        {
+            return _gardenBLL.GetUserGardenComments(account_id);
+        }
+
+        //获取花园维护信息：用户工作记录
+        //输入用户id
+        //返回工作记录
+        [HttpGet("/garden/maintenanceRecords")]
+        public IEnumerable<GardenMaintenance> GetUserMaintenance(string account_id)
+        {
+            return _gardenBLL.GetUserMaintenance(account_id);
         }
     }
 }

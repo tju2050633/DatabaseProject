@@ -20,6 +20,16 @@ namespace Garden.BLL.Interfaces
         public bool AddGardenComment(string gardenId, string comment);
 
         public string Insert(GardenEntity garden);
+
+        //获取互动信息：用户评论
+        //输入用户id
+        //返回评论信息
+        public List<GardenComments> GetUserGardenComments(string account_id);
+
+        //获取花园维护信息：用户工作记录
+        //输入用户id
+        //返回工作记录
+        public List<GardenMaintenance> GetUserMaintenance(string account_id);
     }
 }
 

@@ -1,8 +1,8 @@
 import axios from 'axios';
 
 const API = axios.create({
-    baseURL: 'http://120.27.148.187:81/',
-    timeout: 3000,
+    baseURL: 'http://localhost:5194/',
+    timeout: 5000,
     async: true,
     crossDomain: true,
 })
@@ -20,7 +20,7 @@ const API = axios.create({
 //       },
 export const getAllUserInfo = async (userId) => {
     try {
-        const response = await API.get(`/getUserInfo/`, { params: { userId } });
+        const response = await API.get(`/Account/info/${userId}`);
         return response.data;
     } catch (error) {
         console.error('Error occured! :', error);
@@ -58,13 +58,9 @@ export const postAllUserInfo = async (UserInfo) => {
 //           comment: "晚上就把浩哥撅了",
 //         },
 //       ],
-export const getGardenComment = async (userId) => {
-    try {
-        const response = await API.get(`/GardenComment/`, { params: { userId } });
-        return response.data;
-    } catch (error) {
-        console.error('Error occured! :', error);
-    }
+export const getGardenComment = async (account_id) => {
+    const response = await API.get(`/garden/userComments`, { params: { account_id } });
+    return response.data;
 };
 
 // getGardenLike 提供userid 返回一个数组，具体形式如下：
@@ -73,17 +69,14 @@ export const getGardenComment = async (userId) => {
 //         {
 //           author: "王浩",
 //           avatar: require("../assets/author-avatar.jpg"),
+//           stars:0,
 //           title: "浩哥的后宫",
 //           imageurl: require("../assets/Garden.jpg"),
 //         },
 //       ],
-export const getGardenLike = async (userId) => {
-    try {
-        const response = await API.get(`/GardenLike/`, { params: { userId } });
-        return response.data;
-    } catch (error) {
-        console.error('Error occured! :', error);
-    }
+export const getGardenInfo = async (id) => {
+    const response = await API.get(`/garden/user`, { params: { id } });
+    return response.data;
 };
 
 //blogcomment和bloglike都是对别人的博客互动 
@@ -107,13 +100,9 @@ export const getGardenLike = async (userId) => {
 //     },
 //   ],
 //ps: totalLikes和totalComment请后端同学统计 如果前段统计会很大程度上消耗资源
-export const getBlogComment = async (userId) => {
-    try {
-        const response = await API.get(`/BlogComment/`, { params: { userId } });
-        return response.data;
-    } catch (error) {
-        console.error('Error occured! :', error);
-    }
+export const getBlogComment = async (account_id) => {
+    const response = await API.get(`/Blog/userComments`, { params: { account_id } });
+    return response.data;
 };
 
 // getBlogComment 提供userid 返回一个数组，具体形式如下：
@@ -147,26 +136,6 @@ export const getBlogLike = async (userId) => {
 };
 
 
-// getGardenInfo 提供userid 返回一个数组，具体形式如下：
-    //   花园：花园信息
-    //   Garden: [
-    //     {
-    //       author: "楚杰",
-    //       title: "安楼的花园",
-    //       cover:
-    //         "https://img2.baidu.com/it/u=3194475248,8547823&fm=253&fmt=auto&app=138&f=JPEG?w=800&h=500",
-    //     },
-    //   ],
-export const getGardenInfo = async (userId) => {
-    try {
-        const response = await API.get(`/GardenInfo/`, { params: { userId } });
-        return response.data;
-    } catch (error) {
-        console.error('Error occured! :', error);
-    }
-};
-
-
 // getRecords 提供userid 返回一个数组，具体形式如下：
 // 工作记录：工作记录
 // Records: [
@@ -181,11 +150,7 @@ export const getGardenInfo = async (userId) => {
 //               baby只因你太美 babyOh eh oh现在确认地告诉我Oh eh oh你到底属于谁Oh eh oh`,
 //     },
 //    ]
-export const getRecords = async (userId) => {
-    try {
-        const response = await API.get(`/Records/`, { params: { userId } });
-        return response.data;
-    } catch (error) {
-        console.error('Error occured! :', error);
-    }
+export const getRecords = async (account_id) => {
+    const response = await API.get(`/garden/maintenanceRecords`, { params: { account_id } });
+    return response.data;
 };

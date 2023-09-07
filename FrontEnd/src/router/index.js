@@ -61,9 +61,10 @@ const routes = [
 
   // 个人主页
   {
-    path: '/personalInfo/',
+    path: '/personalInfo/:id',
     name: 'personalInfo',
     component: () => import('../views/PersonalInfoView.vue'),
+    props: true // 开启props传参
   },
   // 数据展示
   {
