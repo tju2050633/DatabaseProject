@@ -52,14 +52,17 @@ namespace Garden.BLL
 
         public int GetPoints(string id)
         {
-            int status;
-            return accountDAL.GetPoints(id, out status);
+            return GetAllInfo(id).Points;
         }
 
-        public string GetUserName(string id)
+        public string GetUserNameById(string id)
         {
-            int status;
-            return accountDAL.GetUserName(id, out status);
+            return GetAllInfo(id).AccountName;
+        }
+
+        public string GetUserAvatarById(string id)
+        {
+            return GetAllInfo(id).Portrait;
         }
     }
 }

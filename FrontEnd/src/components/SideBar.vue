@@ -11,7 +11,11 @@
           <span>账号管理</span>
         </template>
 
-        <el-menu-item index="1-1" @click="this.$router.push('/personalInfo/')"
+        <el-menu-item
+          index="1-1"
+          @click="
+            this.$router.push({ name: 'personalInfo', params: { id: 1 } })
+          "
           >我的主页</el-menu-item
         >
         <el-menu-item index="1-2" @click="this.$router.push('/login/')"
@@ -87,7 +91,7 @@
         <el-menu-item index="3-1" @click="this.$router.push('/display/')"
           >精选花园</el-menu-item
         >
-        <el-menu-item index="3-2" @click="this.$router.push('/garden/')"
+        <el-menu-item index="3-2" @click="navigateToMyGarden"
           >我的花园</el-menu-item
         >
       </el-sub-menu>
@@ -139,9 +143,23 @@
 <script>
 export default {
   name: "SideBar",
+  async created() {
+    this.user_id = "001";
+    this.garden_id = "001";
+  },
+
   methods: {
     refreshPage() {
       location.reload();
+    },
+    navigateToMyGarden() {
+      if (this.user_id == null) alert("请先登录！");
+      else if (this.garden_id == null) alert("您还没有花园！");
+      else
+        this.$router.push({
+          name: "garden",
+          params: { garden_id: this.garden_id },
+        });
     },
   },
 };

@@ -1,13 +1,14 @@
 ﻿using Garden.BLL.Interfaces;
 using Garden.Models;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
 namespace Garden.Controllers
 {
     [Route("[controller]")]
     [ApiController]
     public class GardenController : ControllerBase
-	{
+    {
         private readonly IGardenBLL _gardenBLL;
 
         public GardenController(IGardenBLL gardenBLL)
@@ -16,9 +17,15 @@ namespace Garden.Controllers
         }
 
         [HttpGet("/garden/info")]
-        public ActionResult<GardenEntity> GetGarden(string garden_id)
+        public ActionResult<GardenEntity> GetGardenInfo(string garden_id)
         {
-            return _gardenBLL.GetGarden(garden_id);
+            return _gardenBLL.GetGardenInfo(garden_id);
+        }
+
+        [HttpGet("/garden/name")]
+        public ActionResult<string> GetGardenNameById(string garden_id)
+        {
+            return _gardenBLL.GetGardenNameById(garden_id);
         }
 
         // 查询
@@ -55,15 +62,17 @@ namespace Garden.Controllers
         }
 
         [HttpGet("/garden/comments")]
-        public IEnumerable<GardenComments> GetGardenComments(string id)
+        public List<GardenComments> GetCommentsByGardenId(string garden_id)
         {
-            return _gardenBLL.GetGardenComments(id);
+            return _gardenBLL.GetCommentsByGardenId(garden_id);
         }
 
-        [HttpPost("/garden/comments")]
-        public IActionResult AddGardenComment([FromBody] GardenComments comment)
+        [HttpPost("/garden/comment")]
+        public IActionResult AddGardenComment([FromForm] string commentJson)
         {
-            if (_gardenBLL.AddGardenComment(comment.GardenId, comment.Content))
+            GardenCommentData comment = JsonConvert.DeserializeObject<GardenCommentData>(commentJson);
+
+            if (_gardenBLL.AddGardenComment(comment.UserId, comment.GardenId, comment.Content))
             {
                 return Ok(new { success = true, message = "评论成功" });
             }
@@ -88,6 +97,24 @@ namespace Garden.Controllers
                 Status = 1,
             };
             return _gardenBLL.Insert(garden);
+        }
+
+        //获取互动信息：用户评论
+        //输入用户id
+        //返回评论信息
+        [HttpGet("/garden/userComments")]
+        public IEnumerable<GardenComments> GetUserGardenComments(string account_id)
+        {
+            return _gardenBLL.GetUserGardenComments(account_id);
+        }
+
+        //获取花园维护信息：用户工作记录
+        //输入用户id
+        //返回工作记录
+        [HttpGet("/garden/maintenanceRecords")]
+        public IEnumerable<GardenMaintenance> GetUserMaintenance(string account_id)
+        {
+            return _gardenBLL.GetUserMaintenance(account_id);
         }
     }
 }

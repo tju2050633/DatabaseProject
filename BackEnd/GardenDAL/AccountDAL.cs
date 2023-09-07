@@ -246,34 +246,6 @@ namespace Garden.DAL
             }
         }
 
-        // get/set points
-
-        public int GetPoints(string user_id, out int status)
-        {
-            try
-            {
-                string sql = "SELECT points FROM account WHERE account_id=:id";
-                DataTable dt = OracleHelper.ExecuteTable(sql,
-                    new OracleParameter("id", OracleDbType.Char) { Value = user_id });
-                if (dt.Rows.Count != 1)
-                {
-                    status = 2;
-                    return -1;
-                }
-                status = 0;
-                DataRow dr = dt.Rows[0];
-                int value = Convert.ToInt32(dr["points"]);
-                return value;
-
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-                status = 1;
-                return -1;
-            }
-        }
-
         public int SetPoint(string userId, int new_point)
         {
             try
@@ -298,31 +270,5 @@ namespace Garden.DAL
             }
         }
 
-        // user name
-        public string GetUserName(string user_id, out int status)
-        {
-            try
-            {
-                string sql = "SELECT account_name FROM account WHERE account_id=:id";
-                DataTable dt = OracleHelper.ExecuteTable(sql,
-                    new OracleParameter("id", OracleDbType.Char) { Value = user_id });
-                if (dt.Rows.Count != 1)
-                {
-                    status = 2;
-                    return "";
-                }
-                status = 0;
-                DataRow dr = dt.Rows[0];
-                string value = dr["account_name"].ToString();
-                return value;
-
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-                status = 1;
-                return "";
-            }
-        }
     }
 }

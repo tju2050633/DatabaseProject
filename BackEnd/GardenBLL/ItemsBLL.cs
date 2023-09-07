@@ -26,9 +26,7 @@ namespace Garden.BLL
             // get storage and price
             int storage = itemsDAL.GetStorage(itemId, out _);
             int price = itemsDAL.GetPrice(itemId, out _);
-
-            // get user point
-            int point = accountDAL.GetPoints(userId, out _);
+            int point = AccountDAL.GetAccountById(userId, out _).Points;
 
             if (point < price)
             {
@@ -64,7 +62,7 @@ namespace Garden.BLL
             };
 
             int item_value = itemsDAL.GetPrice(item_id, out _);
-            int user_value = accountDAL.GetPoints(redeemer, out _);
+            int user_value = AccountDAL.GetAccountById(redeemer, out _).Points;
             if (item_value > user_value)
             {
                 return "���ֲ��㣬�޷��һ���";
