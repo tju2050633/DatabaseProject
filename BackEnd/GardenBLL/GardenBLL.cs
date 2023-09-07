@@ -8,6 +8,7 @@ namespace Garden.BLL
     {
         GardenDAL gardenDAL = new();
         GardenCommentsDAL gardenCommentsDAL = new();
+        GardenMaintenanceDAL gardenMaintenanceDAL = new();
 
         public static List<GardenEntity> Shuffle(List<GardenEntity> list)
         {
@@ -69,6 +70,24 @@ namespace Garden.BLL
             {
                 return "插入失败";
             }
+        }
+
+
+        //获取互动信息：用户评论
+        //输入用户id
+        //返回评论信息
+        public List<GardenComments> GetUserGardenComments(string account_id)
+        {
+            return gardenCommentsDAL.GetUserGardenComments(account_id);
+        }
+
+
+        //获取花园维护信息：用户工作记录
+        //输入用户id
+        //返回工作记录
+        public List<GardenMaintenance> GetUserMaintenance(string account_id)
+        {
+            return gardenMaintenanceDAL.GetUserMaintenance(account_id);
         }
     }
 }
