@@ -76,7 +76,7 @@ namespace Garden.DAL
             List<BlogLikeInfo> blogLikeInfoList = new();
             var blogLikeList = BlogLikeDAL.GetAllLikes(user_id); // 获取该用户所有点赞记录
             BlogDAL blogDAL = new();
-            foreach (BlogLike blogLike in blogLikeList)
+            foreach (var blogLike in blogLikeList)
             {
                 BlogInfo blogInfo = ToBlogInfo(blogDAL.GetBlogById(blogLike.BlogId, out _));
                 BlogLikeInfo B = new()
@@ -101,10 +101,10 @@ namespace Garden.DAL
             List<BlogCommentInfo> blogCommentInfoList = new();
             var blogCommentList = BlogCommentsDAL.GetBlogsComments(user_id); // 获取该用户的全部点赞记录
             BlogDAL blogDAL = new();
-            foreach (BlogComments b in blogCommentList)
+            foreach (var b in blogCommentList)
             {
                 Blog blog = blogDAL.GetBlogById(b.OwnerId, out _);
-                Account ac = AccountDAL.GetAccountById(b.OwnerId, out _);
+                Account ac = AccountDAL.GetAccountById(blog.OwnerId, out _);
                 BlogCommentInfo B = new()
                 {
                     TotalLikes = blog.AgreeNum,

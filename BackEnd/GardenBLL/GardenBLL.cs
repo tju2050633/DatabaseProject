@@ -120,5 +120,25 @@ namespace Garden.BLL
         {
             return gardenMaintenanceDAL.GetUserMaintenance(account_id);
         }
+
+        // 获取评论花园历史记录（GardenCommentInfo形式）
+        // 输入用户id
+        public List<GardenCommentInfo> GetGardenCommentInfos(string account_id)
+        {
+            return GardenDAL.GetGardenCommentInfo(account_id);
+        }
+
+        // 获取点赞（Star）花园历史记录（GardenCommentInfo形式）
+        // 输入用户id
+        public List<GardenLikeInfo> GetGardenLikeInfos(string account_id)
+        {
+            return GardenDAL.GetGardenLikeInfo(account_id);
+        }
+
+        // 输入用户id，获取简略版花园信息（GardenInfo）
+        public List<GardenInfo> GetGardenInfos(string account_id)
+        {
+            return GardenDAL.ToGardenInfoList(GetUserGardens(account_id));
+        }
     }
 }

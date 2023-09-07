@@ -210,5 +210,59 @@ namespace Garden.DAL
                 return false;
             }
         }
+
+        // 通过用户ID返回前端需要的历史点赞花园的记录
+        public static List<GardenLikeInfo> GetGardenLikeInfo(string user_id)
+        {
+            List<GardenLikeInfo> ret = new();
+            var gardenLikeList = GardenLikeDAL.GetAllLikes(user_id); // 获取全部点赞花园记录
+            GardenDAL gardenDAL = new();
+            foreach (var g in gardenLikeList)
+            {
+                GardenEntity garden = gardenDAL.GetGardenById(g.GardenId, out _);
+                Account ac = AccountDAL.GetAccountById(garden.OwnerId, out _);
+                GardenLikeInfo G = new()
+                {
+                    Author = ac.AccountName,
+                    Avatar = ac.Portrait,
+                    Title = garden.Name,
+                    GardenId = g.GardenId,
+                    Stars = garden.Stars,
+                    Imageurl = garden.Pictures,
+                    LikeTime = g.LikeTime
+                };
+                ret.Add(G);
+            }
+
+            return ret;
+        }
+
+        // 通过用户ID返回前端需要的历史评论花园的记录
+        public static List<GardenCommentInfo> GetGardenCommentInfo(string user_id)
+        {
+            List<GardenCommentInfo> ret = new();
+            GardenDAL gardenDAL = new();
+            GardenCommentsDAL gardenCommentsDAL = new();
+            var gardenCommentList = gardenCommentsDAL.GetCommentsByUserId(user_id); // 获取全部评论花园记录
+            foreach (var g in gardenCommentList)
+            {
+                GardenEntity garden = gardenDAL.GetGardenById(g.GardenId, out _);
+                Account ac = AccountDAL.GetAccountById(garden.OwnerId, out _);
+                GardenCommentInfo G = new()
+                {
+                    Author = ac.AccountName,
+                    Avatar = ac.Portrait,
+                    Title = garden.Name,
+                    GardenId = g.GardenId,
+                    Stars = garden.Stars,
+                    Imageurl = garden.Pictures,
+                    Comment = g.Content,
+                    CommentTime = g.ReleaseTime
+                };
+                ret.Add(G);
+            }
+
+            return ret;
+        }
     }
 }
