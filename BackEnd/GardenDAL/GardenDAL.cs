@@ -39,7 +39,7 @@ namespace Garden.DAL
         }
 
         // 转化为简略的GardenInfo形式，需要查Account表得到用户名
-        public static GardenInfo ToGardenInfo(GardenEntity ge) 
+        public static GardenInfo ToGardenInfo(GardenEntity ge)
         {
             Account ac = AccountDAL.GetAccountById(ge.OwnerId, out _);
 
@@ -56,7 +56,7 @@ namespace Garden.DAL
 
         public static List<GardenInfo> ToGardenInfoList(List<GardenEntity> gel)
         {
-            List <GardenInfo> G = new();
+            List<GardenInfo> G = new();
             foreach (GardenEntity ge in gel)
             {
                 GardenInfo gi = ToGardenInfo(ge);
@@ -129,7 +129,7 @@ namespace Garden.DAL
                 Console.WriteLine(ex.Message);
                 return null;
             }
-        }     
+        }
 
         public List<GardenEntity> GetPopularGardens(int offset)
         {

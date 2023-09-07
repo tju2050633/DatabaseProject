@@ -61,9 +61,10 @@ const routes = [
 
   // 个人主页
   {
-    path: '/personalInfo/',
+    path: '/personalInfo/:id',
     name: 'personalInfo',
     component: () => import('../views/PersonalInfoView.vue'),
+    props: true // 开启props传参
   },
   // 数据展示
   {
@@ -152,6 +153,14 @@ const routes = [
     name: 'BlogPost',
     component: () => import('../views/BlogPost.vue'),
   },
+
+    //发布志愿者招募页
+  {
+    path: '/VolunteerPost',
+    name: 'VolunteerPost',
+    component: () => import('../views/VolunteerPost.vue'),
+  },
+
 ]
 
 const router = createRouter({

@@ -8,5 +8,7 @@
         public string VolunteerId { get; set; }
         public string? Description { get; set; }
         public int? Point { get; set; }
+        //对应前端维护地点
+        public string Location { get; set; }
     }
 }

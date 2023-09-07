@@ -113,12 +113,40 @@ namespace Garden.Controllers
             return _blogBLL.PutAgreeNum(agreeNum, blog_id);
         }
 
+        //更新点赞记录
+        //输入用户id，博客id，加减1
+        //返回点赞是否成功
+        [HttpPost("bloglikeRecord")]
+        public ActionResult<string> PostBlogLike(string account_id, string blog_id)
+        {
+            return _blogBLL.PostBlogLike(account_id, blog_id);
+        }
+
         // 点赞使对应blog的agree_num加一，返回最新的点赞数，-1表示出错
         // 同时保存点赞记录，所以需要user_id
         [HttpPut("agree")]
         public ActionResult<int> Agree(string user_id, string blog_id)
         {
             return _blogBLL.AddAgree(user_id, blog_id);
+        }
+
+
+        //获取个人的博客评论记录
+        //输入账户id
+        //返回博客记录
+        [HttpGet("userComments")]
+        public IEnumerable<BlogLikeInfo> GetBlogsComments(string account_id)
+        {
+            return _blogBLL.GetBlogsComments(account_id);
+        }
+
+        //获取个人的博客点赞记录
+        //输入账户id
+        //返回博客点赞记录
+        [HttpGet("userLikes")]
+        public IEnumerable<BlogLike> GetAllLikes(string account_id)
+        {
+            return _blogBLL.GetAllLikes(account_id);
         }
     }
 }

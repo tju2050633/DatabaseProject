@@ -105,5 +105,25 @@ namespace Garden.DAL
                return false;
             }
         }
+
+        //获取互动信息：用户评论
+        //输入用户id
+        //返回评论信息
+        public List<GardenComments> GetUserGardenComments(string account_id)
+        {
+            try
+            {
+                string sql = "SELECT * FROM garden_comments WHERE owner_id=:id";
+                DataTable dt = OracleHelper.ExecuteTable(sql,
+                    new OracleParameter("id", OracleDbType.Char) { Value = account_id });
+                return ToModelList(dt);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("DAL : GetCommentsByGardenId error");
+                Console.WriteLine(ex.Message);
+                return null;
+            }
+        }
     }
 }

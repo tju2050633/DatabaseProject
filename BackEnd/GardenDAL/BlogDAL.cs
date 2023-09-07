@@ -316,15 +316,15 @@ namespace Garden.DAL
                 string sql = $"UPDATE blog SET agree_num = agree_num + {add} WHERE blog_id=:id";
                 OracleHelper.ExecuteNonQuery(sql, new OracleParameter("id", OracleDbType.Char) { Value = blog_id });
                 OracleHelper.ExecuteNonQuery("commit;");
-                BlogLikeDAL.Insert(user_id, blog_id, System.DateTime.Now);
+                BlogLikeDAL.Insert(user_id, blog_id);
                 return GetAgreeNumById(blog_id);
             }
             catch (Exception ex)
             {
-                if (ex.Message.Contains("ORA-02185")) 
+                if (ex.Message.Contains("ORA-02185"))
                 {
-                    BlogLikeDAL.Insert(user_id, blog_id, System.DateTime.Now);
-                    return GetAgreeNumById(blog_id); 
+                    BlogLikeDAL.Insert(user_id, blog_id);
+                    return GetAgreeNumById(blog_id);
                 }
                 Console.WriteLine(ex.Message);
                 return -1;
