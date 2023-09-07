@@ -24,6 +24,7 @@ import BlogDistribution from '@/components/BlogDistribution'
 import VolunteerBlock from '@/components/VolunteerBlock.vue'
 import SearchResults from '@/components/SearchResults.vue'
 import GardenActivityBlock from '@/components/GardenActivityBlock.vue'
+import AuditReportCard from '@/components/AuditReportCard.vue'
 import PostBlog from '@/components/PostBlog.vue'
 
 
@@ -80,6 +81,8 @@ app.component('GardenDistribution',GardenDistribution)
 app.component('BlogDistribution',BlogDistribution)
 app.component('VolunteerBlock', VolunteerBlock)
 app.component('SearchResults', SearchResults)
+app.component('AuditReportCard',AuditReportCard)
 app.component('GardenActivityBlock', GardenActivityBlock)
 app.component('PostBlog',PostBlog)
+
 app.mount('#app')
