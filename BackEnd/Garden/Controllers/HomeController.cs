@@ -146,24 +146,18 @@ namespace Garden.Controllers
         }
 
 
-        public class Record
-        {
-            public DateTime date { get; set; }
-            public string Location { get; set; }
-            public string FullContent { get; set; }
-        }
-        // 未完工，假数据
+        //public class Record
+        //{
+        //    public DateTime date { get; set; }
+        //    public string Location { get; set; }
+        //    public string FullContent { get; set; }
+        //}
+
+
         [HttpGet("Records")]
-        public ActionResult<Record[]> GetRecords(string userId)
+        public ActionResult<List<GardenMaintenance>> GetRecords(string userId)
         {
-            Record[] records = new Record[10];
-
-            // 假数据
-            records[0].date = DateTime.Now;
-            records[0].FullContent = "1111111111";
-            records[0].Location = "A";
-
-            return records;
+            return _gardenBLL.GetUserMaintenance(userId);
         }
     }
 }
