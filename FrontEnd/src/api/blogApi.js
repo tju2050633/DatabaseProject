@@ -33,3 +33,9 @@ export const handleAgreeNum = async (agreeNum, blog_id) => {
     const response = await API.put(`/agreeNum`+ '?agreeNum=' + agreeNum+'&blog_id='+blog_id);
     return response.data;
 };
+
+//提交博客
+export const postBlog = async (owner_id, title,content,imgs) => {
+    const response = await API.post(`/Comments`+'?owner_id='+owner_id+'&title='+title+'&content='+content+'&imagePath='+imgs);
+    return response.data;
+}
