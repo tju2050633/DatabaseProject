@@ -35,20 +35,3 @@ export const performExchange = async (itemId, userId) => {
         });
     return response.data;
 };
-
-export const getItemCoverImage = async (itemId) => {
-    const response = await API.get('/items/cover', {
-        params: {
-            itemId: itemId.toString()
-        }
-    });
-    return response.data;
-}
-
-export const getItemImages = async (itemId) => {
-    const response = await API.get('/items/images', {
-        params: {
-            itemId: itemId.toString()
-    } });
-    return response.data;
-}

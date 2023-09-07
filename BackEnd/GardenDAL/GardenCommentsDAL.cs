@@ -76,7 +76,6 @@ namespace Garden.DAL
             }
             catch (Exception ex)
             {
-                Console.WriteLine("DAL : GetCommentsByGardenId error");
                 Console.WriteLine(ex.Message);
                 return null;
             }

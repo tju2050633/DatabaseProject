@@ -1,12 +1,3 @@
-<!--
- * @Author: Jialin Lu
- * @GitHub: https://github.com/tju2050633
- * @Date: 2023-08-20 15:06:24
- * @FilePath: /SharingGardenProject/FrontEnd/src/components/PointItemBlock.vue
- * @Description: 
- * 
- * Copyright (c) 2023 by 1640889387@qq.com, All Rights Reserved. 
--->
 <template>
     <el-card class="item-card">
         <img :src="item.image" class="item-image" alt="Product Image" @load="resizeCard" />
@@ -14,7 +5,7 @@
             <div class="item-name">{{ item.itemName }}</div>
             <div class="item-price">{{ item.price }} 积分</div>
             <div class="item-exchange-count">
-                已兑换：{{ item.sales }}<br/>
+                已兑换：{{ item.sales }}&nbsp;&nbsp;
                 剩余：{{ item.storage }}
             </div>
         </div>

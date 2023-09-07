@@ -13,9 +13,9 @@ namespace Garden.DAL
             Feedback feedback = new();
 
             feedback.FeedbackId = row["feedback_id"].ToString();
-            feedback.UserId = row["account_id"].ToString();
+            feedback.UserId = row["user_id"].ToString();
             feedback.Description = row["description"].ToString();
-            feedback.FeedbackTime = Convert.ToDateTime(row["feedback_time"]);
+            feedback.FeedbackTime = Convert.ToDateTime(row["notify_time"]);
             return feedback;
         }
 
@@ -31,7 +31,7 @@ namespace Garden.DAL
             return F;
         }
 
-        //ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢
+        //»ñÈ¡·´À¡ÐÅÏ¢
         public List<Feedback> GetFeedback(out int status)
         {
 
@@ -42,22 +42,22 @@ namespace Garden.DAL
 
                 status = 0;
                 return ToModelList(dt);
+
             }
             catch (Exception ex)
             {
-                Console.WriteLine("get error");
                 Console.WriteLine(ex.Message);
                 status = 1;
                 return null;
             }
         }
 
-        //ï¿½ï¿½ï¿½ë·´ï¿½ï¿½ï¿½ï¿½Ï¢
+        //²åÈë·´À¡ÐÅÏ¢
         public bool Insert_Feedback(Feedback feedback)
         {
             try
             {
-                string sql = "INSERT INTO feedback(feedback_id, account_id, description, feedback_time) VALUES(:feedback_id, :user_id, :description, :feedback_time)";
+                string sql = "INSERT INTO feedback(feedback_id, user_id, description, feedback_time) VALUES(redeems_seq.NEXTVAL, :feedback_id, :user_id, :description, :feedback_time)";
                 OracleParameter[] oracleParameters = new OracleParameter[]
                 {
                     new OracleParameter("feedback_id", OracleDbType.Char) { Value = feedback.FeedbackId },
@@ -72,7 +72,6 @@ namespace Garden.DAL
 
             catch (Exception ex)
             {
-                Console.WriteLine("insert error");
                 Console.WriteLine(ex.Message);
                 if (ex.Message.Contains("ORA-02185"))
                 {

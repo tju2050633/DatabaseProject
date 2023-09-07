@@ -6,7 +6,6 @@
         public string GardenId { get; set; }
         public DateTime ReleaseTime { get; set; }
         public string Content { get; set; }
-        public string OwnerId { get; set; }
     }
 
     public class GardenCommentData

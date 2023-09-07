@@ -1,5 +1,4 @@
 ﻿using Garden.BLL.Interfaces;
-using Garden.DAL;
 using Garden.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -97,9 +96,9 @@ namespace Garden.Controllers
 
         // 未完工，假数据
         [HttpGet("GardenLike")]
-        public ActionResult<GardenLikeInfo[]> GetGardenLike(string userId)
+        public ActionResult<GardenLike[]> GetGardenLike(string userId)
         {
-            GardenLikeInfo[] gardenLikes = new GardenLikeInfo[10];
+            GardenLike[] gardenLikes = new GardenLike[10];
 
             // 假数据
             gardenLikes[0].Author = "1919";
@@ -129,21 +128,22 @@ namespace Garden.Controllers
             return blogComments;
         }
 
-        // /Home/BlogLike
-        // 返回该用户全部的点赞记录
-        // List<BlogLikeInfo>：{
-        //     Author:
-        //     BlogName:
-        //     Avatar:
-        //     FullContent:
-        //     TotalLikes:
-        //     TotalComment:
-        //     LikeTime:
-        //}
+        // 未完工，假数据
         [HttpGet("BlogLike")]
-        public ActionResult<List<BlogLikeInfo>> GetBlogLike(string userId)
+        public ActionResult<BlogLike[]> GetBlogLike(string userId)
         {
-            return BlogDAL.GetBlogLikeInfo(userId);
+            BlogLike[] blogLikes = new BlogLike[10];
+
+            // 假数据
+            blogLikes[0].Author = "1919";
+            blogLikes[0].TotalComment = 114;
+            blogLikes[0].TotalLikes = 514;
+
+            blogLikes[1].Author = "1234";
+            blogLikes[1].TotalComment = 123;
+            blogLikes[1].TotalLikes = 514;
+
+            return blogLikes;
         }
 
 

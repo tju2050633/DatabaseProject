@@ -28,18 +28,6 @@ namespace Garden.Controllers
             return _ItemsBLL.GetSingleItems(itemId);
         }
 
-        [HttpGet("/items/cover")]
-        public ActionResult<string> GetItemCover(string itemId)
-        {
-            return _ItemsBLL.GetItemCover(itemId);
-        }
-
-        [HttpGet("/items/images")]
-        public ActionResult<List<string>> GetItemImages(string itemId)
-        {
-            return _ItemsBLL.GetItemImages(itemId);
-        }
-
         [HttpPost]
         public ActionResult<string> InsertRedeem(string redeem_id, string redeemer, string item_id)
         {
