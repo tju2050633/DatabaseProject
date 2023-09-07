@@ -122,6 +122,10 @@
             <div>
               <button @click="loadMoreRecruits">加载更多</button>
             </div>
+            <!--志愿者招募页-->
+            <div>
+              <button @click="this.$router.push('/VolunteerPost')">我要发布</button>
+            </div>
           </el-container>
         </el-col>
 
