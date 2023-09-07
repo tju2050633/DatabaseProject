@@ -5,6 +5,8 @@ namespace Garden.BLL.Interfaces
     public interface IItemsBLL
     {
         public Items GetSingleItems(string item_id);
+        public string GetItemCover(string item_id);
+        public List<string> GetItemImages(string item_id);
 
         public List<string> GetAllItemID();
 

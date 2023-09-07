@@ -55,9 +55,9 @@ namespace Garden.Controllers
         }
 
         [HttpGet("/garden/comments")]
-        public IEnumerable<GardenComments> GetGardenComments(string id)
+        public IEnumerable<GardenComments> GetGardenComments(string garden_id)
         {
-            return _gardenBLL.GetGardenComments(id);
+            return _gardenBLL.GetGardenComments(garden_id);
         }
 
         [HttpPost("/garden/comments")]

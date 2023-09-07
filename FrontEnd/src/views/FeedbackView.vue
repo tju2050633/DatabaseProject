@@ -1,27 +1,19 @@
 <template>
-    <!-- 导航栏 -->
-    <NavBar />
+    <div>
+        <!-- 导航栏 -->
+        <NavBar />
 
-    <body>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-
-        <!-- 反馈模块 -->
-        <div class="d-flex">
-            <FeedbackCard />
-        </div>
-
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-
-    </body>
+        <body>
+            <!-- 反馈模块 -->
+            <div class="d-flex feedback-container">
+                <FeedbackCard />
+            </div>
+        </body>
+        
+    </div>
 </template>
+
+
   
 <script>
 export default {
@@ -38,6 +30,11 @@ body {
     position: relative;
     background-position: right;
     background-attachment: fixed;
+}
+
+.feedback-container {
+  margin-top: 100px;
+  margin-bottom: 50px;
 }
 
 .d-flex {

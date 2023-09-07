@@ -6,6 +6,6 @@ namespace Garden.BLL.Interfaces
     {
         public List<Feedback> GetSingleFeedback();
 
-        public string InsertFeedback(string feedback_id, string user_id, string description);
+        public string InsertFeedback(FeedbackModel feedbackModel);
     }
 }
