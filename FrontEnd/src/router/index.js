@@ -161,6 +161,13 @@ const routes = [
     component: () => import('../views/VolunteerPost.vue'),
   },
 
+  //举报审核页面
+  {
+    path: '/AuditReport',
+    name: 'AuditReport',
+    component: () => import('../views/AuditReport.vue'),
+  }
+
 ]
 
 const router = createRouter({

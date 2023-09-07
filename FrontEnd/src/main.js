@@ -24,6 +24,7 @@ import BlogDistribution from '@/components/BlogDistribution'
 import VolunteerBlock from '@/components/VolunteerBlock.vue'
 import SearchResults from '@/components/SearchResults.vue'
 import GardenActivityBlock from '@/components/GardenActivityBlock.vue'
+import AuditReportCard from '@/components/AuditReportCard.vue'
 
 //引入bootstrp
 import 'bootstrap/dist/css/bootstrap.css'
@@ -79,4 +80,5 @@ app.component('BlogDistribution',BlogDistribution)
 app.component('VolunteerBlock', VolunteerBlock)
 app.component('SearchResults', SearchResults)
 app.component('GardenActivityBlock',GardenActivityBlock)
+app.component('AuditReportCard',AuditReportCard)
 app.mount('#app')

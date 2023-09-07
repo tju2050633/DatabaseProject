@@ -110,6 +110,18 @@
           >发表博客</el-menu-item
         >
       </el-sub-menu>
+
+      <el-sub-menu index="5">
+        <template #title>
+          <el-icon>
+            <user />
+          </el-icon>
+          <span>管理选项</span>
+        </template>
+        <el-menu-item index="4-1" @click="this.$router.push('/AuditReport/')"
+          >举报审核</el-menu-item
+        >
+      </el-sub-menu>
     </el-menu>
   </el-col>
 </template>
