@@ -145,7 +145,6 @@ export default {
       for (let i = 0; i < 3; i++) {
         const hotGardenData = await getHotGarden();
         const username = await getUserNameById(hotGardenData.ownerId);
-        console.log("hot garden id", hotGardenData.gardenId);
         const hotGarden = {
           garden_id: hotGardenData.gardenId,
           imageUrl: hotGardenData.pictures,

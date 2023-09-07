@@ -25,6 +25,6 @@ namespace Garden.BLL.Interfaces
 
                 public string PutAgreeNum(int agreeNum, string blog_id);
 
-                public int AddAgree(string blog_id, int num = 1);
+                public int AddAgree(string user_id, string blog_id, int num = 1);
         }
 }
