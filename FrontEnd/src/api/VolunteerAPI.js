@@ -7,8 +7,8 @@ const API = axios.create({
     crossDomain: true,
 })
 
-export const getVolunteerContent = async (recruitment_id) => {
-    const response = await API.get(`/Volunteer_Recruitment/${recruitment_id}`);
+export const getVolunteerContent = async () => {
+    const response = await API.get('/recruit/random');
     return response.data;
 };
 

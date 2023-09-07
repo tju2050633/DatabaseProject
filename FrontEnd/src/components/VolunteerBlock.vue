@@ -4,7 +4,7 @@
 
             <!-- 用户信息 -->
             <div class="user-info">
-                <img class="img-fluid" src="../assets/logo.png" style="width: 30px;"> <!-- 用户头像 -->
+                <img class="img-fluid" :src="content.avatar" style="width: 30px;"> <!-- 用户头像 -->
                 {{ content.username }} <!-- 用户昵称 -->
             </div>
 

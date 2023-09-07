@@ -36,15 +36,17 @@
 
               <!--志愿问卷-->
               <div class="button-field">
+                <!-- 报名按钮 -->
                 <button
                   class="btn btn-outline-secondary"
                   @click="volunteerDialog.dialogVisible = true"
                 >
                   {{ "我要报名" }}
                 </button>
+                <!-- 进入按钮 -->
                 <button
                   class="btn btn-outline-secondary"
-                  @click="this.$router.push('/garden/')"
+                  @click="this.$router.push({name: 'garden', params: { garden_id: content.garden_id }})"
                 >
                   {{ "进入花园" }}
                 </button>
@@ -120,7 +122,7 @@
 
             <!-- 加载更多、我要发布按钮 -->
             <div>
-              <button @click="loadMoreRecruits" class="btn btn-outline-success show-more-btn">
+              <button @click="loadRecruits" class="btn btn-outline-success show-more-btn">
                 加载更多
               </button>
               <button @click="this.$router.push('/VolunteerPost')" class="btn btn-outline-success show-more-btn">
@@ -159,7 +161,7 @@
                   @click="
                     this.$router.push({
                       name: 'personalInfo',
-                      params: { id: 144 },
+                      params: { id: 1 },
                     })
                   "
                 >
@@ -201,29 +203,27 @@ import {
   getMoreRecruits,
   getTopPointsList,
 } from "../api/VolunteerAPI";
+import { getUserNameById, getUserAvatarById } from '@/api/accountApi';
+import { getGardenInfo } from '@/api/gardenAPI';
+
+
 export default {
   el: "#mainpart",
+  created() {
+    this.loadRecruits();
+    this.GetTopPointsList();
+    this.showMore = true;
+    this.updateDisplayedImages(); // 初始化时根据showMore状态设置图片数量
+  },
   data() {
     return {
+      // 右侧 志愿工作榜
       showMore: false, // 控制是否显示更多
       displayedImageList: [], // 实际显示的列表
       maxDisplayCount: 3, // 默认显示的数量
-
-      imageList: [ ],
-      volunteerContent: [
-        // {
-        //   imageUrl: require("../assets/Garden-e.jpg"),
-        //   dialogVisible: false, //是否出现弹窗
-        //   username: "Student1",
-        //   gardenname: "王浩的后宫1",
-        //   location: "嘉定校区19号楼",
-        //   describe: `诚邀您来维护本花园，主要工作如下：
-        //             首先，帮我把花园的土给翻了
-        //             然后，我的花园一盆花都没有，帮我全买了
-        //             最后帮我浇水
-        //             谢谢你`,
-        // },
-      ],
+      imageList: [],
+      
+      volunteerContent: [ ],
       volunteerDialog: [
         {
           dialogVisible: false, //是否出现弹窗
@@ -254,6 +254,53 @@ export default {
     };
   },
   methods: {
+    async loadRecruits() {
+      var that = this;
+      getMoreRecruits(that.state.startNum, that.state.pageSize).then(
+        function (res) {
+          console.log("获取更多招募成功", res);
+          that.state.startNum += that.state.pageSize;
+
+          //处理data形式数据的更改异步问题
+          const promises = res.map(async (recruit) => {
+            const card = await that.toCard(recruit);
+            return card;
+          });
+
+          Promise.all(promises).then((cards) => {
+            that.volunteerContent.push(...cards);
+            console.log("转换后：", that.volunteerContent);
+          });
+        },
+        function (err) {
+          console.log("获取更多招募失败", err);
+        }
+      );
+    },
+
+    async toCard(recruit) {
+      const username = await getUserNameById(recruit.recruiterId);
+      const avatar = await getUserAvatarById(recruit.recruiterId);
+      const gardenInfo = await getGardenInfo(recruit.gardenId);
+      const gardenImage = gardenInfo.pictures;
+      const gardenName = gardenInfo.name;
+      const gardenLocation = gardenInfo.position;
+      var card = {
+        dialogVisible: false,
+        imageUrl: gardenImage,
+        username: username, //返回花园的拥有者
+        avatar: avatar,
+        userid: recruit.recruiterId,
+        garden_id: recruit.gardenId,
+        gardenname: gardenName, //返回花园的名字
+        gardenid: recruit.gardenId,
+        location: gardenLocation, //这里应该返回花园的位置
+        describe: recruit.recruitContent,
+        recruittime: recruit.recruitTime,
+      };
+      return card;
+    },
+
     handleMenuSelect(index) {
       this.activeTab = index;
     },
@@ -286,65 +333,7 @@ export default {
       this.getVolunteerList.username = username;
       this.getVolunteerList.myPoints = Points;
     },
-    // async submitForm() {
-    //   try {
-    //     const response = await submitForm();
-    //     console.log("Data saved:", response.data);
-    //     // 清空表单
-    //     this.volunteerDialog.volunteername = "";
-    //     this.formData.email = "";
-    //   } catch (error) {
-    //     console.error("Error", error);
-    //   }
-    // },
-
-    //跳转到招募页面时获取初始的招募数据
-    //加载更多的招募数据
-    async loadMoreRecruits() {
-      console.log("开始志愿招募读取");
-      var that = this;
-      getMoreRecruits(that.state.startNum, that.state.pageSize).then(
-        function (res) {
-          console.log("获取更多招募成功", res);
-          that.state.startNum += that.state.pageSize;
-
-          //处理data形式数据的更改异步问题
-          const promises = res.map(async (recruit) => {
-            const card = await that.toCard(recruit);
-            return card;
-          });
-
-          Promise.all(promises).then((cards) => {
-            that.volunteerContent.push(...cards);
-            console.log("转换后：", that.volunteerContent);
-          });
-        },
-        function (err) {
-          console.log("获取更多招募失败", err);
-        }
-      );
-    },
-
-    async toCard(recruit) {
-      var card = {
-        imageUrl: require("../assets/Garden-e.jpg"),
-        dialogVisible: false,
-        username: "Student4", //返回花园的拥有者
-        userid: recruit.recruiterId,
-        gardenname: "Garden4", //返回花园的名字
-        gardenid: recruit.gardenId,
-        location: "嘉定校区19号楼", //这里应该返回花园的位置
-        describe: recruit.recruitContent,
-        recruittime: recruit.recruitTime,
-        // recruit.RecruitmentId = row["recruitment_id"].ToString();
-        // recruit.GardenId = row["garden_id"].ToString();
-        // recruit.RecruiterId = row["recruiter_id"].ToString();
-        // recruit.RecruitTime = Convert.ToDateTime(row["recruit_time"]);
-        // recruit.RecruitContent = row["recruit_content"].ToString();
-      };
-      return card;
-    },
-
+    
     //积分排名名单的card转换
     async toUserCard(user, topnum) {
       var card = {
@@ -402,12 +391,7 @@ export default {
       );
     },
   },
-  created() {
-    this.loadMoreRecruits();
-    this.GetTopPointsList();
-    this.showMore = true;
-    this.updateDisplayedImages(); // 初始化时根据showMore状态设置图片数量
-  },
+  
 };
 </script>
 
