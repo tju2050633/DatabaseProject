@@ -6,7 +6,7 @@
       <!-- logo与title -->
       <router-link class="navbar-brand" :to="{ name: 'home' }">
         <img
-          src="../assets/logo.png"
+          src="../assets/logo.jpg"
           alt="Logo"
           width="30"
           class="d-inline-block align-text-top"
@@ -194,6 +194,7 @@ import { reactive, onMounted } from "vue";
 import router from "@/router";
 import "../api/searchApi.js";
 import { getSearchResults } from "../api/searchApi.js";
+import { getUserAvatarById, getUserNameById } from "../api/accountApi.js";
 
 export default {
   name: "NavBar",
@@ -293,18 +294,14 @@ export default {
         if (type === "blog") {
           // 如果类型为博客(blog)
           const blogData = data.map((blog) => ({
-            author: blog.blogId,
-            avatar: require("../assets/author-avatar.jpg"), // 根据需要设置正确的路径
+            author: blog.author,
+            avatar: blog.avatar, // 根据需要设置正确的路径
             blogName: blog.title,
             partialContent: blog.content.substring(0, 100),
             fullContent: blog.content,
             showFullContent: false,
             isOpen: false,
-            comments: [
-              { user: "User5", content: "Comment 5" },
-              { user: "User6", content: "Comment 6" },
-              // Add more comments here
-            ],
+            comments: [],
             liked: false,
             totalLikes: blog.agreeNum,
             showInput: false,
@@ -318,10 +315,10 @@ export default {
         } else if (type === "garden") {
           // 如果类型为花园(garden)
           const gardenData = data.map((garden) => ({
-            imageUrl: garden.Pictures, // 根据需要设置正确的路径
-            username: garden.OwnerId,
-            gardenname: garden.Name,
-            hot: garden.Stars,
+            imageUrl: garden.cover, // 根据需要设置正确的路径
+            username: garden.author,
+            gardenname: garden.title,
+            hot: garden.stars,
           }));
 
           formattedItem = {
@@ -332,13 +329,13 @@ export default {
           // 如果类型为活动(activity)
           // 这里可以根据需要设置物品数据的格式
           const activityData = data.map((activity) => ({
-            author: activity.HolderId,
-            title: activity.title,
-            avatar: require("../assets/author-avatar.jpg"), // 根据需要设置正确的路径
-            imageurl: activity.Picture, // 根据需要设置正确的路径
-            time: activity.Time,
-            address: activity.Location,
-            detail: activity.Description,
+            author: getUserNameById(activity.holderId),
+            title: activity.activityId,
+            avatar: getUserAvatarById(activity.holderId), // 根据需要设置正确的路径
+            imageurl: activity.picture, // 根据需要设置正确的路径
+            time: activity.time,
+            address: activity.location,
+            detail: activity.description,
           }));
           formattedItem = {
             type: "activity",
@@ -347,16 +344,12 @@ export default {
         } else if (type === "volunteer") {
           // 如果类型为志愿者(volunteer)
           const volunteerData = data.map((volunteer) => ({
-            imageUrl: require("../assets/Garden-e.jpg"), // 根据需要设置正确的路径
-            dialogVisible: volunteer.dialogVisible,
-            username: "Student1",
-            gardenname: "王浩的后宫1",
-            location: "嘉定校区19号楼",
-            describe: `诚邀您来维护本花园，主要工作如下：
-                    首先，帮我把花园的土给翻了
-                    然后，我的花园一盆花都没有，帮我全买了 
-                    最后帮我浇水
-                    谢谢你`,
+            imageUrl: volunteer.imageUrl, // 根据需要设置正确的路径
+            dialogVisible: false,
+            username: volunteer.username,
+            gardenname: volunteer.gardenname,
+            location: volunteer.location,
+            describe: volunteer.describe,
           }));
 
           formattedItem = {

@@ -147,7 +147,11 @@
               <div>
                 <img class="all-img-head" src="../assets/activity-header.png" />
               </div>
-              <el-card v-for="(card, index) in itemResults" :key="index">
+              <el-card
+                v-for="(card, index) in activityResults"
+                :key="index"
+                class="activityResults"
+              >
                 <GardenActivityBlock :card="card" />
               </el-card>
               <div>
@@ -199,7 +203,7 @@ export default {
     const gardenResults = results?.find(
       (result) => result.type === "garden"
     )?.data;
-    // 访问 "item" 类型的搜索结果数据（改为活动类）
+    // 访问 "activity" 类型的搜索结果数据（改为活动类）
     const activityResults = results?.find(
       (result) => result.type === "activity"
     )?.data;

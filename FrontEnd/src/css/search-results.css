@@ -46,6 +46,16 @@ body{
   }
 }
 
+@keyframes slide-in-from-bottom {
+  from {
+    transform: translateY(100%);
+  }
+
+  to {
+    transform: translateY(0);
+  }
+}
+
 .result-header{
   display: flex;
   justify-content: center;
@@ -73,8 +83,7 @@ body{
     animation: fade-in 3s backwards;
     margin: 20px;
     box-shadow: 0 10px 18px rgba(0, 0, 0, 0.53);
-    width: 700px;
-    height: auto;
+    width: 600px;
 }
 
 .volunteerResults{
@@ -82,8 +91,32 @@ body{
     animation: fade-in 3s backwards;
     margin: 20px;
     box-shadow: 0 10px 18px rgba(0, 0, 0, 0.53);
-    width: 700px;
+    width: 600px;
     height: auto;
+}
+
+.blogResults{
+  width: 800px;
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin: 20px auto;
+  border-radius: 5px;
+  background-color: rgb(233, 218, 197);
+}
+
+.activityResults{
+    padding: 2vh;
+
+  border-width: 0vh;
+  border-radius: 2vh;
+
+  box-shadow: 8px 8px 24px rgba(0, 0, 0, 0.2);
+  background-color: rgb(244, 237, 228);
+
+  margin-top: 6vh;
+  margin-bottom: 6vh;
+
+  animation: slide-in-from-bottom 2s;
 }
 
 .upload-container{

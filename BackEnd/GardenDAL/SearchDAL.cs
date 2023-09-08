@@ -92,14 +92,14 @@ namespace Garden.DAL
             {
                 if (searchcnt >= 10)
                 {
-                    result.Data.AddRange(AccountDAL.ToUserInfoModelList(dt).Take(10)); // 取10个结果
+                    result.Data.AddRange(VolunteerRecruitDAL.ToRecruitInfoModelList(dt).Take(10)); // 取10个结果
                     return result;
                 }
                 else
                 {
-                    result.Data.AddRange(AccountDAL.ToUserInfoModelList(dt)); // 不足10个，用其他项补齐，最终结果依旧可能小于10个
+                    result.Data.AddRange(VolunteerRecruitDAL.ToRecruitInfoModelList(dt)); // 不足10个，用其他项补齐，最终结果依旧可能小于10个
                     DataTable dt2 = OracleHelper.ExecuteTable(query2);
-                    result.Data.AddRange(AccountDAL.ToUserInfoModelList(dt2).Take(10 - searchcnt));
+                    result.Data.AddRange(VolunteerRecruitDAL.ToRecruitInfoModelList(dt2).Take(10 - searchcnt));
                 }
             }
 
@@ -167,14 +167,12 @@ namespace Garden.DAL
                 Type = "volunteer",
                 Data = new List<object>()
             };
-            string query1 = $"SELECT * FROM Account WHERE account_id LIKE '%{searchTerm}%' " +
-                $"OR account_name LIKE '%{searchTerm}%' " +
-                $"OR bio LIKE '%{searchTerm}%' " +
-                $"OR phone LIKE '%{searchTerm}%'";
-            string query2 = $"SELECT * FROM Account WHERE NOT account_id LIKE '%{searchTerm}%' " +
-                $"AND NOT account_name LIKE '%{searchTerm}%' " +
-                $"AND NOT bio LIKE '%{searchTerm}%' " +
-                $"AND NOT phone LIKE '%{searchTerm}%' ";
+            string query1 = $"SELECT * FROM volunteer_recruit WHERE garden_id LIKE '%{searchTerm}%' " +
+                $"OR recruiter_id LIKE '%{searchTerm}%' " +
+                $"OR recruit_content LIKE '%{searchTerm}%' ";
+            string query2 = $"SELECT * FROM volunteer_recruit WHERE NOT garden_id LIKE '%{searchTerm}%' " +
+                $"AND NOT recruiter_id LIKE '%{searchTerm}%' " +
+                $"AND NOT recruit_content LIKE '%{searchTerm}%' ";
             return ProcessSearch(result, query1, query2);
         }
     }
