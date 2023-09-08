@@ -12,7 +12,7 @@ import request from '@/utils/request'
 //   ]
 export function getGradeTable(params) {
     return request({
-        url: '/DV/gradeD/getGradeTable',
+        url: '/Statistics/usercount',
         method: 'get',
         params,
     })
