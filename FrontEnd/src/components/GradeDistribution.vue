@@ -81,8 +81,9 @@ option && myChart.setOption(option);
     }
   },
   mounted(){
-    this.getData()
     this.createChart()
+    
+    this.getData()
   }
 }
 </script>

@@ -1,21 +1,50 @@
 <template>
     <el-card class="report-card">
-            <h2>
-                <span class="spaninfohead">举报人ID: 用户123</span>
-            </h2>
             <h4>
-                <span class="spaninfohead">举报内容: 这是举报的详细内容，可以包括多行文字描述。</span>
+                <span class="spaninfohead">举报人: {{ report.reporter }}</span>
             </h4>
             <h4>
-                <span class="spaninfo">举报时间: 2023-09-08 14:30:00</span>
+                <span class="spaninfohead">举报内容: {{ report.reportContent }}</span>
+            </h4>
+            <h4>
+                <span class="spaninfohead">举报类型: {{ report.reportType }}</span>
+            </h4>
+            <h4>
+                <span class="spaninfo">举报时间: {{ report.reportTime }}</span>
             </h4>
             <div class="button-container">
-                <button style='margin: 1vh;' class="btn btn-success" @click="this.$router.push({name: 'garden'})">查看详情</button>
-                <button style='margin: 1vh;' class="btn btn-success">回复</button>
+                <button style='margin: 1vh;' class="btn btn-success" @click="check">查看详情</button>
+                <button style='margin: 1vh;' class="btn btn-success" @click="reply">回复</button>
             </div>
             <textarea placeholder="写下您的回复..."></textarea>
     </el-card>
 </template>
+
+<script>
+export default {
+    name: "AuditReportCard",
+    props: {
+        report: {
+            type: Object,
+            required: true,
+        },
+  },
+  created() {
+    console.log("AuditReportCard created : ", this.report)
+  },
+  methods: {
+    check() {
+      // switch (this.report.reportTypeId) {
+      //   case 0:
+      //       this.$router.push({ path: `/blog/${this.report.reportContent}` });
+      //   }
+    },
+    reply() {
+
+    }
+  }
+};
+</script>
 
 <style>
 .report-card {
