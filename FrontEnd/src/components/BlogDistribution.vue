@@ -125,6 +125,7 @@ option && myChart.setOption(option);
   },
   mounted(){
     this.createChart()
+    
     this.getData()
   }
 }
