@@ -77,6 +77,12 @@ import { mapGetters } from 'vuex';
 import { postBlog } from '@/api/blogApi';
 export default {
     name: "BlogForm",
+    computed: {
+      ...mapGetters(['getUserId']),
+      userId() {
+        return this.getUserId;
+      },
+    },
     data(){
         return{
           // oss参数
@@ -88,7 +94,7 @@ export default {
             title:'',
             content:'',
             tags:[],
-            imgs:[],
+            imgs:'',
           },
           tagOptions : [
             { value: "technology", label: "科技" },
@@ -101,7 +107,7 @@ export default {
     },
     methods:{
 
-    async put(name, file) {
+      async put(name, file) {
       // oss初始化
       this.client = new OSS({
       region: 'oss-cn-hangzhou', 
@@ -123,8 +129,8 @@ export default {
       } catch (e) {
         console.log(e)
       }
-    },
-    imgPreview(file) {
+      },
+      imgPreview(file) {
         this.imageUrl = file.url;
         this.preview = true;
         console.log(this.imageUrl,this.preview)
@@ -142,7 +148,7 @@ export default {
         if(this.blog.tags[0]=='')
           return true
 
-      return false
+        return false
       },
       resetForm(){
         this.blog={
@@ -151,15 +157,13 @@ export default {
             tags:[],
           }
       },
-      submitForm(){
+      async submitForm(){
         if(this.checkEmpty()==true){
           alert('请完成表格填写后再提交！')
           return
         }
-        console.log('向后端发送blog')
-        console.log(this.blog)
-        let res=postBlog(this.userId,this.blog.title,this.blog.content,this.blog.imgs)
-        alert(res)
+        let res = await postBlog("1", this.blog.title, this.blog.content, this.blog.imgs);
+        alert(res);
         this.resetForm()
       },
       uploadImage(file){
@@ -167,15 +171,6 @@ export default {
         return false
       }
     },
-    create(){
-
-    },
-    computed:{
-      ...mapGetters(['getUserId']),
-    userId() {
-      return this.getUserId;
-    },
-    }
   };
 </script>
 

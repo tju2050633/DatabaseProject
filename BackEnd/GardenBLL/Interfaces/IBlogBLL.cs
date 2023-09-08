@@ -20,7 +20,7 @@ namespace Garden.BLL.Interfaces
 
                 public List<BlogComments> GetComments(string blog_id);
 
-                public string Insert_Comments(string owner_id, string blog_id, string content);
+                public string Insert_Comments(BlogComments blogComments);
 
                 public List<Blog> GetMoreBlogs(int startIndex, int num = 10);
 

@@ -67,18 +67,9 @@ namespace Garden.BLL
             return blogcommentsDAL.GetCommentsById(blog_id, out _);
         }
 
-        public string Insert_Comments(string owner_id, string blog_id, string content)
+        public string Insert_Comments(BlogComments blogComments)
         {
-            BlogComments blogcomments_info = new()
-            {
-                OwnerId = owner_id,
-                BlogId = blog_id,
-                ReleaseTime = DateTime.Now,
-                Content = content
-            };
-
-            bool Ins = blogcommentsDAL.Insert_Comment(blogcomments_info);
-            if (Ins)
+            if (blogcommentsDAL.Insert_Comment(blogComments))
             {
                 return "评论发布成功";
             }

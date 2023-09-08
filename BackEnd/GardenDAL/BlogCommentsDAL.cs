@@ -74,7 +74,7 @@ namespace Garden.DAL
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                Console.WriteLine("DAL BlogCommentsDAL Insert_Comment Exception:" + ex.Message);
                 if (ex.Message.Contains("ORA-02185"))
                 {
                     return true;
