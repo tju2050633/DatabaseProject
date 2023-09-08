@@ -111,6 +111,22 @@ namespace Garden.BLL
             return BlogDAL.GetBlogLikeInfo(account_id);
         }
 
+        //获取个人的博客评论记录
+        //输入账户id
+        //返回博客评论记录(BlogCommentInfo形式)
+        public List<BlogCommentInfo> GetBlogCommentInfos(string account_id)
+        {
+            return BlogDAL.GetBlogCommentInfo(account_id);
+        }
+
+        //获取个人的博客点赞记录
+        //输入账户id
+        //返回博客点赞记录(BlogLikeInfo形式)
+        public List<BlogLikeInfo> GetBlogLikeInfos(string account_id)
+        {
+            return BlogDAL.GetBlogLikeInfo(account_id);
+        }
+
         //获取个人的博客点赞记录
         //输入账户id
         //返回博客点赞记录
