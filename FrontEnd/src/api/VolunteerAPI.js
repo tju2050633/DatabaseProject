@@ -35,3 +35,22 @@ export const getTopPointsList = async () => {
     const response = await API.get(`/Volunteer/TopPointsList`);
     return response.data;
 };
+
+export const postRecruitment = async (recruitment) => {
+    const content = `招募名称：${recruitment.name}\n招募描述：${recruitment.description}\n招募时间：${recruitment.time}\n招募地点：${recruitment.location}\n招募人数：${recruitment.size}\n招募要求：${recruitment.requirement}\n联系方式：${recruitment.contact}`;
+    const volunteerRecruit = {
+        RecruitmentId: "",
+        GardenId: "001",
+        RecruiterId: "1",
+        RecruitTime: new Date(),
+        RecruitContent: content
+    };
+
+    console.log("API postRecruimentComment : ", volunteerRecruit);
+
+    const formData = new FormData();
+    formData.append("volunteerRecruitJson", JSON.stringify(volunteerRecruit));
+
+    const response = await API.post("/recruit/post", formData);
+    return response.data;
+};

@@ -170,8 +170,8 @@ export default {
       //更新点赞数
       console.log("更新：", this.localCard.totalLikes, this.localCard.blogid);
       handleAgreeNum(
-        this.localCard.totalLikes,
-        parseInt(this.localCard.blogid)
+        parseInt(this.localCard.totalLikes),
+        this.localCard.blogid
       ).then(
         function (res) {
           alert(res);
@@ -195,7 +195,7 @@ export default {
       var that = this;
       //申请接口连接
       postBlogComment(
-        this.localCard.author,
+        this.localCard.ownerId,
         this.localCard.blogid,
         this.localCard.comment
       ).then(

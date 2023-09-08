@@ -9,27 +9,27 @@
                     <el-header class="posthead">
                         <img src="../assets/img-volunteerpost.png">
                     </el-header>
-                    <el-form ref="volunteerForm" :model="volunteer" label-width="120px">
+                    <el-form ref="volunteerForm" :model="recruitment" label-width="120px">
                         <el-form-item label="活动名称">
-                            <el-input v-model="volunteer.name"></el-input>
+                            <el-input v-model="recruitment.name"></el-input>
                         </el-form-item>
                         <el-form-item label="活动描述">
-                            <el-input type="textarea" v-model="volunteer.description"></el-input>
+                            <el-input type="textarea" v-model="recruitment.description"></el-input>
                         </el-form-item>
                         <el-form-item label="活动时间">
-                            <el-input v-model="volunteer.time"></el-input>
+                            <el-input v-model="recruitment.time"></el-input>
                         </el-form-item>
                         <el-form-item label="活动地点">
-                            <el-input v-model="volunteer.location"></el-input>
+                            <el-input v-model="recruitment.location"></el-input>
                         </el-form-item>
                         <el-form-item label="志愿者规模">
-                            <el-input v-model="volunteer.size"></el-input>
+                            <el-input v-model="recruitment.size"></el-input>
                         </el-form-item>
                         <el-form-item label="志愿者要求">
-                            <el-input type="textarea" v-model="volunteer.requirement"></el-input>
+                            <el-input type="textarea" v-model="recruitment.requirement"></el-input>
                         </el-form-item>
                         <el-form-item label="联系方式">
-                            <el-input v-model="volunteer.contact"></el-input>
+                            <el-input v-model="recruitment.contact"></el-input>
                         </el-form-item>
                         <el-form-item>
                             <el-button type="primary" @click="submitForm">发布</el-button>
@@ -55,28 +55,35 @@
 </template>
   
 <script>
-import { ref } from "vue";
+import { postRecruitment } from '@/api/VolunteerAPI';
 
 export default {
     name: "VolunteerForm",
-    setup() {
-        const volunteer = ref({
-            name: "",
-            description: "",
-            time: "",
-            location: "",
-            size: "",
-            requirement: "",
-            contact: "",
-        });
-
-        const submitForm = () => {
-            console.log("提交表单", volunteer.value);
-            resetForm();
+    data() {
+        return {
+            recruitment: {
+                name: "",
+                description: "",
+                time: "",
+                location: "",
+                size: "",
+                requirement: "",
+                contact: "",
+            },
         };
+    },
+    created() {
 
-        const resetForm = () => {
-            volunteer.value = {
+    },
+    methods: {
+        async submitForm() {
+            console.log("View VolunteerPost submitForm : ", this.recruitment);
+            const result = await postRecruitment(this.recruitment);
+            alert(result);
+            this.resetForm();
+        },
+        resetForm() {
+            this.recruitment = {
                 name: "",
                 description: "",
                 time: "",
@@ -85,13 +92,7 @@ export default {
                 requirement: "",
                 contact: "",
             };
-        };
-
-        return {
-            volunteer,
-            submitForm,
-            resetForm,
-        };
+        },
     },
 };
 </script>

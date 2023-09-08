@@ -44,7 +44,7 @@ export const postBlogComment = async (owner_id, blog_id, content) => {
     console.log("API postBlogComment : ", comment);
 
     const formData = new FormData();
-    formData.append("commentJson", JSON.stringify(comment));
+    formData.append("blogCommentJson", JSON.stringify(comment));
 
     const response = await API.post("/blog/comments/post", formData);
     return response.data;
@@ -52,8 +52,10 @@ export const postBlogComment = async (owner_id, blog_id, content) => {
 
 //点赞的接口
 export const handleAgreeNum = async (agreeNum, blog_id) => {
-    const response = await API.put(`/agreeNum`+ '?agreeNum=' + agreeNum+'&blog_id='+blog_id);
-    return response.data;
+  console.log("API handleAgreeNum : ", agreeNum, blog_id);
+
+  const response = await API.put(`/blog/putAgreeNum/${blog_id}/${agreeNum}`);
+  return response.data;
 };
 
 // 提交博客

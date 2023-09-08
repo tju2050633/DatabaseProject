@@ -94,10 +94,9 @@ namespace Garden.DAL
         {
             try
             {
-                string sql = "INSERT INTO volunteer_recruit(recruitement_id, garden_id, recruiter_id, recruit_time, recruit_content) VALUES(volunteer_recruitement_seq.NEXTVAL,:garden_id,:recruiter_id,:recruit_time,:recruit_content)";
+                string sql = "INSERT INTO volunteer_recruit(recruitment_id, garden_id, recruiter_id, recruit_time, recruit_content) VALUES(recruitment_seq.NEXTVAL,:garden_id,:recruiter_id,:recruit_time,:recruit_content)";
                 OracleParameter[] oracleParameters = new OracleParameter[]
                 {
-                    new OracleParameter("recruitement_id", OracleDbType.Char) { Value = recruit.RecruitmentId },
                     new OracleParameter("garden_id", OracleDbType.Char) { Value = recruit.GardenId },
                     new OracleParameter("recruiter_id", OracleDbType.Char) { Value = recruit.RecruiterId },
                     new OracleParameter("recruit_time", OracleDbType.Date) { Value = recruit.RecruitTime },
@@ -115,6 +114,7 @@ namespace Garden.DAL
                     status = 0;
                     return true;
                 }
+                Console.WriteLine("DAL VoluntterRecruitment Insert Error");
                 Console.WriteLine(ex.Message);
                 status = 1;
                 return false;

@@ -2,6 +2,7 @@
 using Garden.BLL.Interfaces;
 using Garden.Models;
 using Garden.BLL;
+using Newtonsoft.Json;
 
 namespace Garden.Controllers
 {
@@ -60,16 +61,11 @@ namespace Garden.Controllers
             return _volunteerBLL.InsertApply(volunteerApply);
         }
 
-        [HttpPost("recruit")]
-        public ActionResult<string> InsertRecruit(string garden_id, string recruiter_id, string content)
+        [HttpPost("/recruit/post")]
+        public ActionResult<string> InsertRecruit([FromForm] string volunteerRecruitJson)
         {
-            VolunteerRecruit volunteerRecruit = new()
-            {
-                GardenId = garden_id,
-                RecruiterId = recruiter_id,
-                RecruitTime = DateTime.Now,
-                RecruitContent = content
-            };
+            Console.WriteLine("Controller volunteerRecruitJson : " + volunteerRecruitJson);
+            VolunteerRecruit volunteerRecruit = JsonConvert.DeserializeObject<VolunteerRecruit>(volunteerRecruitJson);
             return _volunteerBLL.InsertRecruit(volunteerRecruit);
         }
 

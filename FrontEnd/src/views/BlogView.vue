@@ -127,6 +127,7 @@ export default {
       const avatar = await getUserAvatarById(blog.ownerId);
       var card = {
         author: author,
+        ownerId: blog.ownerId,
         blogid: blog.blogId,
         avatar: avatar,
         blogName: blog.title,
