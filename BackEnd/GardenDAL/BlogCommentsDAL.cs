@@ -86,7 +86,7 @@ namespace Garden.DAL
         //获取个人的博客评论记录
         //输入账户id
         //返回博客评论记录
-        public List<BlogComments> GetBlogsComments(string account_id)
+        public static List<BlogComments> GetBlogsComments(string account_id)
         {
             try
             {

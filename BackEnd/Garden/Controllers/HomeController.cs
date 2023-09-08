@@ -60,77 +60,76 @@ namespace Garden.Controllers
             return _accountBLL.UpdateInfo(userInfo.Id, userInfo.Description, userInfo.Email, userInfo.Tel);
         }
 
-        // 未完工，假数据
+        // Home/GardenInfo
+        // 返回该用户的全部花园（GardenInfo形式，简略）
+        //List<BlogCommentInfo>:{
+        //    Author:
+        //    Title:
+        //    GardenId:
+        //    Cover:
+        //    Stars:
+        //    }
         [HttpGet("GardenInfo")]
-        public ActionResult<GardenInfo[]> GetGardenInfo(string userId)
+        public ActionResult<List<GardenInfo>> GetGardenInfo(string userId)
         {
-            GardenInfo[] gardenInfos = new GardenInfo[10];
-            // 假数据
-            gardenInfos[0].Author = "田所浩二";
-            gardenInfos[0].Title = "114514";
-            gardenInfos[0].Stars = 1;
-            gardenInfos[0].GardenId = "1";
-            gardenInfos[1].Author = "田所浩二";
-            gardenInfos[1].Title = "11451419";
-            gardenInfos[1].Stars = 1145;
-            gardenInfos[1].GardenId = "2";
-
-            return gardenInfos;
+            return _gardenBLL.GetGardenInfos(userId);
         }
 
-        // 未完工，假数据
+        // Home/GardenComment
+        // 返回用户全部评论花园记录
+        //List<GardenCommentInfo>:{
+        //    Author:
+        //    Title:
+        //    GardenId:
+        //    Avatar:
+        //    Imageurl:
+        //    Comment:
+        //    Stars:
+        //    CommentTime:
+        //    }
         [HttpGet("GardenComment")]
-        public ActionResult<GardenComment[]> GetGardenComment(string userId)
+        public ActionResult<List<GardenCommentInfo>> GetGardenComment(string userId)
         {
-            GardenComment[] gardenComments = new GardenComment[10];
-
-            // 假数据
-            gardenComments[0].Comment = "114514";
-            gardenComments[0].Author = "1919";
-            gardenComments[0].Title = "810";
-            gardenComments[1].Comment = "11111";
-            gardenComments[1].Author = "2222";
-            gardenComments[1].Title = "333";
-
-            return gardenComments;
+            return _gardenBLL.GetGardenCommentInfos(userId);
         }
 
-        // 未完工，假数据
+        // /Home/GardenLike
+        // 返回用户全部点赞花园记录
+        //List<GardenCommentInfo>:{
+        //    Author:
+        //    Title:
+        //    GardenId:
+        //    Avatar:
+        //    Imageurl:
+        //    Stars:
+        //    LikeTime:
+        //    }
         [HttpGet("GardenLike")]
-        public ActionResult<GardenLikeInfo[]> GetGardenLike(string userId)
+        public ActionResult<List<GardenLikeInfo>> GetGardenLike(string userId)
         {
-            GardenLikeInfo[] gardenLikes = new GardenLikeInfo[10];
-
-            // 假数据
-            gardenLikes[0].Author = "1919";
-            gardenLikes[0].Title = "810";
-            gardenLikes[1].Author = "1111";
-            gardenLikes[1].Title = "222";
-
-            return gardenLikes;
+            return _gardenBLL.GetGardenLikeInfos(userId);
         }
 
-        // 未完工，假数据
+        // /Home/BlogComment
+        // 返回用户全部评论博客记录
+        //List<BlogCommentInfo>:{
+        //    Author:
+        //    BlogName:
+        //    Avatar:
+        //    FullContent:
+        //    Comment:
+        //    TotalLikes:
+        //    TotalComment:
+        //    CommentTime:
+        //    }
         [HttpGet("BlogComment")]
-        public ActionResult<BlogComment[]> GetBlogComment(string userId)
+        public ActionResult<List<BlogCommentInfo>> GetBlogComment(string userId)
         {
-            BlogComment[] blogComments = new BlogComment[10];
-
-            // 假数据
-            blogComments[0].Author = "1919";
-            blogComments[0].Comment = "1919";
-            blogComments[0].TotalComment = 114;
-            blogComments[0].TotalLikes = 514;
-            blogComments[1].Author = "222";
-            blogComments[1].Comment = "333";
-            blogComments[1].TotalComment = 44;
-            blogComments[1].TotalLikes = 555;
-
-            return blogComments;
+            return _blogBLL.GetBlogCommentInfos(userId);
         }
 
         // /Home/BlogLike
-        // 返回该用户全部的点赞记录
+        // 返回该用户全部的点赞博客记录
         // List<BlogLikeInfo>：{
         //     Author:
         //     BlogName:
@@ -143,28 +142,22 @@ namespace Garden.Controllers
         [HttpGet("BlogLike")]
         public ActionResult<List<BlogLikeInfo>> GetBlogLike(string userId)
         {
-            return BlogDAL.GetBlogLikeInfo(userId);
+            return _blogBLL.GetBlogLikeInfos(userId);
         }
 
 
-        public class Record
-        {
-            public DateTime date { get; set; }
-            public string Location { get; set; }
-            public string FullContent { get; set; }
-        }
-        // 未完工，假数据
+        //public class Record
+        //{
+        //    public DateTime date { get; set; }
+        //    public string Location { get; set; }
+        //    public string FullContent { get; set; }
+        //}
+
+
         [HttpGet("Records")]
-        public ActionResult<Record[]> GetRecords(string userId)
+        public ActionResult<List<GardenMaintenance>> GetRecords(string userId)
         {
-            Record[] records = new Record[10];
-
-            // 假数据
-            records[0].date = DateTime.Now;
-            records[0].FullContent = "1111111111";
-            records[0].Location = "A";
-
-            return records;
+            return _gardenBLL.GetUserMaintenance(userId);
         }
     }
 }

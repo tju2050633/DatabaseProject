@@ -23,23 +23,29 @@
         public int Stars { get; set; }
     }
 
-    // 用于返回前端
-    public class GardenComment
+    // 花园评论历史记录，用于返回前端
+    public class GardenCommentInfo
     {
-        public string Author { get; set; }
-        public string Title { get; set; }
-        public string Avatar { get; set; }
-        public string? Imageurl { get; set; }
-        public string Comment { get; set; }
+        public string Author { get; set; }  // 花园主人用户名
+        public string Title { get; set; }   // 花园标题
+        public string? Avatar { get; set; } // 花园主人头像
+        public string GardenId { get; set; }
+        public int Stars { get; set; }
+        public string? Imageurl { get; set; } // Cover
+        public string Comment { get; set; }  // 评论内容 
+        public DateTime CommentTime { get; set; }
     }
 
-    // 用于返回前端
+    // 花园点赞历史记录，用于返回前端
     public class GardenLikeInfo
     {
-        public string Author { get; set; }
-        public string Avatar { get; set; }
-        public string Title { get; set; }
-        public string? Imageurl { get; set; }
+        public string Author { get; set; }  // 花园主人用户名
+        public string Title { get; set; }   // 花园标题
+        public string? Avatar { get; set; } // 花园主人头像
+        public string GardenId { get; set; }
+        public int Stars { get; set; }
+        public string? Imageurl { get; set; } // Cover
+        public DateTime? LikeTime { get; set; }
     }
 
 }
