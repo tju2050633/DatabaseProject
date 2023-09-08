@@ -12,6 +12,7 @@ builder.Services.AddSwaggerGen();
 
 // Add BLL Singleton
 builder.Services.AddSingleton<IAccountBLL, AccountBLL>();
+builder.Services.AddSingleton<IAuditBLL, AuditBLL>();
 builder.Services.AddSingleton<IBlogBLL, BlogBLL>();
 builder.Services.AddSingleton<IGardenBLL, GardenBLL>();
 builder.Services.AddSingleton<IVolunteerBLL, VolunteerBLL>();
