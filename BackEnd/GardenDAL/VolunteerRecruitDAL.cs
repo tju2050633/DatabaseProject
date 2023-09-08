@@ -30,6 +30,35 @@ namespace Garden.DAL
             return rl;
         }
 
+        private static RecruitInfo ToRecruitInfo(DataRow row)
+        {
+            //获取花园信息
+            GardenEntity gd = GardenDAL.GetGardenById(row["garden_id"].ToString(), out _);
+            //获取招募者信息
+            Account ac = AccountDAL.GetAccountById(row["recruiter_id"].ToString(), out _);
+
+            RecruitInfo info = new RecruitInfo();
+
+            info.imageUrl = gd.Pictures;
+            info.username = ac.AccountName;
+            info.gardenname = gd.Name;
+            info.location = gd.Position;
+            info.describe = row["recruit_content"].ToString();
+
+            return info;
+        }
+        public static List<RecruitInfo> ToRecruitInfoModelList(DataTable dt)
+        {
+            List<RecruitInfo> ul = new();
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+                DataRow dr = dt.Rows[i];
+                RecruitInfo info = ToRecruitInfo(dr);
+                ul.Add(info);
+            }
+            return ul;
+        }
+
         public List<VolunteerRecruit> GetMoreRecruits(int startIndex, int num)
         {
             try

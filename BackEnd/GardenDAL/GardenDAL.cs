@@ -70,7 +70,7 @@ namespace Garden.DAL
             return ToGardenInfoList(ToModelList(dt));
         }
 
-        public GardenEntity GetGardenById(string garden_id, out int status)
+        public static GardenEntity GetGardenById(string garden_id, out int status)
         {
             try
             {
@@ -216,10 +216,9 @@ namespace Garden.DAL
         {
             List<GardenLikeInfo> ret = new();
             var gardenLikeList = GardenLikeDAL.GetAllLikes(user_id); // 获取全部点赞花园记录
-            GardenDAL gardenDAL = new();
             foreach (var g in gardenLikeList)
             {
-                GardenEntity garden = gardenDAL.GetGardenById(g.GardenId, out _);
+                GardenEntity garden = GardenDAL.GetGardenById(g.GardenId, out _);
                 Account ac = AccountDAL.GetAccountById(garden.OwnerId, out _);
                 GardenLikeInfo G = new()
                 {
@@ -241,12 +240,11 @@ namespace Garden.DAL
         public static List<GardenCommentInfo> GetGardenCommentInfo(string user_id)
         {
             List<GardenCommentInfo> ret = new();
-            GardenDAL gardenDAL = new();
             GardenCommentsDAL gardenCommentsDAL = new();
             var gardenCommentList = gardenCommentsDAL.GetCommentsByUserId(user_id); // 获取全部评论花园记录
             foreach (var g in gardenCommentList)
             {
-                GardenEntity garden = gardenDAL.GetGardenById(g.GardenId, out _);
+                GardenEntity garden = GardenDAL.GetGardenById(g.GardenId, out _);
                 Account ac = AccountDAL.GetAccountById(garden.OwnerId, out _);
                 GardenCommentInfo G = new()
                 {

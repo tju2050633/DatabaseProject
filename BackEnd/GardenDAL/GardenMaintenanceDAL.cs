@@ -7,7 +7,7 @@ namespace Garden.DAL
 {
     public class GardenMaintenanceDAL
     {
-        GardenDAL gardenDAL = new();
+
         private GardenMaintenance ToModel(DataRow row)
         {
             GardenMaintenance maintenance = new()
@@ -21,7 +21,7 @@ namespace Garden.DAL
                 Location = "",
             };
             //处理花园位置问题：
-            GardenEntity gd = gardenDAL.GetGardenById(maintenance.GardenId, out _);
+            GardenEntity gd = GardenDAL.GetGardenById(maintenance.GardenId, out _);
             maintenance.Location = gd.Position;
             return maintenance;
         }

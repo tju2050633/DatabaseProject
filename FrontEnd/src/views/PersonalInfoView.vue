@@ -14,7 +14,7 @@
             <el-container class="info">
               <el-main>
                 <!-- 头图 -->
-                <el-row class="top-image" body-style="heigh:500px ">
+                <el-row class="top-image" body-style="heigh:700px ">
                   <el-col :span="24">
                     <el-image
                       style="width: 100vw; height: 30vh"
@@ -416,11 +416,13 @@ import {
   getAllUserInfo,
   getBlogComment,
   getGardenComment,
-  getGardenInfo,
+  getUserGardenInfo,
   getRecords,
   getBlogLike,
   postAllUserInfo,
 } from "@/api/personalPageAPI";
+import { getGardenInfo } from "@/api/gardenAPI";
+
 import { mapGetters } from "vuex";
 
 export default {
@@ -436,7 +438,7 @@ export default {
       change: false,
       showtel: true,
       chooseComponent: 1,
-      url: "https://img2.baidu.com/it/u=3194475248,8547823&fm=253&fmt=auto&app=138&f=JPEG?w=800&h=500",
+      url: "https://img1.imgtp.com/2023/09/08/sUHsllBJ.jpg",
       avaUrl: "",
 
       // 以下是用户的数据 通过api获取 假数据先保留以备展示（已处理假数据问题）
@@ -513,16 +515,20 @@ export default {
         points: User.points,
         id: User.accountId,
       };
+      this.avaUrl = User.portrait; //补上主页用户头像
       return card;
     },
 
     //转换gardenComments
     async toGdCommentsCard(comment) {
+      const gardeninfo = await getGardenInfo(comment.gardenId);
+      const gardenowner = await getAllUserInfo(comment.ownerId);
+
       var card = {
-        author: this.UserInfo.name,
-        title: comment.gardenId, //应该填评论对应的花园的花园名
-        avatar: require("../assets/author-avatar.jpg"), //用户头像，待补入
-        imageurl: require("../assets/Garden.jpg"), //应该填评论对应的花园的图片
+        author: gardenowner.accountName,
+        title: gardeninfo.name, //应该填评论对应的花园的花园名
+        avatar: gardenowner.portrait, //用户头像，待补入
+        imageurl: gardeninfo.pictures, //应该填评论对应的花园的图片
         comment: comment.content,
       };
       return card;
@@ -532,7 +538,7 @@ export default {
     async toGdStarsCard(garden) {
       var card = {
         author: this.UserInfo.name,
-        avatar: require("../assets/author-avatar.jpg"), //用户头像，待补入
+        avatar: this.avaUrl, //用户头像，待补入
         stars: 0,
         title: garden.name,
         imageurl: garden.pictures,
@@ -614,7 +620,7 @@ export default {
       );
 
       //获取互动信息：花园的星;花园信息
-      getGardenInfo(parseInt(this.account_id)).then(
+      getUserGardenInfo(parseInt(this.account_id)).then(
         function (res) {
           //处理data形式数据的更改异步问题
           console.log("星数返回：", res);

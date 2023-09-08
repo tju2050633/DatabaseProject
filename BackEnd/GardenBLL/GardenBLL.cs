@@ -20,12 +20,12 @@ namespace Garden.BLL
 
         public GardenEntity GetGardenInfo(string id)
         {
-            return gardenDAL.GetGardenById(id, out _);
+            return GardenDAL.GetGardenById(id, out _);
         }
 
         public string GetGardenNameById(string id)
         {
-            return gardenDAL.GetGardenById(id, out _).Name;
+            return GardenDAL.GetGardenById(id, out _).Name;
         }
 
         public GardenEntity GetGardenRandomly()
