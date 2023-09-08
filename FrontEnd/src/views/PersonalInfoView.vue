@@ -436,7 +436,7 @@ export default {
       change: false,
       showtel: true,
       chooseComponent: 1,
-      url: "https://img2.baidu.com/it/u=3194475248,8547823&fm=253&fmt=auto&app=138&f=JPEG?w=800&h=500",
+      url: "https://img1.baidu.com/it/u=1595762586,3524366763&fm=253&fmt=auto&app=138&f=JPEG?w=890&h=500",
       avaUrl: "",
 
       // 以下是用户的数据 通过api获取 假数据先保留以备展示（已处理假数据问题）
@@ -471,14 +471,13 @@ export default {
       this.showtel = !this.showtel;
     },
     refresh(index) {
-      this.chooseComponent = index; //通过v-if 展示四个不同的组件 还没写
+      this.chooseComponent = index; //通过v-if
     },
     InfoHasChanged() {
       console.log("信息改变");
       //此处应该向后端发送请求修改数据
 
       if (this.userId != "") {
-        //为了展示假数据 但这样也会导致假数据被修改了无法恢复到最开始定义的假数据
         let result = postAllUserInfo(this.UserInfo);
         if (result == true) {
           alert("信息修改成功！");

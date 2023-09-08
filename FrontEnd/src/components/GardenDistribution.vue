@@ -12,7 +12,7 @@ export default{
     return{
       begin_date:'Jan',
       end_date:'Dec',
-      timeperiod:['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],//generate locally
+      timeperiod:['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
       total_garden_num:[242, 545, 657, 737, 858, 976, 1435, 2116, 2932, 3620, 4666, 5843],
       active_garden_num:[100, 235, 357, 437, 558, 676, 935, 1116, 1232, 1220, 1266, 1343],
 
@@ -193,9 +193,10 @@ getData(){
 
   },
   mounted(){
-    this.getData();
     this.createChart();
     this.createPie();
+    
+    this.getData();
   }
 }
 </script>
