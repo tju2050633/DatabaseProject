@@ -195,6 +195,8 @@ export default {
                 const avatar = await getUserAvatarById(blogs[i].ownerId);
                 let blog = {
                     author: author,
+                    ownerId: blogs[i].ownerId,
+                    blogid: blogs[i].blogId,
                     avatar: avatar,
                     blogName: blogs[i].title,
                     partialContent: blogs[i].content,

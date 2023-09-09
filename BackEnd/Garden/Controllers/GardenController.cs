@@ -64,9 +64,10 @@ namespace Garden.Controllers
         }
 
         [HttpGet("/garden/top")]
-        public IEnumerable<GardenEntity> GetTopGardens()
+        public List<GardenEntity> GetTopGardens()
         {
-            return _gardenBLL.GetTopGardens();
+            List<GardenEntity> gardens = _gardenBLL.GetTopGardens();
+            return gardens;
         }
 
         [HttpGet("/garden/comments")]

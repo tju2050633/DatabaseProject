@@ -342,8 +342,8 @@ export default {
 
     async initHotGardens() {
       const hotGardens = await getGardenList();
-
-      for (let i = 0; i < 4; i++)
+      console.log("hotGardens ", hotGardens);
+      for (let i = 0; i < 4 && i < hotGardens.length; i++)
       {
         const username = await getUserNameById(hotGardens[i].ownerId);
         this.hotImages.push({
