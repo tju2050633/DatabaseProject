@@ -1,3 +1,12 @@
+<!--
+ * @Author: Jialin Lu
+ * @GitHub: https://github.com/tju2050633
+ * @Date: 2023-08-09 15:24:49
+ * @FilePath: /SharingGardenProject/FrontEnd/src/components/PersonalBlogBlock.vue
+ * @Description: 
+ * 
+ * Copyright (c) 2023 by 1640889387@qq.com, All Rights Reserved. 
+-->
 <!-- 个人信息页面的博客模块 -->
 
 <template>
@@ -7,10 +16,9 @@
       <img
         class="author-avatar-img"
         :src="card.avatar"
-        @click="this.$router.push('/personalInfo/')"
         alt="作者头像"
       />
-      <h2 class="spaninfohead" @click="this.$router.push('/personalInfo/')">
+      <h2 class="spaninfohead" >
         {{ card.author }}
       </h2>
     </div>

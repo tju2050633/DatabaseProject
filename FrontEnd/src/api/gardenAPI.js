@@ -26,14 +26,15 @@ export const getGardenInfo = async (garden_id) => {
 };
 
 export const getGardenIdByUserId = async (user_id) => {
-    console.log("API getGardenIdByUserId user_id: ", user_id);
     const response = await API.get('/garden/user', {
         params: {
             user_id: user_id.toString()
         }
     });
-    console.log("API getGardenIdByUserId data: ", response.data);
-    return response.data;
+    if (response.data.length === 0) 
+        return "";
+    else
+        return response.data[0].gardenId;
 };
 
 export const getGardenNameById = async (garden_id) => {

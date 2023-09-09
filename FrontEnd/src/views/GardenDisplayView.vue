@@ -117,11 +117,12 @@
 <script>
 import { getHotGarden, getNewGarden, getMyGarden, getGardenList } from '@/api/gardenDisplayAPI';
 import { getUserNameById } from '@/api/accountApi';
-import { mapGetters } from 'vuex';
+import { useStore } from 'vuex';
 export default {
   el: "#mainpart",
   data() {
     return {
+      userId: useStore().state.user.id,
       activeTab: "hot", // 默认选中热门板块
       showMore: false, // 控制是否显示更多图片
       displayedImageList: [], // 实际显示的图片列表
@@ -194,7 +195,7 @@ export default {
           garden_id: gardenList[i].gardenId,
           imageUrl: gardenList[i].pictures,
           description: "TOP" + (i + 1) + " " + gardenList[i].name,
-        })
+        });
       }
       this.displayedImageList = this.imageList.slice(0, this.maxDisplayCount);
     },
@@ -213,28 +214,12 @@ export default {
         this.displayedImageList = this.imageList.slice(0, this.maxDisplayCount); // 仅显示前maxDisplayCount张图片
       }
     },
-    //有关api获取
-    getUserInfo(){
-      console.log('开始获取用户信息！')
-      if(this.userId!=''){ //这样可以展示假数据
-        this.imageList=getGardenList(this.userId);
-      }
-    },
+
   },
   async created() {
-    console.log(this.userId);
     this.initGardenData();
     this.initDisplayedImages();
     this.updateDisplayedImages(); // 初始化时根据showMore状态设置图片数量
-  },
-  mounted(){
-    this.getUserInfo()
-  },
-  computed:{
-    ...mapGetters(['getUserId']),
-    userId() {
-      return this.getUserId;
-    },
   },
 
   watch:{

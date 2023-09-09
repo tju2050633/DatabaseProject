@@ -327,8 +327,6 @@ export default {
     else
       this.garden_id = await getGardenIdByUserId(this.user_id);
 
-    console.log("user_id", this.user_id);
-    console.log("garden_id", this.garden_id);
     this.initHotGardens();
   },
 

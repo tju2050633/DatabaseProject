@@ -424,7 +424,6 @@ import {
   getGardenComment,
   getUserGardenInfo,
   getRecords,
-  getBlogLike,
   postAllUserInfo,
 } from "@/api/personalPageAPI";
 import { getGardenInfo } from "@/api/gardenAPI";
@@ -723,62 +722,9 @@ export default {
     chooseComponent(oldValue, newValue) {
       console.log(`chooseComponent 变化！ ${oldValue} -> ${newValue}`);
 
-      if (this.userId != "") {
-        //为了展示假数据
-        if (newValue == 1) {
-          // //互动模块
-          // this.GardenComment = getGardenComment(this.userId);
-          // this.GardenLike = getGardenStars(this.userId);
-          //无本地需要配置的参数
-        } else if (newValue == 2) {
-          //博客模块
-          this.BlogComment = getBlogComment(this.userId);
-          this.BlogLike = getBlogLike(this.userId);
-          //配置本地需要的参数
-          for (let item of this.BlogComment) {
-            console.log(item);
-            // 确保属性响应式
-            this.$set(
-              item,
-              "partialContent",
-              this.partialText(item.fullContent)
-            );
-            this.$set(item, "isOpen", false);
-            this.$set(item, "showFullContent", false);
-          }
-          for (let item of this.BlogLike) {
-            console.log(item);
-            // 确保属性响应式
-            this.$set(
-              item,
-              "partialContent",
-              this.partialText(item.fullContent)
-            );
-            this.$set(item, "isOpen", false);
-            this.$set(item, "showFullContent", false);
-          }
-        } else if (newValue == 3) {
-          //花园模块
-          this.Garden = getGardenInfo(this.userId);
-          //无本地需要配置的参数
-        } else if (newValue == 4) {
-          this.Records = getRecords(this.userId);
-          //配置本地需要的参数
-          for (let item of this.Records) {
-            console.log(item);
-            // 确保属性响应式
-            this.$set(
-              item,
-              "partialContent",
-              this.partialText(item.fullContent)
-            );
-            this.$set(item, "isOpen", false);
-            this.$set(item, "showFullContent", false);
-          }
-        }
+        
       }
     },
-  },
 };
 </script>
 

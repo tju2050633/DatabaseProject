@@ -180,8 +180,8 @@ router.beforeEach((to, from, next) => {
   console.log('to:', to)
   // 判断用户是否已经登录
   const store = useStore();
-  //const isLogin = store.state.user.is_login;
-  const isLogin = true;
+  const isLogin = store.state.user.is_login;
+  // const isLogin = true;
   console.log(store.state.user.is_login);
 
   if (to.path === '/login'

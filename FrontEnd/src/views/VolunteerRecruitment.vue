@@ -161,7 +161,7 @@
                   @click="
                     this.$router.push({
                       name: 'personalInfo',
-                      params: { id: 1 },
+                      params: { id: item.userId },
                     })
                   "
                 >
@@ -205,7 +205,6 @@ import {
 } from "../api/VolunteerAPI";
 import { getUserNameById, getUserAvatarById } from '@/api/accountApi';
 import { getGardenInfo } from '@/api/gardenAPI';
-
 
 export default {
   el: "#mainpart",
@@ -337,6 +336,7 @@ export default {
     //积分排名名单的card转换
     async toUserCard(user, topnum) {
       var card = {
+        userId: user.accountId,
         description: "TOP" + topnum,
         username: user.accountName,
         myPoints: user.points,
