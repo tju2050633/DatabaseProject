@@ -11,9 +11,7 @@
           <span>账号管理</span>
         </template>
 
-        <el-menu-item
-          index="1-1"
-          @click="navigateToMyPage"
+        <el-menu-item index="1-1" @click="navigateToMyPage"
           >我的主页</el-menu-item
         >
         <el-menu-item index="1-2" @click="this.$router.push('/login/')"
@@ -32,15 +30,10 @@
         <el-menu-item
           index="2-1"
           @click="
-            this.$router
-              .push({
-                name: 'TJMap',
-                params: { lng: 121.505829, lat: 31.285099 },
-              })
-              .then(() => {
-                // 手动触发页面刷新,仅改变传参未改变路由，router不自动更改页面内容===>此处修复地图页面不能更改其他校区页面的bug
-                refreshPage();
-              })
+            this.$router.push({
+              name: 'TJMap',
+              params: { lng: 121.505829, lat: 31.285099 },
+            })
           "
         >
           四平路校区
@@ -48,15 +41,10 @@
         <el-menu-item
           index="2-1"
           @click="
-            this.$router
-              .push({
-                name: 'TJMap',
-                params: { lng: 121.220631, lat: 31.291873 },
-              })
-              .then(() => {
-                // 手动触发页面刷新,仅改变传参未改变路由，router不自动更改页面内容
-                refreshPage();
-              })
+            this.$router.push({
+              name: 'TJMap',
+              params: { lng: 121.220631, lat: 31.291873 },
+            })
           "
         >
           嘉定校区
@@ -64,15 +52,10 @@
         <el-menu-item
           index="2-1"
           @click="
-            this.$router
-              .push({
-                name: 'TJMap',
-                params: { lng: 121.397398, lat: 31.277339 },
-              })
-              .then(() => {
-                // 手动触发页面刷新,仅改变传参未改变路由，router不自动更改页面内容
-                refreshPage();
-              })
+            this.$router.push({
+              name: 'TJMap',
+              params: { lng: 121.397398, lat: 31.277339 },
+            })
           "
         >
           沪西校区
@@ -151,7 +134,7 @@
 </style>
 
 <script>
-import { useStore } from 'vuex';
+import { useStore } from "vuex";
 import { getGardenIdByUserId } from "../api/gardenAPI.js";
 
 export default {
@@ -159,11 +142,8 @@ export default {
   async created() {
     const store = useStore();
     this.user_id = store.state.user.id;
-    if(this.user_id == "")
-      this.garden_id = "";
-    else
-      this.garden_id = await getGardenIdByUserId(this.user_id);
-
+    if (this.user_id == "") this.garden_id = "";
+    else this.garden_id = await getGardenIdByUserId(this.user_id);
   },
 
   methods: {
@@ -171,19 +151,22 @@ export default {
       location.reload();
     },
     navigateToMyGarden() {
-      if (this.user_id == "")
-        alert("请先登录！");
-      else if
-        (this.garden_id == "") alert("您还没有花园！");
+      if (this.user_id == "") alert("请先登录！");
+      else if (this.garden_id == "") alert("您还没有花园！");
       else
-        this.$router.push({ name: "garden", params: { garden_id: this.garden_id } });
+        this.$router.push({
+          name: "garden",
+          params: { garden_id: this.garden_id },
+        });
     },
 
     navigateToMyPage() {
-      if (this.user_id == "")
-        alert("请先登录！");
+      if (this.user_id == "") alert("请先登录！");
       else
-        this.$router.push({ name: "personalInfo", params: { id: this.user_id } });
+        this.$router.push({
+          name: "personalInfo",
+          params: { id: this.user_id },
+        });
     },
   },
 };
