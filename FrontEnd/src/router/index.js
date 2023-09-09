@@ -195,7 +195,7 @@ router.beforeEach((to, from, next) => {
     }
   } else {
     // 如果用户已经登录，继续跳转到目标页面
-    if (isLogin) {
+    if (isLogin || to.path === '/' || to.path.startsWith('/TJMap/')) {
       next()
     } else {
       alert("该页面需要用户权限,请登录");
