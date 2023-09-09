@@ -94,6 +94,12 @@
                 v-for="(image, index) in gardenResults"
                 :key="index"
                 class="gardenResults"
+                @click="
+                  this.$router.push({
+                    name: 'garden',
+                    params: { garden_id: image.gardenId },
+                  })
+                "
               >
                 <GardenBlock :image="image" />
               </el-card>

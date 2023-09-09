@@ -378,6 +378,12 @@
                     <el-card
                       v-for="(Garden, index) in Garden"
                       :key="index"
+                      @click="
+                        this.$router.push({
+                          name: 'garden',
+                          params: { garden_id: Garden.gardenId },
+                        })
+                      "
                       class="info-card"
                     >
                       <PersonalGardenBlock :Garden="Garden" />
@@ -438,7 +444,7 @@ export default {
       change: false,
       showtel: true,
       chooseComponent: 1,
-      url: "https://img1.baidu.com/it/u=1595762586,3524366763&fm=253&fmt=auto&app=138&f=JPEG?w=890&h=500",
+      url: "https://img1.imgtp.com/2023/09/08/sUHsllBJ.jpg",
       avaUrl: "",
 
       // 以下是用户的数据 通过api获取 假数据先保留以备展示（已处理假数据问题）
@@ -567,6 +573,7 @@ export default {
         author: this.UserInfo.name,
         title: garden.name,
         cover: garden.pictures,
+        gardenId: garden.gardenId,
       };
       return card;
     },

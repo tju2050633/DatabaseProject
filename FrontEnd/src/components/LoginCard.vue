@@ -132,7 +132,16 @@ export default {
           console.log(res);
           router.push({ name: "home" });
           //修改is_login,使navbar的渲染变化
-          store.commit("updateUser", { is_login: true });
+          store.commit("updateUser", {
+            id: state.userid,
+            username: "",
+            photo: "",
+            followerCount: 0,
+            access: "",
+            refresh: "",
+            is_login: true,
+          });
+          // store.commit("updateUser", { id: state.id });
           console.log(store.state.user);
         },
         function (err) {
@@ -143,22 +152,22 @@ export default {
       );
 
       // ajaxs请求我这里调试不成功,改为熟悉的axios-- by 周成杰
-        // store.dispatch("login", {
-        //   username: username.value,
-        //   password: password.value,
-        //   //传的参数必须和服务端的API相对应
-        //   id: state.userid,
-        //   pwd: state.password,
+      // store.dispatch("login", {
+      //   username: username.value,
+      //   password: password.value,
+      //   //传的参数必须和服务端的API相对应
+      //   id: state.userid,
+      //   pwd: state.password,
 
-        //   success() {
-        //     console.log("success");
-        //     router.push({ name: "home" });
-        //   },
-        //   error() {
-        //     console.log("fail");
-        //     error_message.value = "用户名或密码错误";
-        //   },
-        // });
+      //   success() {
+      //     console.log("success");
+      //     router.push({ name: "home" });
+      //   },
+      //   error() {
+      //     console.log("fail");
+      //     error_message.value = "用户名或密码错误";
+      //   },
+      // });
     };
 
     return {

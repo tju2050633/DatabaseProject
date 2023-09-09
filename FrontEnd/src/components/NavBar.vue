@@ -129,7 +129,10 @@
               <router-link
                 class="dropdown-item"
                 v-if="$store.state.user.is_login"
-                :to="{ name: 'personalInfo' }"
+                :to="{
+                  name: 'personalInfo',
+                  params: { id: $store.state.user.id },
+                }"
                 >个人主页</router-link
               >
             </li>
@@ -294,6 +297,7 @@ export default {
         if (type === "blog") {
           // 如果类型为博客(blog)
           const blogData = data.map((blog) => ({
+            blogid: blog.blogId,
             author: blog.author,
             avatar: blog.avatar, // 根据需要设置正确的路径
             blogName: blog.title,
@@ -319,6 +323,7 @@ export default {
             username: garden.author,
             gardenname: garden.title,
             hot: garden.stars,
+            gardenId: garden.gardenId,
           }));
 
           formattedItem = {
@@ -360,7 +365,7 @@ export default {
         // console.log("单个结果：", formattedItem);
         state.searchResults.push(formattedItem);
       });
-      // console.log("转换结果：", state.searchResults);
+      console.log("转换结果：", state.searchResults);
     };
 
     // 监听搜索表单的提交事件，保存新的搜索记录（这里实现正式的搜索算法）
