@@ -75,6 +75,7 @@
 import OSS from 'ali-oss'
 import { mapGetters } from 'vuex';
 import { postBlog } from '@/api/blogApi';
+import { useStore } from 'vuex';
 export default {
     name: "BlogForm",
     computed: {
@@ -162,7 +163,7 @@ export default {
           alert('请完成表格填写后再提交！')
           return
         }
-        let res = await postBlog("1", this.blog.title, this.blog.content, this.blog.imgs);
+        let res = await postBlog(useStore().state.user.id, this.blog.title, this.blog.content, this.blog.imgs);
         alert(res);
         this.resetForm()
       },

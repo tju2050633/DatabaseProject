@@ -183,6 +183,7 @@
 
 <script>
 import { postFeedback } from '../api/Feedback.js';
+import { useStore } from 'vuex';
 
 export default {
     name: "FeedbackCard",
@@ -218,7 +219,7 @@ export default {
             document.getElementById('登录与注册').checked = true;
 
             // 提交
-            postFeedback("1", selectedRadio, topic, content, files, email);
+            postFeedback(useStore().state.user.id, selectedRadio, topic, content, files, email);
         };
 
         return {

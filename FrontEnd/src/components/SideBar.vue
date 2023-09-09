@@ -13,9 +13,7 @@
 
         <el-menu-item
           index="1-1"
-          @click="
-            this.$router.push({ name: 'personalInfo', params: { id: 1 } })
-          "
+          @click="navigateToMyPage"
           >我的主页</el-menu-item
         >
         <el-menu-item index="1-2" @click="this.$router.push('/login/')"
@@ -153,11 +151,21 @@
 </style>
 
 <script>
+import { useStore } from 'vuex';
+import { getGardenIdByUserId } from "../api/gardenAPI.js";
+
 export default {
   name: "SideBar",
   async created() {
-    this.user_id = "001";
-    this.garden_id = "001";
+    const store = useStore();
+    this.user_id = store.state.user.id;
+    if(this.user_id == "")
+      this.garden_id = "";
+    else
+      this.garden_id = await getGardenIdByUserId(this.user_id);
+
+    console.log("user_id", this.user_id);
+    console.log("garden_id", this.garden_id);
   },
 
   methods: {
@@ -165,13 +173,19 @@ export default {
       location.reload();
     },
     navigateToMyGarden() {
-      if (this.user_id == null) alert("请先登录！");
-      else if (this.garden_id == null) alert("您还没有花园！");
+      if (this.user_id == "")
+        alert("请先登录！");
+      else if
+        (this.garden_id == "") alert("您还没有花园！");
       else
-        this.$router.push({
-          name: "garden",
-          params: { garden_id: this.garden_id },
-        });
+        this.$router.push({ name: "garden", params: { garden_id: this.garden_id } });
+    },
+
+    navigateToMyPage() {
+      if (this.user_id == "")
+        alert("请先登录！");
+      else
+        this.$router.push({ name: "personalInfo", params: { id: this.user_id } });
     },
   },
 };

@@ -80,8 +80,6 @@ export default {
             console.log("useStore().state", useStore().state)
             console.log("this.userId", this.userId);
 
-            this.userId = "1";
-
             this.myPoints = await fetchMyPoints(this.userId); 
 
             const itemInfo = await fetchItemInfo(this.itemId); 

@@ -25,6 +25,17 @@ export const getGardenInfo = async (garden_id) => {
     return response.data;
 };
 
+export const getGardenIdByUserId = async (user_id) => {
+    console.log("API getGardenIdByUserId user_id: ", user_id);
+    const response = await API.get('/garden/user', {
+        params: {
+            user_id: user_id.toString()
+        }
+    });
+    console.log("API getGardenIdByUserId data: ", response.data);
+    return response.data;
+};
+
 export const getGardenNameById = async (garden_id) => {
     const response = await API.get('/garden/name', {
         params: {

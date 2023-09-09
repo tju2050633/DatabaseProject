@@ -44,9 +44,11 @@ namespace Garden.Controllers
         }
 
         [HttpGet("/garden/user")]
-        public IEnumerable<GardenEntity> GetUserGardens(string id)
+        public List<GardenEntity> GetUserGardens(string user_id)
         {
-            return _gardenBLL.GetUserGardens(id);
+            List<GardenEntity> gardens = _gardenBLL.GetUserGardens(user_id);
+            Console.WriteLine("Controllers GetUserGardens gardens", gardens);
+            return gardens;
         }
 
         [HttpGet("/garden/popular")]

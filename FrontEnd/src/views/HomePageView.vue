@@ -44,7 +44,6 @@
               </div>
 
               <div class="col nav-col">
-                <!-- <el-card class="navigator-item" @click="this.$router.push({name: 'garden', params: { garden_id: this.garden_id }})"> -->
                 <el-card class="navigator-item" @click="navigateToMyGarden">
 
                   <div class="navigator-card">
@@ -314,28 +313,30 @@ body {
 <script>
 import { reactive} from "vue";
 import { getGardenList } from "../api/gardenDisplayAPI.js";
+import { getGardenIdByUserId } from "../api/gardenAPI.js";
 import { getUserNameById } from '@/api/accountApi';
-import { mapGetters } from 'vuex'
+import { useStore } from 'vuex';
 
 export default {
   name: "HomePageView",
-  computed: {
-    ...mapGetters(['getUserId'])
-  },
 
   async created() {
-    console.log("user_id", this.getUserId); // undefined
-    this.user_id = "001";
-    this.garden_id = "001";
+    this.user_id = this.store.state.user.id;
+    if(this.user_id == "")
+      this.garden_id = "";
+    else
+      this.garden_id = await getGardenIdByUserId(this.user_id);
 
+    console.log("user_id", this.user_id);
+    console.log("garden_id", this.garden_id);
     this.initHotGardens();
   },
 
   methods: {
     navigateToMyGarden() {
-      if (this.user_id == null)
+      if (this.user_id == "")
         alert("请先登录！");
-      else if (this.garden_id == null)
+      else if (this.garden_id == "")
         alert("您还没有花园！");
       else
         this.$router.push({ name: "garden", params: { garden_id: this.garden_id } });
@@ -374,6 +375,8 @@ export default {
   },
   
   setup() {
+    const store = useStore();
+
     const mainPageDem = reactive([
       { description: "", src: require("../assets/mainpage1.jpeg"), target:"display" },
       { description: "", src: require("../assets/mainpage2.jpeg"), target:"BlogView" },
@@ -383,6 +386,7 @@ export default {
     const hotImages = reactive([ ]);
 
     return {
+      store,
       mainPageDem,
       hotImages,
     };

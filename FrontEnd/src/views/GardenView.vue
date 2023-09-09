@@ -125,7 +125,7 @@
 <script>
 import { getGardenInfo, getComments, postComment } from '@/api/gardenAPI';
 import { getUserNameById } from '@/api/accountApi';
-import { mapGetters } from 'vuex';
+import { useStore } from 'vuex';
 import { reactive } from 'vue';
 export default {
 
@@ -151,16 +151,9 @@ export default {
   ///// init
 
   async created() {
-    this.user_id = "1";
+    this.user_id = useStore().state.user.id;
     this.initGardenInfo();
     this.initComments();
-  },
-
-  computed:{
-    ...mapGetters(['getUserId']),
-    userId() {
-      return this.getUserId;
-    },
   },
 
   ///// methods
