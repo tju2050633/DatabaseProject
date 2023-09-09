@@ -625,7 +625,7 @@ export default {
       );
 
       //获取互动信息：花园的星;花园信息
-      getUserGardenInfo(parseInt(this.account_id)).then(
+      getUserGardenInfo(this.account_id).then(
         function (res) {
           //处理data形式数据的更改异步问题
           console.log("星数返回：", res);
@@ -721,10 +721,8 @@ export default {
   watch: {
     chooseComponent(oldValue, newValue) {
       console.log(`chooseComponent 变化！ ${oldValue} -> ${newValue}`);
-
-        
-      }
     },
+  },
 };
 </script>
 

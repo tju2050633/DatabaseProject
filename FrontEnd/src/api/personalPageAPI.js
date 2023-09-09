@@ -74,8 +74,8 @@ export const getGardenComment = async (account_id) => {
 //           imageurl: require("../assets/Garden.jpg"),
 //         },
 //       ],
-export const getUserGardenInfo = async (id) => {
-    const response = await API.get(`/garden/user`, { params: { id } });
+export const getUserGardenInfo = async (user_id) => {
+    const response = await API.get(`/garden/user`, { params: { user_id } });
     return response.data;
 };
 
