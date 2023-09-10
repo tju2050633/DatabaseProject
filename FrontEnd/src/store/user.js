@@ -41,7 +41,7 @@ const ModuleUser = {
         login(context, data) {
             $.ajax({
                 // url: "https://app165.acapp.acwing.com.cn/api/token/",
-                url: "http://localhost:5194/api/Account",
+                url: "http://39.106.47.60:5194/api/Account",
                 type: "Get",
                 data: {
                     username: data.username,
@@ -54,7 +54,7 @@ const ModuleUser = {
                     setInterval(() => {
                         $.ajax({
                             // url: "https://app165.acapp.acwing.com.cn/api/token/refresh/",
-                            url: "http://localhost:5194/api/Account",
+                            url: "http://39.106.47.60:5194/api/Account",
                             type: "POST",
                             data: {
                                 refresh,
@@ -68,7 +68,7 @@ const ModuleUser = {
 
                     $.ajax({
                         // url: "https://app165.acapp.acwing.com.cn/myspace/getinfo/",
-                        url: "http://localhost:5194/api/Account",
+                        url: "http://39.106.47.60:5194/api/Account",
                         type: "GET",
                         data: {
                             user_id: access_obj.user_id,

@@ -12,7 +12,7 @@ import axios from 'axios';
 axios.defaults.headers.common['Content-Type'] = 'application/json';
 
 const API = axios.create({
-    baseURL: 'http://localhost:5194',
+    baseURL: 'http://39.106.47.60:5194',
     timeout: 5000,
     async: true,
     crossDomain: true,
